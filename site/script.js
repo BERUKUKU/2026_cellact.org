@@ -249,6 +249,9 @@
     };
     var resize = function () {
       W = hero.clientWidth; H = hero.clientHeight;
+      var bgBox = hero.classList.contains('hero') && innerWidth <= 820 && hero.querySelector('.hero-bg');
+      if (bgBox) H = bgBox.clientHeight;                          // phones: hexagons stay on the picture, not over the copy
+      cv.style.height = bgBox ? H + 'px' : '';
       cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       var count = Math.round(Math.min(30, Math.max(8, W * H / 24000)));
       cells = [];
