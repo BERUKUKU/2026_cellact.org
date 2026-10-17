@@ -344,7 +344,7 @@
       h.r = (8 + Math.random() * 12) * k; h.z = 0.5 + Math.random() * 0.7;
       h.rot = Math.random() * 6.28; h.vr = (Math.random() - .5) * 0.004; h.vy = -(0.04 + Math.random() * 0.08);
       h.life = (thumb.classList.contains('sd-media') ? 4.2 : 2.6) + Math.random() * 2.6;   // seconds visible
-      h.age = first ? -Math.random() * (thumb.classList.contains('sd-media') ? 2.2 : 3.5) : 0;   // negative = waiting to appear (staggered start)
+      h.age = first ? h.life * (0.15 + Math.random() * 0.6) : 0;   // first batch is already part-way through its life, so the hexagons are visible the moment the card scrolls in
     };
     var layout = function () {
       W = thumb.clientWidth; H = thumb.clientHeight;
@@ -391,11 +391,11 @@
       px = (e.clientX - r.left) / r.width - .5; py = (e.clientY - r.top) / r.height - .5;
     });
     (thumb.closest('.service-card') || thumb).addEventListener('pointerleave', function () { px = 0; py = 0; });
-    var start = function () { if (!run) { run = true; last = 0; raf = setInterval(draw, 33); } }, stop = function () { run = false; clearInterval(raf); };
+    var start = function () { if (!run) { run = true; last = 0; draw(); raf = setInterval(draw, 33); } }, stop = function () { run = false; clearInterval(raf); };
     // run only while on screen: scroll check works everywhere, IntersectionObserver is an extra trigger
     var onScreen = function () { var r = thumb.getBoundingClientRect(); return r.bottom > -40 && r.top < innerHeight + 40; };
     var sync = function () { onScreen() ? start() : stop(); };
-    addEventListener('scroll', sync, { passive: true }); addEventListener('resize', sync); sync();
+    addEventListener('scroll', sync, { passive: true }); addEventListener('resize', sync); sync(); setInterval(sync, 200);
     if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { en[0].isIntersecting ? start() : sync(); }).observe(thumb);
   });
 
