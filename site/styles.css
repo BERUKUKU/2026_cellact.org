@@ -577,3 +577,17 @@ p, dd { font-size: 1rem; line-height: 1.95; }
   .hero .hero-actions { margin-top: 0; }
   .hero-intro .hi-logo { width: min(240px, 52vw); margin-top: -4vw; }
 }
+
+/* calmer, more corporate: squarer controls, quieter hero copy, softer picture colour */
+.btn { border-radius: 6px; padding: 13px 28px; letter-spacing: .1em; font-weight: 500; }
+.btn-primary, .hero .btn-primary { box-shadow: none; }
+.gnav a, .lm-replay, .hi-skip { border-radius: 6px; }
+.tag, .steps li { border-radius: 4px; }
+.hero .hero-bg { filter: saturate(.8); }
+.hero .hero-sub { font-weight: 400; letter-spacing: .12em; font-size: clamp(.8rem, 1.5vw, .95rem); }
+.hero .hero-eyebrow { font-weight: 500; }
+@media (max-width: 820px) {
+  .hero .hero-sub { font-size: .74rem; letter-spacing: .06em; white-space: nowrap; }
+  .hero .hero-actions { gap: 10px; }
+  .hero .hero-actions .btn { min-height: 46px; padding-block: 11px; font-size: .92rem; }
+}
