@@ -36,11 +36,11 @@ $purpose = (string)($old['purpose'] ?? ($_GET['purpose'] ?? ''));
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0b7f75">
-<link rel="icon" href="images/cellact_logo.png?v=120" type="image/png">
+<link rel="icon" href="images/cellact_logo.png?v=121" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&amp;family=Noto+Serif+JP:wght@500;600&amp;display=swap">
-<link rel="stylesheet" href="styles.css?v=120">
+<link rel="stylesheet" href="styles.css?v=121">
 <script>document.documentElement.classList.add('js')</script>
 
 </head>
@@ -48,7 +48,7 @@ $purpose = (string)($old['purpose'] ?? ($_GET['purpose'] ?? ''));
 <a class="skip" href="#main">本文へスキップ</a>
 <header class="site-header">
 <div class="container">
-<a class="brand" href="index.html" aria-label="一般社団法人 CELLACT トップへ"><img src="images/cellact_logo.png?v=120" alt="" width="62" height="66"><span>一般社団法人 CELLACT<small>REGENERATIVE MEDICINE</small></span></a>
+<a class="brand" href="index.html" aria-label="一般社団法人 CELLACT トップへ"><img src="images/cellact_logo.png?v=121" alt="" width="62" height="66"><span>一般社団法人 CELLACT<small>REGENERATIVE MEDICINE</small></span></a>
 <button class="menu-btn" aria-expanded="false" aria-controls="gnav" aria-label="メニュー"><span></span></button>
 <nav class="gnav" id="gnav" aria-label="メインメニュー"><ul><li><a href="index.html">TOP</a></li><li><a href="business.html">BUSINESS</a></li><li><a href="company.html">COMPANY</a></li><li><a href="recruit.html">RECRUIT</a></li><li><a href="news-archive.html">NEWS</a></li><li><a class="nav-cta" href="contact.php" aria-current="page">CONTACT</a></li></ul></nav>
 </div>
@@ -80,7 +80,7 @@ $purpose = (string)($old['purpose'] ?? ($_GET['purpose'] ?? ''));
 <div class="container">
 <div class="footer-grid">
 <div>
-<a class="footer-brand" href="index.html"><img src="images/cellact_logo_white.png?v=120" alt="" width="72" height="76"><b>一般社団法人 CELLACT</b></a>
+<a class="footer-brand" href="index.html"><img src="images/cellact_logo_white.png?v=121" alt="" width="72" height="76"><b>一般社団法人 CELLACT</b></a>
 <address>〒104-0061 東京都中央区銀座6-6-5<br>HULIC &amp; New GINZA NAMIKI6 11F<br>TEL <a href="tel:0332890202">03-3289-0202</a> / FAX 03-3289-0022</address>
 </div>
 <div><h4>MENU</h4><ul><li><a href="index.html">TOP</a></li><li><a href="business.html">BUSINESS</a></li><li><a href="company.html">COMPANY</a></li><li><a href="recruit.html">RECRUIT</a></li><li><a href="news-archive.html">NEWS</a></li><li><a href="contact.php">CONTACT</a></li></ul></div>
@@ -89,6 +89,6 @@ $purpose = (string)($old['purpose'] ?? ($_GET['purpose'] ?? ''));
 <div class="copy"><span>&copy; 2026 一般社団法人 CELLACT. All rights reserved.</span></div>
 </div>
 </footer>
-<script src="script.js?v=120" defer></script>
+<script src="script.js?v=121" defer></script>
 </body>
 </html>

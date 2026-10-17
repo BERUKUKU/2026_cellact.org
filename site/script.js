@@ -72,6 +72,10 @@
       var iTimer = 0, iDone = false;
       var bc = d.createElement('canvas'); bc.className = 'hi-burst'; layer.appendChild(bc);
       var bx = bc.getContext('2d'), bdpr = Math.min(devicePixelRatio || 1, 2), BW = 0, BH = 0, parts = [];
+      if (innerWidth <= 720) {                                          // phones: more air between the hexagon and the wordmark
+        var wm = iSvg.querySelector('#wordmark'); if (wm) wm.setAttribute('transform', 'translate(0 52)');
+        iSvg.setAttribute('viewBox', '118 55 1018 1062');
+      }
       var iSet = function (id, k, v) { var e = iSvg.querySelector('#' + id); if (e) e.setAttribute(k, v); };
       var iEase = function (t, a, b) { var x = Math.max(0, Math.min(1, (t - a) / (b - a))); return x * x * x * (x * (x * 6 - 15) + 10); };
       var iFrame = function (t) {
