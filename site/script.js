@@ -240,8 +240,13 @@
     hero.insertBefore(cv, hero.querySelector('.hero-inner'));
     var ctx = cv.getContext('2d'), W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2);
     var PAR = 52, cells = [], mx = 0, my = 0, tx = 0, ty = 0, visible = true;
+    var avoid = null;
     var spawnCell = function (c, first) {
-      c.x = Math.random() * W; c.y = H * (0.05 + Math.random() * 0.9); c.r = 10 + Math.random() * 30;
+      c.r = 10 + Math.random() * 30;
+      for (var tr = 0; tr < 12; tr++) {                          // phones (top hero): keep the hexagons off the copy block
+        c.x = Math.random() * W; c.y = H * (0.05 + Math.random() * 0.9);
+        if (!avoid || c.x + c.r < avoid.l || c.x - c.r > avoid.r || c.y + c.r < avoid.t || c.y - c.r > avoid.b) break;
+      }
       c.z = 0.3 + Math.random() * 0.9; c.rot = Math.random() * 6.28; c.vr = (Math.random() - .5) * 0.002;
       c.vy = -(0.03 + Math.random() * 0.07); c.a = 0.5 + Math.random() * 0.4; c.dot = Math.random() < 0.35;
       c.life = 3.6 + Math.random() * 3.6;                       // seconds visible
@@ -249,6 +254,11 @@
     };
     var resize = function () {
       W = hero.clientWidth; H = hero.clientHeight;
+      avoid = null;
+      if (hero.classList.contains('hero') && innerWidth <= 820) {
+        var hr0 = hero.getBoundingClientRect(), e1 = hero.querySelector('.hero-eyebrow'), e2 = hero.querySelector('.hero-actions');
+        if (e1 && e2) { var r1 = e1.getBoundingClientRect(), r2 = e2.getBoundingClientRect(); avoid = { l: 0, r: W, t: r1.top - hr0.top - 8, b: r2.bottom - hr0.top + 8 }; }
+      }
       cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       var count = Math.round(Math.min(30, Math.max(8, W * H / 24000)));
       cells = [];
