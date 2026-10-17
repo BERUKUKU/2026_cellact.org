@@ -241,7 +241,7 @@
     var ctx = cv.getContext('2d'), W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2);
     var PAR = 52, cells = [], mx = 0, my = 0, tx = 0, ty = 0, visible = true;
     var spawnCell = function (c, first) {
-      c.x = Math.random() * W; c.y = H * (0.05 + Math.random() * 0.9); c.r = (10 + Math.random() * 30) * (H < 260 ? 0.55 : 1);
+      c.x = Math.random() * W; c.y = H * (0.05 + Math.random() * 0.9); c.r = 10 + Math.random() * 30;
       c.z = 0.3 + Math.random() * 0.9; c.rot = Math.random() * 6.28; c.vr = (Math.random() - .5) * 0.002;
       c.vy = -(0.03 + Math.random() * 0.07); c.a = 0.5 + Math.random() * 0.4; c.dot = Math.random() < 0.35;
       c.life = 3.6 + Math.random() * 3.6;                       // seconds visible
@@ -249,9 +249,6 @@
     };
     var resize = function () {
       W = hero.clientWidth; H = hero.clientHeight;
-      var bgBox = hero.classList.contains('hero') && innerWidth <= 820 && hero.querySelector('.hero-bg');
-      if (bgBox) H = bgBox.clientHeight;                          // phones: hexagons stay on the picture, not over the copy
-      cv.style.height = bgBox ? H + 'px' : '';
       cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       var count = Math.round(Math.min(30, Math.max(8, W * H / 24000)));
       cells = [];

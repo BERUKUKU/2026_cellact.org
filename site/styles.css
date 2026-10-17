@@ -561,21 +561,20 @@ p, dd { font-size: 1rem; line-height: 1.95; }
 .hero .hero-bg img.intro-blur { will-change: filter; }
 .prose .sub-note { margin-top: 2em; font-size: .9rem; color: var(--ink-soft); text-align: right; }
 
-/* phones: picture on top (not zoomed in), copy below on a light band */
+/* phones: copy sits in the sky, the wide landscape fills the foot of the first view */
 @media (max-width: 820px) {
-  .hero { --hh: 52vw; min-height: 0; display: block; background: #f1faf8; }
-  .hero .hero-bg { position: relative; inset: auto; height: var(--hh); overflow: hidden; z-index: -2; }
-  .hero .hero-bg img { object-position: 50% 50%; transform: none; }
+  .hero { --hh: 58vw; min-height: calc(100svh - var(--header-h, 72px)); display: flex; flex-direction: column; justify-content: flex-start; background: #dafce2; }
+  .hero .hero-bg { position: absolute; inset: 0; background: #dafce2; z-index: -2; }
+  .hero .hero-bg img { position: absolute; left: 0; bottom: 0; width: 100%; height: var(--hh); object-fit: cover; object-position: 50% 50%; transform: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 26%); mask-image: linear-gradient(to bottom, transparent 0, #000 26%); }
   .hero::after, .hero .hero-inner::before { display: none; }
-  .hero .hero-intro { inset: 0 0 auto 0; height: var(--hh); }
-  .hero .hero-inner { padding-block: 30px 40px; }
+  .hero .hero-intro { inset: 0; height: auto; }
+  .hero .hero-inner { display: block; padding-block: 56px calc(var(--hh) * .5); }
   .hero .hero-eyebrow { font-size: .72rem; letter-spacing: .22em; margin-bottom: 12px; }
-  .hero h1 { font-size: 6.6vw; margin-bottom: 12px; }
-  .hero .hero-sub { font-size: .9rem; letter-spacing: .04em; margin-bottom: 22px; }
-  .hero .hero-inner { display: block; }
-  .hero .hero-sub { margin-bottom: 24px; }
+  .hero h1 { font-size: 6.8vw; margin-bottom: 12px; }
+  .hero .hero-sub { font-size: .74rem; letter-spacing: .06em; white-space: nowrap; margin-bottom: 26px; }
   .hero .hero-actions { margin-top: 0; }
-  .hero-intro .hi-logo { width: min(200px, 44vw); margin-top: -3vw; }
+  .hero-intro .hi-logo { width: min(240px, 52vw); margin-top: -4vw; }
 }
 
 /* calmer, more corporate: squarer controls, quieter hero copy, softer picture colour */
