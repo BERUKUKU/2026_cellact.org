@@ -590,12 +590,3 @@ p, dd { font-size: 1rem; line-height: 1.95; }
   .hero .hero-actions { gap: 10px; }
   .hero .hero-actions .btn { min-height: 46px; padding-block: 11px; font-size: .92rem; }
 }
-
-/* phones: a few flat cream clouds in the empty sky, echoing the illustration */
-@media (max-width: 820px) {
-  .hero .hero-bg::before, .hero .hero-bg::after { content: ""; position: absolute; border-radius: 999px; background: #fff8ea; opacity: .85; pointer-events: none; }
-  .hero .hero-bg::before { width: 46vw; height: 9vw; right: -6vw; top: 66vw; box-shadow: -12vw -4vw 0 -2vw #fff8ea, 6vw -5vw 0 -3vw #fff8ea; animation: skyDrift 90s linear infinite alternate; }
-  .hero .hero-bg::after { width: 38vw; height: 7.5vw; left: -8vw; top: 98vw; box-shadow: 10vw -4vw 0 -2vw #fff8ea, -4vw -3.5vw 0 -3vw #fff8ea; animation: skyDrift 120s linear infinite alternate-reverse; }
-}
-@keyframes skyDrift { from { transform: translateX(-4vw); } to { transform: translateX(8vw); } }
-@media (prefers-reduced-motion: reduce) { .hero .hero-bg::before, .hero .hero-bg::after { animation: none; } }
