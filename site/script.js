@@ -117,8 +117,20 @@
         });
         bx.shadowBlur = 0;
       };
+      var phone = innerWidth <= 820, T_STOP = phone ? T_FOCUS + 2.6 : T_FOCUS + 1.3;
       var iScene = function (t) {
         iFrame(Math.min(t, 4.1));
+        if (phone) {
+          // phones: the logo drifts up and softens away, the landscape rises out of the haze, then the copy settles in
+          var lo = iEase(t, T_BREAK, T_BREAK + 1.8), pi = iEase(t, T_BREAK + 0.5, T_FOCUS + 1.4), cq = iEase(t, T_BREAK + 1.5, T_FOCUS + 2.2);
+          introEl.style.opacity = 1 - lo;
+          introEl.style.transform = 'translateY(' + (-14 * lo).toFixed(2) + 'px) scale(' + (1 + 0.06 * lo).toFixed(4) + ')';
+          introEl.style.filter = 'blur(' + (6 * lo).toFixed(2) + 'px)';
+          veil.style.opacity = 1 - iEase(t, T_BREAK + 0.2, T_FOCUS + 0.8);
+          if (bgImg) { bgImg.style.opacity = pi; bgImg.style.transform = 'translateY(' + (30 * (1 - pi)).toFixed(2) + 'px)'; bgImg.style.filter = 'blur(' + (10 * (1 - pi)).toFixed(2) + 'px)'; }
+          copy.style.opacity = cq; copy.style.transform = 'translateY(' + (12 * (1 - cq)).toFixed(2) + 'px)'; if (hint) hint.style.opacity = cq;
+          return;
+        }
         var go = iEase(t, T_BREAK, T_FOCUS);
         introEl.style.opacity = 1 - iEase(t, T_BREAK + 0.15, T_BREAK + 1.2);   // the logo dissolves while its hexagon breaks apart
         veil.style.opacity = 1 - iEase(t, T_BREAK, T_FOCUS - 0.3);
@@ -129,8 +141,8 @@
       var iFinish = function () {
         if (iDone) return; iDone = true; clearInterval(iTimer);
         heroEl.classList.remove('intro-on');
-        copy.style.opacity = ''; if (hint) hint.style.opacity = '';
-        if (bgImg) { bgImg.style.filter = ''; bgImg.classList.remove('intro-blur'); }
+        copy.style.opacity = ''; copy.style.transform = ''; if (hint) hint.style.opacity = '';
+        if (bgImg) { bgImg.style.filter = ''; bgImg.style.opacity = ''; bgImg.style.transform = ''; bgImg.classList.remove('intro-blur'); }
         layer.style.display = 'none';
       };
       introDelay = T_FOCUS - 0.15;                                              // headline starts as the picture comes into focus
@@ -142,7 +154,7 @@
         var t = (Date.now() - iStart) / 1000;
         
         iScene(t);
-        if (t >= T_FOCUS + 1.3) iFinish();
+        if (t >= T_STOP) iFinish();
       }, 16);
       addEventListener('resize', sizeBurst);
       var skip = function () { iFinish(); };
