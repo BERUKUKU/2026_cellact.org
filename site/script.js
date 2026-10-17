@@ -285,6 +285,9 @@
         var hr0 = hero.getBoundingClientRect(), e1 = hero.querySelector('.hero-eyebrow'), e2 = hero.querySelector('.hero-actions');
         if (e1 && e2) { var r1 = e1.getBoundingClientRect(), r2 = e2.getBoundingClientRect(); avoid = { l: 0, r: W, t: r1.top - hr0.top - 8, b: r2.bottom - hr0.top + 8 }; }
       }
+      var stripBg = hero.classList.contains('page-hero') && innerWidth <= 820 && hero.querySelector('.hero-bg');
+      if (stripBg) H = stripBg.clientHeight;                       // phones: sub-page hexagons stay on the picture strip
+      cv.style.height = stripBg ? H + 'px' : '';
       cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       var count = Math.round(Math.min(30, Math.max(8, W * H / 24000)));
       cells = [];
@@ -352,7 +355,7 @@
       h.x = W * (0.06 + Math.random() * 0.88); h.y = H * (0.08 + Math.random() * 0.84);
       h.r = (8 + Math.random() * 12) * k; h.z = 0.5 + Math.random() * 0.7;
       h.rot = Math.random() * 6.28; h.vr = (Math.random() - .5) * 0.004; h.vy = -(0.016 + Math.random() * 0.04); h.ph = Math.random() * 6.28; h.sa = (4 + Math.random() * 8) * k;
-      h.life = (thumb.classList.contains('sd-media') ? 8 : 6) + Math.random() * 4;   // seconds visible
+      h.life = (thumb.classList.contains('sd-media') ? 7 : 6) + Math.random() * 5;   // seconds visible
       h.age = first ? h.life * (0.15 + Math.random() * 0.6) : 0;   // first batch is already part-way through its life, so the hexagons are visible the moment the card scrolls in
     };
     var layout = function () {
@@ -374,7 +377,7 @@
       hexes.forEach(function (h) {
         h.age += dt;
         if (h.age < 0) return;                                  // not born yet
-        if (h.age > h.life) { spawn(h, false); h.age = -Math.random() * (thumb.classList.contains('sd-media') ? 0.3 : 0.8); return; }
+        if (h.age > h.life) { spawn(h, false); h.age = -Math.random() * 0.6; return; }
         h.y += h.vy * h.z * 60 * dt; h.rot += h.vr * 60 * dt;
         var u = h.age / h.life;
         var env = Math.sin(Math.PI * u); env = env * env * (3 - 2 * Math.min(1, env * 1.6));   // soft in, soft out

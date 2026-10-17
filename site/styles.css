@@ -596,3 +596,14 @@ p, dd { font-size: 1rem; line-height: 1.95; }
   .hero .hero-inner { position: relative; }
   .hero .hero-inner::before { display: block; content: ""; position: absolute; z-index: -1; left: -4vw; right: -4vw; width: auto; top: 6px; height: calc(100% - var(--hh) * .42 - 6px); border-radius: 40px; background: rgba(255,255,255,.88); filter: blur(26px); pointer-events: none; }
 }
+
+/* phones: sub-page heroes show the picture as a wider strip, title sits on a light band below */
+@media (max-width: 820px) {
+  .page-hero { height: auto; display: block; color: var(--ink); background: #f1faf8; }
+  .page-hero .hero-bg { position: relative; inset: auto; height: 40vw; overflow: hidden; }
+  .page-hero .hero-bg img { height: 100%; }
+  .page-hero::after, .page-hero .container::before, .page-hero .container::after { display: none; content: none; }
+  .page-hero .container { padding-block: 22px 26px; }
+  .page-hero h1 { font-size: 1.8rem; }
+  .page-hero h1, .page-hero .eyebrow, .page-hero .breadcrumb { text-shadow: none; }
+}
