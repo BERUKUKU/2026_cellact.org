@@ -107,7 +107,7 @@ a:hover { color: var(--peach-deep); }
 .philosophy { text-align: center; }
 .philosophy .statement { font-family: var(--serif); font-size: clamp(1.15rem, 2.6vw, 1.55rem); line-height: 2.1; letter-spacing: .08em; margin: 0 auto; max-width: 30em; }
 .philosophy .statement strong { background: linear-gradient(transparent 62%, rgba(67,217,181,.38) 62%); font-weight: 600; }
-.philosophy p.body { color: var(--ink-soft); max-width: 40em; margin: 28px auto 0; text-align: left; }
+.philosophy p.body { color: var(--ink-soft); max-width: 40em; margin: 28px auto 0; text-align: left; text-wrap: pretty; }
 
 /* facts */
 .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 56px; }

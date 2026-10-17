@@ -92,11 +92,11 @@ def head(title, desc, path, og_img='images/hero_top.webp', extra_head='', noinde
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0b7f75">
-<link rel="icon" href="images/cellact_logo.png?v=137" type="image/png">
+<link rel="icon" href="images/cellact_logo.png?v=138" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&amp;family=Noto+Serif+JP:wght@500;600&amp;display=swap">
-<link rel="stylesheet" href="styles.css?v=137">
+<link rel="stylesheet" href="styles.css?v=138">
 <script>document.documentElement.classList.add('js')</script>
 {extra_head}
 </head>
@@ -114,7 +114,7 @@ def header(current):
     items += f'<li><a class="nav-cta" href="contact.php"{cur}>CONTACT</a></li>'
     return f'''<header class="site-header">
 <div class="container">
-<a class="brand" href="index.html" aria-label="{ORG} トップへ"><img src="images/cellact_logo.png?v=137" alt="" width="62" height="66"><span>{ORG}<small>REGENERATIVE MEDICINE</small></span></a>
+<a class="brand" href="index.html" aria-label="{ORG} トップへ"><img src="images/cellact_logo.png?v=138" alt="" width="62" height="66"><span>{ORG}<small>REGENERATIVE MEDICINE</small></span></a>
 <button class="menu-btn" aria-expanded="false" aria-controls="gnav" aria-label="メニュー"><span></span></button>
 <nav class="gnav" id="gnav" aria-label="メインメニュー"><ul>{items}</ul></nav>
 </div>
@@ -141,7 +141,7 @@ def footer():
 <div class="container">
 <div class="footer-grid">
 <div>
-<a class="footer-brand" href="index.html"><img src="images/cellact_logo_white.png?v=137" alt="" width="72" height="76"><b>{ORG}</b></a>
+<a class="footer-brand" href="index.html"><img src="images/cellact_logo_white.png?v=138" alt="" width="72" height="76"><b>{ORG}</b></a>
 <address>〒104-0061 東京都中央区銀座6-6-5<br>HULIC &amp; New GINZA NAMIKI6 11F<br>TEL <a href="tel:0332890202">{TEL}</a> / FAX 03-3289-0022</address>
 </div>
 <div><h4>MENU</h4><ul>{nav}</ul></div>
@@ -150,7 +150,7 @@ def footer():
 <div class="copy"><span>&copy; 2026 {ORG}. All rights reserved.</span></div>
 </div>
 </footer>
-<script src="script.js?v=137" defer></script>
+<script src="script.js?v=138" defer></script>
 </body>
 </html>
 '''
@@ -194,14 +194,14 @@ def build_index():
         cards += f'''<article class="service-card reveal"><a href="business.html#{s["id"]}" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;flex:1">
 <div class="thumb"><img src="images/{s["img"]}" alt="" loading="lazy" width="1500" height="857"></div>
 <div class="body"><span class="en">{s["en"]}</span><h3>{s["name"]}</h3><p>{s["short"]}</p><span class="more" style="color:var(--teal-deep)">詳しく見る</span></div></a></article>'''
-    ld = '''<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"一般社団法人 CELLACT","url":"https://n2cellact.or.jp/","logo":"https://n2cellact.or.jp/images/cellact_logo.png?v=137","telephone":"+81-3-3289-0202","email":"info@cellact.org","address":{"@type":"PostalAddress","postalCode":"104-0061","addressRegion":"東京都","addressLocality":"中央区","streetAddress":"銀座6-6-5 HULIC & New GINZA NAMIKI6 11F","addressCountry":"JP"}}</script>'''
+    ld = '''<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"一般社団法人 CELLACT","url":"https://n2cellact.or.jp/","logo":"https://n2cellact.or.jp/images/cellact_logo.png?v=138","telephone":"+81-3-3289-0202","email":"info@cellact.org","address":{"@type":"PostalAddress","postalCode":"104-0061","addressRegion":"東京都","addressLocality":"中央区","streetAddress":"銀座6-6-5 HULIC & New GINZA NAMIKI6 11F","addressCountry":"JP"}}</script>'''
     s = head(f'{ORG} | 再生医療クリニック',
              '再生する力で、健康と希望の未来を創る。幹細胞療法・免疫細胞療法・幹細胞培養上清療法など、再生医療を提供する一般社団法人 CELLACT の公式サイトです。',
              'index.html', extra_head=ld)
     s += header('index.html')
     s += f'''<main id="main">
 <section class="hero">
-<div class="hero-bg"><img src="images/hero_top.webp?v=137" alt="" width="1500" height="857" fetchpriority="high"></div>
+<div class="hero-bg"><img src="images/hero_top.webp?v=138" alt="" width="1500" height="857" fetchpriority="high"></div>
 <div class="hero-intro" aria-hidden="true"><div class="hi-veil"></div><div class="hi-logo" data-capsule-intro>{CAPSULE_SVG}</div><button type="button" class="hi-skip">スキップ</button></div>
 <div class="container hero-inner">
 <p class="hero-eyebrow">CELLACT / REGENERATIVE MEDICINE</p>

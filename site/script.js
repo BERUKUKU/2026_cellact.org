@@ -243,6 +243,20 @@
     }
   }
 
+  // Soft hexagon path (rounded corners) so the floating cells feel gentle rather than sharp
+  var softHex = function (g, x, y, r, rot) {
+    var v = [], i, a = 0.3;
+    for (i = 0; i < 6; i++) v.push([x + Math.cos(rot + i * Math.PI / 3) * r, y + Math.sin(rot + i * Math.PI / 3) * r]);
+    g.beginPath();
+    for (i = 0; i < 6; i++) {
+      var p = v[(i + 5) % 6], c = v[i], n = v[(i + 1) % 6];
+      var sx = c[0] + (p[0] - c[0]) * a, sy = c[1] + (p[1] - c[1]) * a, ex = c[0] + (n[0] - c[0]) * a, ey = c[1] + (n[1] - c[1]) * a;
+      i ? g.lineTo(sx, sy) : g.moveTo(sx, sy);
+      g.quadraticCurveTo(c[0], c[1], ex, ey);
+    }
+    g.closePath();
+  };
+
   // Hero: hexagon "cells" (echo the logo) fade in at random spots, drift, fade out and reappear; gently parallaxed by the pointer
   var hero = d.querySelector('.hero, .page-hero');
   if (hero) {
@@ -260,8 +274,8 @@
         if (!avoid || c.x + c.r < avoid.l || c.x - c.r > avoid.r || c.y + c.r < avoid.t || c.y - c.r > avoid.b) break;
       }
       c.z = 0.3 + Math.random() * 0.9; c.rot = Math.random() * 6.28; c.vr = (Math.random() - .5) * 0.002;
-      c.vy = -(0.03 + Math.random() * 0.07); c.a = 0.5 + Math.random() * 0.4; c.dot = Math.random() < 0.35;
-      c.life = 3.6 + Math.random() * 3.6;                       // seconds visible
+      c.vy = -(0.012 + Math.random() * 0.032); c.ph = Math.random() * 6.28; c.sa = 6 + Math.random() * 14; c.a = 0.5 + Math.random() * 0.4; c.dot = Math.random() < 0.35;
+      c.life = 7 + Math.random() * 5;                       // seconds visible
       c.age = first ? -Math.random() * 3.0 : 0;                 // staggered start
     };
     var resize = function () {
@@ -277,13 +291,8 @@
       for (var i = 0; i < count; i++) { var c = {}; spawnCell(c, true); cells.push(c); }
     };
     var hex = function (c) {
-      ctx.beginPath();
-      for (var k = 0; k < 6; k++) {
-        var ang = c.rot + k * Math.PI / 3;
-        var px = c.x + tx * c.z * PAR + Math.cos(ang) * c.r, py = c.y + ty * c.z * PAR + Math.sin(ang) * c.r;
-        k ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
-      }
-      ctx.closePath();
+      softHex(ctx, c.x + tx * c.z * PAR + Math.sin(c.age * 0.8 + c.ph) * c.sa, c.y + ty * c.z * PAR,
+        c.r * (1 + 0.05 * Math.sin(c.age * 1.2 + c.ph)), c.rot + Math.sin(c.age * 0.55 + c.ph * 1.7) * 0.3);
     };
     var lastT = 0;
     var frame = function () {
@@ -342,8 +351,8 @@
       var k = Math.max(1, W / 360);
       h.x = W * (0.06 + Math.random() * 0.88); h.y = H * (0.08 + Math.random() * 0.84);
       h.r = (8 + Math.random() * 12) * k; h.z = 0.5 + Math.random() * 0.7;
-      h.rot = Math.random() * 6.28; h.vr = (Math.random() - .5) * 0.004; h.vy = -(0.04 + Math.random() * 0.08);
-      h.life = (thumb.classList.contains('sd-media') ? 4.2 : 2.6) + Math.random() * 2.6;   // seconds visible
+      h.rot = Math.random() * 6.28; h.vr = (Math.random() - .5) * 0.004; h.vy = -(0.016 + Math.random() * 0.04); h.ph = Math.random() * 6.28; h.sa = (4 + Math.random() * 8) * k;
+      h.life = (thumb.classList.contains('sd-media') ? 8 : 6) + Math.random() * 4;   // seconds visible
       h.age = first ? h.life * (0.15 + Math.random() * 0.6) : 0;   // first batch is already part-way through its life, so the hexagons are visible the moment the card scrolls in
     };
     var layout = function () {
@@ -371,12 +380,7 @@
         var env = Math.sin(Math.PI * u); env = env * env * (3 - 2 * Math.min(1, env * 1.6));   // soft in, soft out
         ctx.lineWidth = 1.2 + h.z * 0.9;
         ctx.strokeStyle = 'rgba(11,127,117,.85)';
-        ctx.beginPath();
-        for (var k = 0; k < 6; k++) {
-          var a = h.rot + k * Math.PI / 3;
-          var x = h.x + tx * h.z * 18 + Math.cos(a) * h.r, y = h.y + ty * h.z * 18 + Math.sin(a) * h.r;
-          k ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
-        }
+        softHex(ctx, h.x + tx * h.z * 18 + Math.sin(h.age * 0.8 + h.ph) * h.sa, h.y + ty * h.z * 18, h.r * (1 + 0.05 * Math.sin(h.age * 1.2 + h.ph)), h.rot + Math.sin(h.age * 0.55 + h.ph * 1.7) * 0.3);
         // fade out near the bottom-left corner so the card number stays readable
         var fx = Math.max(0, Math.min(1, (h.x - W * 0.2) / (W * 0.12)));
         var fy = Math.max(0, Math.min(1, (H * 0.88 - h.y) / (H * 0.2)));
