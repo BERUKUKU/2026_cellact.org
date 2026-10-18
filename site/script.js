@@ -346,8 +346,9 @@
     var subStart = Date.now();
     setInterval(function () {
       if (scrollY > innerHeight * 1.2) return;
-      var wide = innerWidth > 820, t = (Date.now() - subStart) / 1000, w = -Math.cos(2 * Math.PI * t / (wide ? 110 : 120));   // -1..1
-      subImg.style.setProperty('--px', (w * subImg.offsetWidth * (wide ? 0.115 : 0.14)).toFixed(1) + 'px');
+      var wide = innerWidth > 820, t = (Date.now() - subStart) / 1000, w = -Math.cos(2 * Math.PI * t / (wide ? 120 : 130));   // -1..1
+      var z = parseFloat(getComputedStyle(d.documentElement).getPropertyValue(wide ? '--subhero-zoom' : '--subhero-zoom-sp')) || 1.15;
+      subImg.style.setProperty('--px', (w * subImg.offsetWidth * (z - 1) / 2 * 0.85).toFixed(1) + 'px');   // stays inside the enlarged margin
     }, 50);
   }
 

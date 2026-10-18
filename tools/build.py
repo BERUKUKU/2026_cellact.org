@@ -245,7 +245,7 @@ def build_index():
 def build_services():
     s = head('BUSINESS', '一般社団法人 CELLACT の事業内容。幹細胞療法、免疫細胞療法、幹細胞培養上清療法などの再生医療に取り組んでいます。', 'business.html')
     s += header('business.html')
-    s += page_hero('BUSINESS', '事業内容', 'hero_business.webp?v=7', [('index.html', 'TOP'), ('business.html', 'BUSINESS')], pos='50% 72%', mpos='80% 60%')
+    s += page_hero('BUSINESS', '事業内容', 'hero_business.webp?v=7', [('index.html', 'TOP'), ('business.html', 'BUSINESS')], pos='50% 90%', mpos='80% 70%')
     s += '<main id="main"><section class="section"><div class="container">'
     s += section_head('FIELDS', '取り組んでいる再生医療', False, '細胞の力を活かした、3つの領域で医療を提供しています。')
     for sv in SERVICES:
