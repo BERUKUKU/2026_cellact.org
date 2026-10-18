@@ -329,30 +329,33 @@
 
   }
 
-  // Wide hero picture (PC): glides slowly sideways and back so the view can be taken in little by little
-  var panImg = d.querySelector('.hero .hero-bg img');
-  if (panImg && !reduce) {
-    var panStart = Date.now();
-    setInterval(function () {
-      if (scrollY > innerHeight * 1.2) return;
-      var t = (Date.now() - panStart) / 1000, p = 50 - 50 * Math.cos(2 * Math.PI * t / (innerWidth <= 820 ? 120 : 90));   // 210 s (phone) / 150 s (PC) per round trip: a slow, seeping drift
-      panImg.style.objectPosition = p.toFixed(2) + '% 50%';
-      if (innerWidth > 820) panImg.style.translate = '0 ' + (Math.sin(2 * Math.PI * t / 29) * 8).toFixed(1) + 'px';   // gentle up-and-down swell (PC)
-    }, 50);
-  }
-
-  // Sub-page heroes: the panoramic picture glides slowly sideways inside an enlarged frame
-  var subImg = d.querySelector('.page-hero .hero-bg img');
-  if (subImg && !reduce && subImg.getAttribute('src').indexOf('hero_privacy') < 0) {
-    var subStart = Date.now();
-    setInterval(function () {
-      if (scrollY > innerHeight * 1.2) return;
-      var wide = innerWidth > 820, t = (Date.now() - subStart) / 1000, w = -Math.cos(2 * Math.PI * t / (wide ? 55 : 65));   // -1..1
-      var z = parseFloat(getComputedStyle(d.documentElement).getPropertyValue(wide ? '--subhero-zoom' : '--subhero-zoom-sp')) || 1.15;
-      subImg.style.setProperty('--px', (w * subImg.offsetWidth * (z - 1) / 2 * 0.85).toFixed(1) + 'px');   // stays inside the enlarged margin
-      subImg.style.setProperty('--py', (Math.sin(2 * Math.PI * t / 17) * Math.min(10, subImg.offsetHeight * (z - 1) / 2 * 0.9 + 8)).toFixed(1) + 'px');   // gentle up-and-down swell
-    }, 50);
-  }
+  // Panorama glide: the picture is sized to cover its frame (times an optional zoom) and travels sideways with a compositor-driven
+  // Web Animation (sampled sine path), so the motion is smooth instead of stepping; a gentle up-and-down swell rides on top.
+  var glide = function (img, frame, o) {
+    if (!img || !frame || reduce) return;
+    var anim = null, build = function () {
+      if (anim) { anim.cancel(); anim = null; }
+      var nw = img.naturalWidth, nh = img.naturalHeight, W = frame.clientWidth, H = frame.clientHeight;
+      if (!nw || !nh || !W || !H) return;
+      var z = o.zoom ? o.zoom() : 1, sc = Math.max(W / nw, H / nh) * z, cw = nw * sc, ch = nh * sc;
+      var fy = o.fy ? o.fy() : 0.5, rx = Math.max(0, cw - W), my = Math.max(0, ch - H);
+      img.style.cssText += ';position:absolute;left:0;top:0;max-width:none;width:' + cw.toFixed(1) + 'px;height:' + ch.toFixed(1) + 'px;object-fit:fill;object-position:0 0';
+      var ay = Math.min(o.swell == null ? 8 : o.swell, my * 0.45), base = -my * fy, N = 240, kf = [], px = o.prop === 'transform';
+      for (var i = 0; i <= N; i++) {
+        var u = i / N, x = -rx * (0.5 - 0.5 * Math.cos(2 * Math.PI * u)) * 0.92 - rx * 0.04, y = base + ay * Math.sin(2 * Math.PI * u * (o.swells || 3));
+        kf.push(px ? { transform: 'translate3d(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px,0)' } : { translate: x.toFixed(2) + 'px ' + y.toFixed(2) + 'px' });
+      }
+      if (!px) img.style.setProperty('scale', 'none');
+      anim = img.animate(kf, { duration: (o.period ? o.period() : 90) * 1000, iterations: Infinity, easing: 'linear', delay: -(o.offset || 0) * 1000 });
+    };
+    if (img.complete && img.naturalWidth) build(); else img.addEventListener('load', build, { once: true });
+    var rt = 0; addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(build, 120); });
+    if (img.parentNode && img.parentNode.tagName === 'PICTURE') img.addEventListener('load', build);
+  };
+  var focusY = function (img) { var m = (img.getAttribute('style') || '').match(/object-position:\s*[^;]*?\s(\d+(?:\.\d+)?)%/); return m ? parseFloat(m[1]) / 100 : 0.5; };
+  var heroImg = d.querySelector('.hero .hero-bg img'), subHeroImg = d.querySelector('.page-hero .hero-bg img');
+  if (heroImg) glide(heroImg, heroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 120 : 90; }, fy: function () { return 0.5; }, swell: 8, swells: 3 });
+  if (subHeroImg) glide(subHeroImg, subHeroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 65 : 55; }, zoom: function () { return parseFloat(getComputedStyle(d.documentElement).getPropertyValue(innerWidth <= 820 ? '--subhero-zoom-sp' : '--subhero-zoom')) || 1.1; }, fy: function () { return focusY(subHeroImg); }, swell: 10, swells: 3 });
 
   // Light dust: many tiny white particles drift slowly and twinkle across the whole hero picture (a different role from the hexagon cells)
   var dBg = d.querySelector('.hero .hero-bg, .page-hero .hero-bg');
@@ -426,18 +429,9 @@
   }
 
   // Panoramic card pictures glide slowly sideways inside their frame
-  var panCards = Array.prototype.slice.call(d.querySelectorAll('img[data-pan]'));
-  if (panCards.length && !reduce) {
-    var panCardStart = Date.now();
-    setInterval(function () {
-      var t = (Date.now() - panCardStart) / 1000;
-      panCards.forEach(function (im, i) {
-        var r = im.getBoundingClientRect();
-        if (r.bottom < -80 || r.top > innerHeight + 80) return;
-        im.style.objectPosition = (50 - 50 * Math.cos(2 * Math.PI * (t + i * 17) / 120)).toFixed(2) + '% 50%';
-      });
-    }, 50);
-  }
+  Array.prototype.slice.call(d.querySelectorAll('img[data-pan]')).forEach(function (im, i) {
+    glide(im, im.parentNode, { prop: 'transform', period: function () { return 120; }, offset: i * 37, swell: 0, swells: 1 });
+  });
 
   // Service cards: soft 3D tilt following the pointer
   if (finePointer) d.querySelectorAll('.service-card').forEach(function (card) {

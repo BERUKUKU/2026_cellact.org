@@ -750,8 +750,8 @@ input, textarea, select { border-radius: 14px; }
 .gnav a.nav-cta:hover, .gnav a.nav-cta[aria-current="page"]:hover { background: var(--teal-deep); color: #fff; }
 
 /* sub-page heroes are panoramas too: on wide screens the picture is enlarged a little so it can glide sideways */
-@media (min-width: 821px) { .page-hero { height: var(--subhero-h); } .page-hero .hero-bg img:not([src*="hero_privacy"]) { scale: var(--subhero-zoom); translate: var(--px, 0px) var(--py, 0px); will-change: translate; } }
-@media (max-width: 820px) { .page-hero .hero-bg img:not([src*="hero_privacy"]) { scale: var(--subhero-zoom-sp); translate: var(--px, 0px) var(--py, 0px); will-change: translate; } }
+@media (min-width: 821px) { .page-hero { height: var(--subhero-h); } .page-hero .hero-bg img:not([src*="hero_privacy"]) { will-change: translate; } }
+@media (max-width: 820px) { .page-hero .hero-bg img:not([src*="hero_privacy"]) { will-change: translate; } }
 
 /* dreamlike layers: a breathing horizon glow and a slow white mist (all heroes) */
 .hero .hero-bg::before, .page-hero .hero-bg::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
