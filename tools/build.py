@@ -201,7 +201,7 @@ def build_index():
     s += header('index.html')
     s += f'''<main id="main">
 <section class="hero">
-<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=193" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
+<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=195" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
 <div class="hero-intro" aria-hidden="true"><div class="hi-veil"></div><div class="hi-logo" data-capsule-intro>{CAPSULE_SVG}</div><button type="button" class="hi-skip">スキップ</button></div>
 <div class="container hero-inner">
 <p class="hero-eyebrow">CELLACT / REGENERATIVE MEDICINE</p>
@@ -528,7 +528,7 @@ exit;
 # ---------------------------------------------------------------- PRIVACY (DRAFT) / 404 / sitemap
 def build_misc():
     s = head('プライバシーポリシー', '一般社団法人 CELLACT のプライバシーポリシー。', 'privacy.html')
-    s += header('') + page_hero('PRIVACY', 'プライバシーポリシー', 'hero_privacy.webp', [('index.html', 'TOP'), ('privacy.html', 'プライバシーポリシー')], pos='50% 18%', mpos='43% 22%')
+    s += header('') + page_hero('PRIVACY', 'プライバシーポリシー', 'hero_privacy.webp?v=2', [('index.html', 'TOP'), ('privacy.html', 'プライバシーポリシー')], pos='50% 42%', mpos='50% 50%')
     s += f'''<main id="main"><section class="section"><div class="container-narrow prose">
 <!-- 公開前に法務確認のうえ、内容を最終化してください -->
 <p>{ORG}（以下「当法人」）は、お問い合わせ・採用に関するご連絡などを通じてお預かりする個人情報の重要性を認識し、個人情報の保護に関する法律（個人情報保護法）その他の関係法令を遵守して、以下の方針に基づき適切に取り扱います。</p>

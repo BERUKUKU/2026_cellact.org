@@ -732,3 +732,6 @@ input, textarea, select { border-radius: 14px; }
     background-size: 190% 100%; background-repeat: no-repeat; animation-duration: 90s; }
 }
 @media (prefers-reduced-motion: reduce) { .hero .hero-bg::after { animation: none; } }
+
+/* privacy hero: push the monitor to the right so the long title does not sit on top of it */
+@media (min-width: 821px) { .page-hero .hero-bg img[src*="hero_privacy"] { transform: scale(1.38); transform-origin: 0% 55%; } }
