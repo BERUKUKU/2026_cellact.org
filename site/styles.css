@@ -567,7 +567,7 @@ p, dd { font-size: 1rem; line-height: 1.95; }
   .hero { min-height: 0; display: flex; flex-direction: column; justify-content: flex-start; background: #63e7fe; color: var(--ink); }
   .hero .hero-inner { order: 1; position: relative; top: auto; left: auto; right: auto; display: block; padding-block: 34px 18px; z-index: 2; }
   .hero .hero-inner .hero-actions { display: none; }
-  .hero .hero-bg { order: 2; position: relative; inset: auto; width: 100%; aspect-ratio: 1.12 / 1; overflow: hidden; background: #63e7fe; z-index: 0; }
+  .hero .hero-bg { order: 2; position: relative; inset: auto; width: 100%; height: max(340px, calc(100svh - var(--header-h, 72px) - 54vw)); overflow: hidden; background: #63e7fe; z-index: 0; }
   .hero .hero-bg picture { display: block; position: absolute; inset: 0; }
   .hero .hero-bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; transform: none; -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,.6) 14%, #000 34%); mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,.6) 14%, #000 34%); }
   .hero::after, .hero .hero-inner::before { display: none; }
@@ -580,7 +580,8 @@ p, dd { font-size: 1rem; line-height: 1.95; }
   .hero .hero-sub { font-size: .8rem; letter-spacing: .05em; white-space: normal; margin-bottom: 0; }
   .hero-intro .hi-logo { width: min(240px, 52vw); margin-top: -4vw; }
   .hero .hero-fx { z-index: 1; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 30%); mask-image: linear-gradient(to bottom, transparent 0, #000 30%); }
-  .hero .scroll-hint { display: none; }
+  .hero .scroll-hint { display: block; right: auto; left: 50%; top: auto; bottom: 178px; transform: translateX(-50%); z-index: 3; color: #0a4a63; opacity: 1; text-shadow: 0 0 8px rgba(255,255,255,.9); }
+  .hero .scroll-hint::after { background: #0a4a63; height: 40px; box-shadow: 0 0 6px rgba(255,255,255,.8); }
 }
 
 /* calmer, more corporate: squarer controls, quieter hero copy, softer picture colour */
