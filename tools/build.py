@@ -19,7 +19,7 @@ NEWS = [  # newest first
 <ul><li>募集職種：看護師（正看護師・准看護師）、受付スタッフ</li><li>勤務形態：正社員（試用期間あり）</li><li>勤務地：セルアクト クリニック銀座（CELLACT CLINIC GINZA）（東京都中央区銀座）</li><li>歓迎スキル：英語対応、再生医療・美容医療経験、ホスピタリティを重視した接遇</li></ul>
 <p>教育・研修はチームでサポートし、未経験の方も段階的に業務を習得できる環境を整えています。ライフステージに合わせた働き方についてもお気軽にご相談ください。</p>
 <p>応募・詳細は <a href="recruit.html">採用情報</a> をご覧のうえ、<a href="contact.php">お問い合わせ</a> からご連絡ください。担当者より折り返しご案内いたします。</p>'''),
-    dict(slug='news-20270101-rename', date='2027.01.01', tag='クリニック情報', warm=False, img='cellact_super.webp',
+    dict(slug='news-20270101-rename', date='2027.01.01', tag='クリニック情報', warm=False, img='cellact_super.webp?v=2',
          title='N2クリニック銀座本院は「セルアクト クリニック銀座（CELLACT CLINIC GINZA）」へ名称変更しました。',
          excerpt='N2クリニック銀座本院は、この度「セルアクト クリニック銀座（CELLACT CLINIC GINZA）」へ名称を変更いたしました。',
          body='''<p>日頃よりご愛顧いただき、誠にありがとうございます。</p>
@@ -37,7 +37,7 @@ NEWS = [  # newest first
 ]
 
 SERVICES = [
-    dict(id='stem', en='STEM CELL TREATMENT', name='幹細胞療法', img='cellact_stem.webp?v=2', yt=None,
+    dict(id='stem', en='STEM CELL TREATMENT', name='幹細胞療法', img='cellact_stem.webp?v=3', yt=None,
          short='自己の幹細胞を用いた再生医療により、損傷した組織の修復・再生を促します。',
          lead='ご自身の幹細胞を用いた再生医療により、損傷した組織の修復・再生を促します。',
          paras=['幹細胞は、さまざまな細胞に変化する力と、自らを複製する力をもつ細胞です。この性質を医療に活かし、加齢や損傷によって傷んだ組織の回復を支えることを目指します。',
@@ -53,7 +53,7 @@ SERVICES = [
          points=[('どんな治療か', 'ご自身の免疫細胞を活用する再生医療です。'),
                  ('特徴', '一人ひとりの状態に合わせて、治療計画を設計します。'),
                  ('安全への取り組み', '細胞の品質管理と、法令の遵守を徹底しています。')]),
-    dict(id='super', en='STEMCELL SUPERNATANT', name='幹細胞培養上清療法', img='cellact_super.webp', yt=None,
+    dict(id='super', en='STEMCELL SUPERNATANT', name='幹細胞培養上清療法', img='cellact_super.webp?v=2', yt=None,
          short='細胞間の情報伝達を担うサイトカインが豊富な培養上清で、細胞本来の活性をサポートします。',
          lead='細胞間の情報伝達を担うサイトカインが豊富な培養上清で、細胞本来の活性をサポートします。',
          paras=['幹細胞培養上清とは、幹細胞を培養する過程で、培養液に分泌される成分を取り出したものです。細胞間の情報伝達を担うサイトカインが豊富に含まれています。',
@@ -192,7 +192,7 @@ def build_index():
     cards = ''
     for s in SERVICES:
         cards += f'''<article class="service-card reveal"><a href="business.html#{s["id"]}" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;flex:1">
-<div class="thumb"><img src="images/{s["img"]}" alt="" loading="lazy" width="1500" height="857"{" data-pan" if s["id"] == "immune" else ""}></div>
+<div class="thumb"><img src="images/{s["img"]}" alt="" loading="lazy" width="1500" height="857"{" data-pan"}></div>
 <div class="body"><span class="en">{s["en"]}</span><h3>{s["name"]}</h3><p>{s["short"]}</p><span class="more" style="color:var(--teal-deep)">詳しく見る</span></div></a></article>'''
     ld = '''<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"一般社団法人 CELLACT","url":"https://n2cellact.or.jp/","logo":"https://n2cellact.or.jp/images/cellact_logo.png?v=151","telephone":"+81-3-3289-0202","email":"info@cellact.org","address":{"@type":"PostalAddress","postalCode":"104-0061","addressRegion":"東京都","addressLocality":"中央区","streetAddress":"銀座6-6-5 HULIC & New GINZA NAMIKI6 11F","addressCountry":"JP"}}</script>'''
     s = head(f'{ORG} | 再生医療クリニック',
@@ -201,7 +201,7 @@ def build_index():
     s += header('index.html')
     s += f'''<main id="main">
 <section class="hero">
-<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=189" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
+<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=190" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
 <div class="hero-intro" aria-hidden="true"><div class="hi-veil"></div><div class="hi-logo" data-capsule-intro>{CAPSULE_SVG}</div><button type="button" class="hi-skip">スキップ</button></div>
 <div class="container hero-inner">
 <p class="hero-eyebrow">CELLACT / REGENERATIVE MEDICINE</p>
@@ -249,7 +249,7 @@ def build_services():
     for sv in SERVICES:
         paras = ''.join(f'<p>{p}</p>' for p in sv['paras'])
         pts = ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in sv['points'])
-        s += f'''<article class="service-detail reveal" id="{sv["id"]}"><div class="sd-media"><img src="images/{sv["img"]}" alt="" loading="lazy" width="1500" height="857"{" data-pan" if sv["id"] == "immune" else ""}></div>
+        s += f'''<article class="service-detail reveal" id="{sv["id"]}"><div class="sd-media"><img src="images/{sv["img"]}" alt="" loading="lazy" width="1500" height="857"{" data-pan"}></div>
 <div class="sd-text"><p class="eyebrow" style="color:var(--peach-deep)">{sv["en"]}</p><h2>{sv["name"]}</h2><p class="sd-lead">{sv["lead"]}</p>{paras}<dl class="sd-points">{pts}</dl></div></article>'''
     s += '<p class="sd-note reveal">※ 治療の内容・期間・リスク・費用などについては、診察時に医師が個別にご説明します。治療の経過や感じ方には、個人差があります。</p>'
     s += '''</div></section>
