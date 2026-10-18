@@ -201,7 +201,7 @@ def build_index():
     s += header('index.html')
     s += f'''<main id="main">
 <section class="hero">
-<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=199" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
+<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=201" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
 <div class="hero-intro" aria-hidden="true"><div class="hi-veil"></div><div class="hi-logo" data-capsule-intro>{CAPSULE_SVG}</div><button type="button" class="hi-skip">スキップ</button></div>
 <div class="container hero-inner">
 <p class="hero-eyebrow">CELLACT / REGENERATIVE MEDICINE</p>
@@ -369,7 +369,7 @@ $purpose = (string)($old['purpose'] ?? ($_GET['purpose'] ?? ''));
 ?>
 '''
     s += head('CONTACT', '一般社団法人 CELLACT へのお問い合わせフォーム。治療・採用などのご質問を24時間受け付けています。', 'contact.php', og_img='images/hero_contact.webp')
-    s += header('contact.php') + page_hero('CONTACT', 'お問い合わせ', 'hero_contact.webp?v=4', [('index.html', 'TOP'), ('contact.php', 'CONTACT')], pos='50% 100%', mpos='78% 100%')
+    s += header('contact.php') + page_hero('CONTACT', 'お問い合わせ', 'hero_contact.webp?v=5', [('index.html', 'TOP'), ('contact.php', 'CONTACT')], pos='50% 100%', mpos='78% 100%')
     s += '''<main id="main"><section class="section tint"><div class="container-narrow">
 <ol class="steps" aria-label="手順"><li class="on">1 入力</li><li>2 確認</li><li>3 完了</li></ol>
 <p class="lead" style="margin:0 auto 28px;text-align:center">フォームは24時間受け付けています。必須項目をご入力のうえ「確認画面へ」を押してください。</p>
@@ -433,7 +433,7 @@ $_SESSION['confirmed'] = true;
 ?>
 '''
     c += head('送信内容の確認', '入力内容をご確認ください。', 'contact_confirm.php', noindex=True)
-    c += header('contact.php') + page_hero('CONTACT', 'お問い合わせ', 'hero_contact.webp?v=4', [('index.html', 'TOP'), ('contact.php', 'CONTACT'), ('contact_confirm.php', '確認')], pos='50% 100%', mpos='78% 100%')
+    c += header('contact.php') + page_hero('CONTACT', 'お問い合わせ', 'hero_contact.webp?v=5', [('index.html', 'TOP'), ('contact.php', 'CONTACT'), ('contact_confirm.php', '確認')], pos='50% 100%', mpos='78% 100%')
     c += '''<main id="main"><section class="section tint"><div class="container-narrow">
 <ol class="steps" aria-label="手順"><li>1 入力</li><li class="on">2 確認</li><li>3 完了</li></ol>
 <div class="form-card">
@@ -515,7 +515,7 @@ exit;
 
     # --- thanks
     t = head('お問い合わせありがとうございます', '送信が完了しました。', 'contact_thanks.html', noindex=True)
-    t += header('contact.php') + page_hero('CONTACT', 'お問い合わせ', 'hero_contact.webp?v=4', [('index.html', 'TOP'), ('contact.php', 'CONTACT'), ('contact_thanks.html', '完了')], pos='50% 100%', mpos='78% 100%')
+    t += header('contact.php') + page_hero('CONTACT', 'お問い合わせ', 'hero_contact.webp?v=5', [('index.html', 'TOP'), ('contact.php', 'CONTACT'), ('contact_thanks.html', '完了')], pos='50% 100%', mpos='78% 100%')
     t += '''<main id="main"><section class="section tint"><div class="container-narrow">
 <ol class="steps" aria-label="手順"><li>1 入力</li><li>2 確認</li><li class="on">3 完了</li></ol>
 <div class="form-card" style="text-align:center"><h2 class="section-title" style="font-size:1.5rem">お問い合わせありがとうございます</h2>

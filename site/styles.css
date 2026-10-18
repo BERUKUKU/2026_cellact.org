@@ -743,3 +743,7 @@ input, textarea, select { border-radius: 14px; }
     background: radial-gradient(ellipse 100% 150% at 0% 45%, rgba(247,255,251,.88) 0%, rgba(247,255,251,.66) 42%, rgba(247,255,251,0) 82%); filter: blur(6px); }
 }
 @media (max-width: 820px) { .page-hero::before { display: none; } }
+
+/* header CONTACT button keeps its solid colour on hover and when it is the current page */
+.gnav a.nav-cta, .gnav a.nav-cta[aria-current="page"] { background: var(--teal); color: #fff; }
+.gnav a.nav-cta:hover, .gnav a.nav-cta[aria-current="page"]:hover { background: var(--teal-deep); color: #fff; }
