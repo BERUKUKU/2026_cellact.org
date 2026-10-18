@@ -269,7 +269,7 @@
     var PAR = 52, cells = [], mx = 0, my = 0, tx = 0, ty = 0, visible = true;
     var avoid = null;
     var spawnCell = function (c, first) {
-      c.r = 10 + Math.random() * 30;
+      c.r = (10 + Math.random() * 30) * (innerWidth <= 820 && hero.classList.contains('hero') ? 0.5 : 1);   // phones: smaller cells on the TOP hero
       for (var tr = 0; tr < 12; tr++) {                          // phones (top hero): keep the hexagons off the copy block
         c.x = Math.random() * W; c.y = H * (0.05 + Math.random() * 0.9);
         if (!avoid || c.x + c.r < avoid.l || c.x - c.r > avoid.r || c.y + c.r < avoid.t || c.y - c.r > avoid.b) break;

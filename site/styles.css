@@ -668,7 +668,7 @@ p, dd { font-size: 1rem; line-height: 1.95; }
 .section.tint::after, .section.warm::after { content: ""; position: absolute; left: -60px; bottom: -80px; width: 220px; height: 220px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.9); background: rgba(185,169,238,.12); pointer-events: none; }
 .section.tint > .container, .section.warm > .container { position: relative; z-index: 1; }
 /* philosophy: marker in lime */
-.philosophy .statement strong { background: linear-gradient(transparent 62%, rgba(223,242,138,.75) 62%); }
+.philosophy .statement strong { background: linear-gradient(transparent 62%, rgba(127,220,247,.42) 62%); }
 /* tables, forms */
 .info-table { border-top: 3px solid var(--sky); }
 input, textarea, select { border-radius: 14px; }
