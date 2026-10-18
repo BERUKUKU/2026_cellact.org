@@ -64,7 +64,8 @@
     var seen = false;   // plays on every visit / reload (set to a sessionStorage check to show it once per tab)
     var layer = heroEl.querySelector('.hero-intro'), veil = heroEl.querySelector('.hi-veil');
     var copy = heroEl.querySelector('.hero-inner'), hint = heroEl.querySelector('.scroll-hint');
-    var bgImg = heroEl.querySelector('.hero-bg img');
+    var bgImg = heroEl.querySelector('.hero-bg img'), spAct = heroEl.querySelector('.hero-actions-sp');
+    var setAux = function (v) { if (hint) hint.style.opacity = v; if (spAct) spAct.style.opacity = v; };
     if (!reduce && !seen) {
       var iSvg = introEl.querySelector('svg'), iTravel = 66, iClose = 2.85;
       var T_BREAK = 3.9, T_FOCUS = 5.4, T_END = 6.0;                    // seconds: hexagon starts to break / picture sharp + logo gone / copy fully in
@@ -110,7 +111,7 @@
           var m = 1 - Math.exp(-a * 1.6);                                  // fast start, easing out
           var px = p.x + p.vx * m * 0.9, py = p.y + p.vy * m * 0.9, rot = p.rot + p.vr * a;
           var env = Math.sin(Math.PI * Math.min(1, a / p.life)); env = Math.min(1, env * 1.7);
-          bx.lineWidth = 1.5 + p.z * 1.1; bx.strokeStyle = 'rgba(11,127,117,' + (0.95 * env) + ')'; bx.fillStyle = 'rgba(255,255,255,' + (0.16 * env) + ')';
+          bx.lineWidth = 1.5 + p.z * 1.1; bx.strokeStyle = 'rgba(15,107,134,' + (0.95 * env) + ')'; bx.fillStyle = 'rgba(255,255,255,' + (0.16 * env) + ')';
           bx.beginPath();
           for (var q = 0; q < 6; q++) { var an = rot + q * Math.PI / 3; var hx = px + Math.cos(an) * p.r, hy = py + Math.sin(an) * p.r; q ? bx.lineTo(hx, hy) : bx.moveTo(hx, hy); }
           bx.closePath(); bx.fill(); bx.stroke();
@@ -128,7 +129,7 @@
           introEl.style.filter = 'blur(' + (6 * lo).toFixed(2) + 'px)';
           veil.style.opacity = 1 - iEase(t, T_BREAK + 0.2, T_FOCUS + 0.8);
           if (bgImg) { bgImg.style.opacity = pi; bgImg.style.transform = 'translateY(' + (30 * (1 - pi)).toFixed(2) + 'px)'; bgImg.style.filter = 'blur(' + (10 * (1 - pi)).toFixed(2) + 'px)'; }
-          copy.style.opacity = cq; copy.style.transform = 'translateY(' + (12 * (1 - cq)).toFixed(2) + 'px)'; if (hint) hint.style.opacity = cq;
+          copy.style.opacity = cq; copy.style.transform = 'translateY(' + (12 * (1 - cq)).toFixed(2) + 'px)'; setAux(cq);
           return;
         }
         var go = iEase(t, T_BREAK, T_FOCUS);
@@ -136,17 +137,17 @@
         veil.style.opacity = 1 - iEase(t, T_BREAK, T_FOCUS - 0.3);
         if (bgImg) bgImg.style.filter = 'blur(' + (BLUR0 * (1 - go)).toFixed(2) + 'px)';
         var cp = iEase(t, T_BREAK + 0.6, T_FOCUS + 1.0);                          // copy fades in once the picture is nearly sharp
-        copy.style.opacity = cp; if (hint) hint.style.opacity = cp;
+        copy.style.opacity = cp; setAux(cp);
       };
       var iFinish = function () {
         if (iDone) return; iDone = true; clearInterval(iTimer);
         heroEl.classList.remove('intro-on');
-        copy.style.opacity = ''; copy.style.transform = ''; if (hint) hint.style.opacity = '';
+        copy.style.opacity = ''; copy.style.transform = ''; setAux('');
         if (bgImg) { bgImg.style.filter = ''; bgImg.style.opacity = ''; bgImg.style.transform = ''; bgImg.classList.remove('intro-blur'); }
         layer.style.display = 'none';
       };
       introDelay = T_FOCUS - 0.15;                                              // headline starts as the picture comes into focus
-      sizeBurst(); heroEl.classList.add('intro-on'); copy.style.opacity = 0; if (hint) hint.style.opacity = 0;
+      sizeBurst(); heroEl.classList.add('intro-on'); copy.style.opacity = 0; setAux(0);
       if (bgImg) bgImg.classList.add('intro-blur');
       iScene(0);
       var iStart = Date.now(), madeParts = false;
@@ -260,7 +261,7 @@
   // Hero: hexagon "cells" (echo the logo) fade in at random spots, drift, fade out and reappear; gently parallaxed by the pointer
   var hero = d.querySelector('.hero, .page-hero');
   if (hero) {
-    var light = true; var ink = light ? '11,127,117' : '255,255,255';
+    var light = true; var ink = light ? '15,107,134' : '255,255,255';
     var cv = d.createElement('canvas');
     cv.className = 'hero-fx'; cv.setAttribute('aria-hidden', 'true');
     hero.insertBefore(cv, hero.querySelector('.hero-inner'));
@@ -281,15 +282,14 @@
     var resize = function () {
       W = hero.clientWidth; H = hero.clientHeight;
       avoid = null;
-      if (hero.classList.contains('hero') && innerWidth <= 820) {
-        var hr0 = hero.getBoundingClientRect(), e1 = hero.querySelector('.hero-eyebrow'), e2 = hero.querySelector('.hero-actions');
-        if (e1 && e2) { var r1 = e1.getBoundingClientRect(), r2 = e2.getBoundingClientRect(); avoid = { l: 0, r: W, t: r1.top - hr0.top - 8, b: r2.bottom - hr0.top + 8 }; }
-      }
-      var stripBg = hero.classList.contains('page-hero') && innerWidth <= 820 && hero.querySelector('.hero-bg');
-      if (stripBg) H = stripBg.clientHeight;                       // phones: sub-page hexagons stay on the picture strip
-      cv.style.height = stripBg ? H + 'px' : '';
+      var picBox = innerWidth <= 820 && hero.querySelector('.hero-bg'), isTop = hero.classList.contains('hero');
+      if (picBox) {                                                // phones: hexagons live on the picture only, not over the copy
+        H = picBox.clientHeight;
+        cv.style.top = isTop ? picBox.offsetTop + 'px' : '0px'; cv.style.height = H + 'px'; cv.style.bottom = 'auto';
+      } else { cv.style.top = ''; cv.style.height = ''; cv.style.bottom = ''; }
       cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       var count = Math.round(Math.min(30, Math.max(8, W * H / 24000)));
+      if (innerWidth <= 820 && hero.classList.contains('hero')) count = Math.round(count * 0.6);   // phones: fewer, fainter cells over the picture
       cells = [];
       for (var i = 0; i < count; i++) { var c = {}; spawnCell(c, true); cells.push(c); }
     };
@@ -310,7 +310,7 @@
         c.y += c.vy * c.z * 60 * dt; c.rot += c.vr * 60 * dt;
         var u = c.age / c.life, s = Math.sin(Math.PI * u), env = Math.max(0, Math.min(1, s * s * (3 - 2 * Math.min(1, s * 1.6))));
         ctx.lineWidth = light ? 1.5 + c.z * 1.1 : 1.4 + c.z * 1.6;
-        ctx.strokeStyle = 'rgba(' + ink + ',' + (light ? Math.min(1, c.a + 0.35) : c.a) * env + ')';
+        ctx.strokeStyle = 'rgba(' + ink + ',' + (light ? Math.min(1, c.a + 0.35) : c.a) * env * (innerWidth <= 820 && hero.classList.contains('hero') ? 0.55 : 1) + ')';
         ctx.fillStyle = light ? 'rgba(255,255,255,' + (0.16 * env) + ')' : 'rgba(' + ink + ',' + (c.a * 0.16) * env + ')';
         if (light) { ctx.shadowColor = 'rgba(255,255,255,' + (0.9 * env) + ')'; ctx.shadowBlur = 8; }
         else { ctx.shadowColor = 'rgba(8,40,50,.45)'; ctx.shadowBlur = 12; }
@@ -372,7 +372,7 @@
       var dt = last ? Math.min((now - last) / 1000, 0.1) : 0.016; last = now;
       tx += (px - tx) * 0.07; ty += (py - ty) * 0.07;
       ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = 'rgba(11,127,117,.04)';
+      ctx.fillStyle = 'rgba(15,107,134,.04)';
       ctx.shadowColor = 'rgba(255,255,255,.7)'; ctx.shadowBlur = 3;
       hexes.forEach(function (h) {
         h.age += dt;
@@ -382,7 +382,7 @@
         var u = h.age / h.life;
         var env = Math.sin(Math.PI * u); env = env * env * (3 - 2 * Math.min(1, env * 1.6));   // soft in, soft out
         ctx.lineWidth = 1.2 + h.z * 0.9;
-        ctx.strokeStyle = 'rgba(11,127,117,.85)';
+        ctx.strokeStyle = 'rgba(15,107,134,.85)';
         softHex(ctx, h.x + tx * h.z * 18 + Math.sin(h.age * 0.8 + h.ph) * h.sa, h.y + ty * h.z * 18, h.r * (1 + 0.05 * Math.sin(h.age * 1.2 + h.ph)), h.rot + Math.sin(h.age * 0.55 + h.ph * 1.7) * 0.3);
         // fade out near the bottom-left corner so the card number stays readable
         var fx = Math.max(0, Math.min(1, (h.x - W * 0.2) / (W * 0.12)));

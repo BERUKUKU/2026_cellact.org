@@ -91,12 +91,12 @@ def head(title, desc, path, og_img='images/hero_top.webp', extra_head='', noinde
 <meta property="og:image" content="{BASE}{og_img}">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0b7f75">
-<link rel="icon" href="images/cellact_logo.png?v=139" type="image/png">
+<meta name="theme-color" content="#0f6b86">
+<link rel="icon" href="images/cellact_logo.png?v=151" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&amp;family=Noto+Serif+JP:wght@500;600&amp;display=swap">
-<link rel="stylesheet" href="styles.css?v=139">
+<link rel="stylesheet" href="styles.css?v=151">
 <script>document.documentElement.classList.add('js')</script>
 {extra_head}
 </head>
@@ -114,7 +114,7 @@ def header(current):
     items += f'<li><a class="nav-cta" href="contact.php"{cur}>CONTACT</a></li>'
     return f'''<header class="site-header">
 <div class="container">
-<a class="brand" href="index.html" aria-label="{ORG} トップへ"><img src="images/cellact_logo.png?v=139" alt="" width="62" height="66"><span>{ORG}<small>REGENERATIVE MEDICINE</small></span></a>
+<a class="brand" href="index.html" aria-label="{ORG} トップへ"><img src="images/cellact_logo.png?v=151" alt="" width="62" height="66"><span>{ORG}<small>REGENERATIVE MEDICINE</small></span></a>
 <button class="menu-btn" aria-expanded="false" aria-controls="gnav" aria-label="メニュー"><span></span></button>
 <nav class="gnav" id="gnav" aria-label="メインメニュー"><ul>{items}</ul></nav>
 </div>
@@ -141,7 +141,7 @@ def footer():
 <div class="container">
 <div class="footer-grid">
 <div>
-<a class="footer-brand" href="index.html"><img src="images/cellact_logo_white.png?v=139" alt="" width="72" height="76"><b>{ORG}</b></a>
+<a class="footer-brand" href="index.html"><img src="images/cellact_logo_white.png?v=151" alt="" width="72" height="76"><b>{ORG}</b></a>
 <address>〒104-0061 東京都中央区銀座6-6-5<br>HULIC &amp; New GINZA NAMIKI6 11F<br>TEL <a href="tel:0332890202">{TEL}</a> / FAX 03-3289-0022</address>
 </div>
 <div><h4>MENU</h4><ul>{nav}</ul></div>
@@ -150,7 +150,7 @@ def footer():
 <div class="copy"><span>&copy; 2026 {ORG}. All rights reserved.</span></div>
 </div>
 </footer>
-<script src="script.js?v=139" defer></script>
+<script src="script.js?v=151" defer></script>
 </body>
 </html>
 '''
@@ -194,14 +194,14 @@ def build_index():
         cards += f'''<article class="service-card reveal"><a href="business.html#{s["id"]}" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;flex:1">
 <div class="thumb"><img src="images/{s["img"]}" alt="" loading="lazy" width="1500" height="857"></div>
 <div class="body"><span class="en">{s["en"]}</span><h3>{s["name"]}</h3><p>{s["short"]}</p><span class="more" style="color:var(--teal-deep)">詳しく見る</span></div></a></article>'''
-    ld = '''<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"一般社団法人 CELLACT","url":"https://n2cellact.or.jp/","logo":"https://n2cellact.or.jp/images/cellact_logo.png?v=139","telephone":"+81-3-3289-0202","email":"info@cellact.org","address":{"@type":"PostalAddress","postalCode":"104-0061","addressRegion":"東京都","addressLocality":"中央区","streetAddress":"銀座6-6-5 HULIC & New GINZA NAMIKI6 11F","addressCountry":"JP"}}</script>'''
+    ld = '''<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"一般社団法人 CELLACT","url":"https://n2cellact.or.jp/","logo":"https://n2cellact.or.jp/images/cellact_logo.png?v=151","telephone":"+81-3-3289-0202","email":"info@cellact.org","address":{"@type":"PostalAddress","postalCode":"104-0061","addressRegion":"東京都","addressLocality":"中央区","streetAddress":"銀座6-6-5 HULIC & New GINZA NAMIKI6 11F","addressCountry":"JP"}}</script>'''
     s = head(f'{ORG} | 再生医療クリニック',
              '再生する力で、健康と希望の未来を創る。幹細胞療法・免疫細胞療法・幹細胞培養上清療法など、再生医療を提供する一般社団法人 CELLACT の公式サイトです。',
              'index.html', extra_head=ld)
     s += header('index.html')
     s += f'''<main id="main">
 <section class="hero">
-<div class="hero-bg"><img src="images/hero_top.webp?v=139" alt="" width="1500" height="857" fetchpriority="high"></div>
+<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=2" width="592" height="1050"><img src="images/hero_top.webp?v=163" alt="" width="2000" height="862" fetchpriority="high"></picture></div>
 <div class="hero-intro" aria-hidden="true"><div class="hi-veil"></div><div class="hi-logo" data-capsule-intro>{CAPSULE_SVG}</div><button type="button" class="hi-skip">スキップ</button></div>
 <div class="container hero-inner">
 <p class="hero-eyebrow">CELLACT / REGENERATIVE MEDICINE</p>
@@ -209,6 +209,7 @@ def build_index():
 <p class="hero-sub">Advancing Health and Hope Through Regeneration.</p>
 <div class="hero-actions"><a class="btn btn-primary" href="business.html">事業内容を見る {ICON_ARROW}</a><a class="btn btn-ghost" href="contact.php">お問い合わせ</a></div>
 </div>
+<div class="hero-actions-sp"><a class="btn btn-primary" href="business.html">事業内容を見る {ICON_ARROW}</a><a class="btn btn-ghost" href="contact.php">お問い合わせ {ICON_ARROW}</a></div>
 <span class="scroll-hint" aria-hidden="true">SCROLL</span>
 </section>
 
@@ -226,9 +227,9 @@ def build_index():
 </div></section>
 
 <section class="section warm" id="news"><div class="container">
-{section_head('NEWS', 'お知らせ')}
+{section_head('NEWS', 'お知らせ', True)}
 {news_list(NEWS)}
-<p style="margin-top:28px"><a class="btn btn-line" href="news-archive.html">過去の記事を見る {ICON_ARROW}</a></p>
+<p style="margin-top:28px;text-align:center"><a class="btn btn-line" href="news-archive.html">過去の記事を見る {ICON_ARROW}</a></p>
 </div></section>
 
 {cta()}
@@ -242,7 +243,7 @@ def build_index():
 def build_services():
     s = head('BUSINESS', '一般社団法人 CELLACT の事業内容。幹細胞療法、免疫細胞療法、幹細胞培養上清療法などの再生医療に取り組んでいます。', 'business.html')
     s += header('business.html')
-    s += page_hero('BUSINESS', '事業内容', 'hero_business.webp?v=5', [('index.html', 'TOP'), ('business.html', 'BUSINESS')], pos='50% 50%', mpos='72% 50%')
+    s += page_hero('BUSINESS', '事業内容', 'hero_business.webp?v=6', [('index.html', 'TOP'), ('business.html', 'BUSINESS')], pos='50% 50%', mpos='72% 50%')
     s += '<main id="main"><section class="section"><div class="container">'
     s += section_head('FIELDS', '取り組んでいる再生医療', False, '細胞の力を活かした、3つの領域で医療を提供しています。')
     for sv in SERVICES:
@@ -311,8 +312,8 @@ def build_recruit():
 <div class="reveal message"><p>再生医療の現場で、医療の未来を共に築きませんか？<br>私たちは、幹細胞療法や免疫細胞療法による再生医療のほか、幹細胞培養上清療法などを提供しています。</p>
 <p>未来の医療である「再生医療」の現場に、あなたのスキルと情熱を活かしませんか？<br>私たちは患者様の生活を再生し、希望を届けるために共に働ける仲間を探しています。</p>
 <p>技術や経験はもちろん、何より「医療の可能性を信じ、成長したい」という意欲を重視します。</p></div></div>
-<div class="container"><div class="photo-row reveal"><img src="images/clinic_kanban.webp" alt="クリニックの看板" loading="lazy" width="1500" height="844"><img src="images/clinic_ope.webp" alt="施術風景" loading="lazy" width="1200" height="1200"><img src="images/clinic_chair.webp" alt="ラウンジ" loading="lazy" width="1500" height="1000"></div></div></section>
-<section class="section tint"><div class="container">{section_head('POSITIONS', '募集要項', True)}<div class="positions">{cards}</div>
+<div class="container"><div class="photo-row reveal"><img src="images/clinic_corridor.webp" alt="クリニックの廊下" loading="lazy" width="1600" height="1065"><img src="images/clinic_ope.webp" alt="施術風景" loading="lazy" width="1200" height="1200"><img src="images/lounge.webp" alt="ラウンジ" loading="lazy" width="1458" height="1228"></div></div></section>
+<section class="section tint"><div class="container">{section_head('POSITIONS', '募集要項')}<div class="positions">{cards}</div>
 <p style="text-align:center;margin-top:36px"><a class="btn btn-teal" href="contact.php?purpose=recruit">採用に関するお問い合わせ {ICON_ARROW}</a></p></div></section></main>''' + footer()
     write('recruit.html', s)
 
