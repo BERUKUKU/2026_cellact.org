@@ -766,3 +766,6 @@ input, textarea, select { border-radius: 14px; }
 
 
 .dust-fx { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+/* light dust waits for the picture: hidden during the logo intro, then fades in and stays */
+.dust-fx { transition: opacity 1.6s ease; }
+.hero.intro-on .dust-fx { opacity: 0; transition: none; }
