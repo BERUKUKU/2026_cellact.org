@@ -416,25 +416,10 @@
     var curTick = function () {
       var h = curHero.offsetHeight || 1, p = Math.max(0, Math.min(1, scrollY / h));
       var wide = innerWidth > 820;
-      if (curBg) { curBg.style.transform = 'translate3d(0,' + (wide ? p * h * 0.18 : p * h * 0.22).toFixed(1) + 'px,0)'; curBg.style.filter = p > 0 ? 'brightness(' + (1 - 0.28 * p).toFixed(3) + ')' : ''; }
+      if (curBg) { curBg.style.transform = 'translate3d(0,' + (wide ? p * h * 0.18 : p * h * 0.22).toFixed(1) + 'px,0)';  }
       if (curInner && !curHero.classList.contains('intro-on')) { curInner.style.transform = 'translate3d(0,' + (-p * (wide ? 46 : 90)).toFixed(1) + 'px,0)'; curInner.style.opacity = String(Math.max(0, 1 - p * 1.5).toFixed(3)); }
     };
     addEventListener('scroll', curTick, { passive: true }); curTick();
-  }
-
-  // Wide screens: card / figure pictures move a touch slower than the page (inner parallax)
-  var pxImgs = Array.prototype.slice.call(d.querySelectorAll('.service-card .thumb img, .sd-media img'));
-  if (pxImgs.length && !reduce) {
-    var pxTick = function () {
-      var vh = innerHeight, amp = innerWidth <= 820 ? 22 : 34;
-      pxImgs.forEach(function (im) {
-        var r = im.getBoundingClientRect();
-        if (r.bottom < -80 || r.top > vh + 80) return;
-        var p = ((r.top + r.height / 2) - vh / 2) / vh;                 // -0.5 .. 0.5 while on screen
-        im.style.setProperty('--py', (-p * amp).toFixed(1) + 'px');
-      });
-    };
-    addEventListener('scroll', pxTick, { passive: true }); addEventListener('resize', pxTick); pxTick();
   }
 
   // Panoramic card pictures glide slowly sideways inside their frame
@@ -442,39 +427,18 @@
     glide(im, im.parentNode, { prop: 'transform', period: function () { return 120; }, offset: i * 37, swell: 0, swells: 1 });
   });
 
-  // Scroll director: keeps the TOP "world" alive while reading — a fixed pastel sky layer that drifts with the page, per-section progress
-  // (--sp) that moves the background hexagons, and cards that rise / settle as they enter (phones).
-  if (!reduce) {
-    var world = d.createElement('div'); world.className = 'world-fx'; world.setAttribute('aria-hidden', 'true');
-    world.innerHTML = '<i class="wf-a"></i><i class="wf-b"></i><i class="wf-c"></i><i class="wf-h1"></i><i class="wf-h2"></i>';
-    d.body.insertBefore(world, d.body.firstChild);
-    var dirSecs = Array.prototype.slice.call(d.querySelectorAll('.section, .cta, .site-footer'));
-    var dirBands = Array.prototype.slice.call(d.querySelectorAll('.world-band'));
-    var dirCards = Array.prototype.slice.call(d.querySelectorAll('.service-card, .about-card, .position, .fact, .news-list li, .news-list a, .safety-photo, .info-table, .lm-mark'));
-    var dirHeads = Array.prototype.slice.call(d.querySelectorAll('.section-head'));
+  // Parallax bands (the picture windows between sections): picture, mist and the big word move at their own pace while scrolling
+  var dirBands = Array.prototype.slice.call(d.querySelectorAll('.world-band'));
+  if (dirBands.length && !reduce) {
     var dirPending = false, dirRun = function () {
       dirPending = false;
-      var vh = innerHeight, phone = innerWidth <= 820, root = d.documentElement;
-      root.style.setProperty('--sy', scrollY.toFixed(0));
-      dirSecs.forEach(function (s) {
-        var r = s.getBoundingClientRect(); if (r.bottom < -200 || r.top > vh + 200) return;
-        s.style.setProperty('--sp', Math.max(-1.6, Math.min(1.6, (r.top + r.height / 2 - vh / 2) / vh)).toFixed(3));
-      });
+      var vh = innerHeight, phone = innerWidth <= 820;
       dirBands.forEach(function (bd) {
         var r = bd.getBoundingClientRect(); if (r.bottom < -80 || r.top > vh + 80) return;
         var p = (r.top + r.height / 2 - vh / 2) / vh, im = bd.firstElementChild, w = bd.querySelector('.wb-word');
-        im.style.setProperty('--wy', (-p * r.height * 0.42).toFixed(1) + 'px');                       // picture travels slower than the page
-        if (phone) im.style.setProperty('--wxi', Math.max(-1, Math.min(1, p)) * -80);                                // and slides sideways a little
-        w.style.setProperty('--wx', (r.width * 0.45 - p * r.width * 0.9 - w.offsetWidth / 2).toFixed(1) + 'px');   // the big word crosses the band as you scroll
-      });
-      dirHeads.forEach(function (h) {
-        var r = h.getBoundingClientRect(); if (r.bottom < -100 || r.top > vh + 100) return;
-        h.style.translate = '0 ' + ((r.top + r.height / 2 - vh / 2) / vh * (phone ? -18 : -26)).toFixed(1) + 'px';
-      });
-      if (phone) dirCards.forEach(function (c) {
-        var r = c.getBoundingClientRect(); if (r.bottom < -60 || r.top > vh + 60) return;
-        var e = Math.max(0, Math.min(1, (vh * 0.94 - r.top) / (vh * 0.42)));
-        c.style.translate = '0 ' + ((1 - e) * 34).toFixed(1) + 'px'; c.style.scale = (0.95 + 0.05 * e).toFixed(4);
+        im.style.setProperty('--wy', (-p * r.height * 0.42).toFixed(1) + 'px');
+        if (phone) im.style.setProperty('--wxi', Math.max(-1, Math.min(1, p)) * -80);
+        w.style.setProperty('--wx', (r.width * 0.45 - p * r.width * 0.9 - w.offsetWidth / 2).toFixed(1) + 'px');
       });
     };
     var dirKick = function () { if (!dirPending) { dirPending = true; requestAnimationFrame(dirRun); } };
