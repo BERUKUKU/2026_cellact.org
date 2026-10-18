@@ -353,6 +353,22 @@
     addEventListener('scroll', curTick, { passive: true }); curTick();
   }
 
+  // Wide screens: card / figure pictures move a touch slower than the page (inner parallax)
+  var pxImgs = Array.prototype.slice.call(d.querySelectorAll('.service-card .thumb img, .sd-media img'));
+  if (pxImgs.length && !reduce) {
+    var pxTick = function () {
+      if (innerWidth <= 820) { pxImgs.forEach(function (im) { im.style.removeProperty('--py'); }); return; }
+      var vh = innerHeight;
+      pxImgs.forEach(function (im) {
+        var r = im.getBoundingClientRect();
+        if (r.bottom < -80 || r.top > vh + 80) return;
+        var p = ((r.top + r.height / 2) - vh / 2) / vh;                 // -0.5 .. 0.5 while on screen
+        im.style.setProperty('--py', (-p * 34).toFixed(1) + 'px');
+      });
+    };
+    addEventListener('scroll', pxTick, { passive: true }); addEventListener('resize', pxTick); pxTick();
+  }
+
   // Service cards: soft 3D tilt following the pointer
   if (finePointer) d.querySelectorAll('.service-card').forEach(function (card) {
     card.addEventListener('pointermove', function (e) {
