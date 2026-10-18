@@ -12,8 +12,8 @@
   --peach: #7fc3ea;
   --peach-deep: #11a38e;
   --radius: 10px;
-  --subhero-h: clamp(270px, 28vw, 540px);   /* height of sub-page heroes on wide screens */
-  --subhero-zoom: 1.14;                      /* wide screens: enlargement of the picture (room for the sideways glide); 1 = whole picture width */
+  --subhero-h: clamp(240px, 22vw, 420px);   /* height of sub-page heroes on wide screens (original) */
+  --subhero-zoom: 1.06;                      /* wide screens: enlargement of the picture (room for the sideways glide); 1 = whole picture width */
   --subhero-zoom-sp: 1.2;                    /* phones */
   --shadow: 0 1px 2px rgba(10,74,99,.06), 0 10px 28px rgba(10,74,99,.08);
   --serif: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
