@@ -129,7 +129,7 @@ def world_band(img, word, pos='50% 50%'):
 
 
 def cta(heading='まずはお気軽にご相談ください'):
-    return world_band('hero65_news.webp', 'REGENERATIVE MEDICINE', '30% 50%') + f'''<section class="section cta">
+    return world_band('band_arches.webp', 'REGENERATIVE MEDICINE', '50% 50%') + f'''<section class="section cta">
 <div class="container reveal">
 <p class="eyebrow" style="color:#fff;opacity:.85">CONTACT</p>
 <h2 class="section-title">{heading}</h2>
@@ -208,7 +208,7 @@ def build_index():
     s += header('index.html')
     s += f'''<main id="main">
 <section class="hero">
-<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=202" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
+<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=204" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
 <div class="hero-intro" aria-hidden="true"><div class="hi-veil"></div><div class="hi-logo" data-capsule-intro>{CAPSULE_SVG}</div><button type="button" class="hi-skip">スキップ</button></div>
 <div class="container hero-inner">
 <p class="hero-eyebrow">CELLACT / REGENERATIVE MEDICINE</p>
@@ -227,13 +227,14 @@ def build_index():
 </div>
 </section>
 
-{world_band('hero65_company.webp', 'CELL · CARE · FUTURE', '70% 50%')}
+{world_band('band_greenhouse.webp', 'CELL · CARE · FUTURE', '60% 50%')}
 <section class="section tint" id="business"><div class="container">
 {section_head('BUSINESS', '事業内容', True, '細胞の力を活かした3つの再生医療に取り組んでいます。')}
 <div class="service-list">{cards}</div>
 <p style="text-align:center;margin-top:40px"><a class="btn btn-line" href="business.html">事業内容の詳細 {ICON_ARROW}</a></p>
 </div></section>
 
+{world_band('band_waterfall.webp', 'FROM CELLS TO LIFE', '50% 50%')}
 <section class="section warm" id="news"><div class="container">
 {section_head('NEWS', 'お知らせ', True)}
 {news_list(NEWS)}

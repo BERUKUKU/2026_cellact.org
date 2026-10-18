@@ -427,6 +427,13 @@
     glide(im, im.parentNode, { prop: 'transform', period: function () { return 120; }, offset: i * 37, swell: 0, swells: 1 });
   });
 
+  // Each band fades into the colour of the section above and below it (read from the neighbours), and is opaque so nothing shows through
+  Array.prototype.slice.call(d.querySelectorAll('.world-band')).forEach(function (bd) {
+    var col = function (el) { if (!el) return ''; var c = getComputedStyle(el).backgroundColor; return (c && c !== 'rgba(0, 0, 0, 0)' && c !== 'transparent') ? c : ''; };
+    var t = col(bd.previousElementSibling), b = col(bd.nextElementSibling);
+    if (t) bd.style.setProperty('--wb-top', t); if (b) bd.style.setProperty('--wb-bot', b);
+  });
+
   // Parallax bands (the picture windows between sections): picture, mist and the big word move at their own pace while scrolling
   var dirBands = Array.prototype.slice.call(d.querySelectorAll('.world-band'));
   if (dirBands.length && !reduce) {
