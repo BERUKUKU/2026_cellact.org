@@ -735,3 +735,11 @@ input, textarea, select { border-radius: 14px; }
 
 /* privacy hero: push the monitor to the right so the long title does not sit on top of it */
 @media (min-width: 821px) { .page-hero .hero-bg img[src*="hero_privacy"] { transform: scale(1.14); transform-origin: 0% 55%; } .page-hero:has(img[src*="hero_privacy"]) h1 { font-size: clamp(1.5rem, 3.2vw, 2.3rem); } }
+
+/* sub-page heroes: the mist is anchored to the hero's left edge (not to the centred text column), so there is no clear strip at the far left */
+@media (min-width: 821px) {
+  .page-hero .container::before { display: none; }
+  .page-hero::before { content: ""; position: absolute; z-index: -1; left: 0; top: 0; bottom: 0; width: min(78vw, 1300px); pointer-events: none;
+    background: radial-gradient(ellipse 100% 150% at 0% 45%, rgba(247,255,251,.88) 0%, rgba(247,255,251,.66) 42%, rgba(247,255,251,0) 82%); filter: blur(6px); }
+}
+@media (max-width: 820px) { .page-hero::before { display: none; } }
