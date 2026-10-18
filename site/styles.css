@@ -734,4 +734,4 @@ input, textarea, select { border-radius: 14px; }
 @media (prefers-reduced-motion: reduce) { .hero .hero-bg::after { animation: none; } }
 
 /* privacy hero: push the monitor to the right so the long title does not sit on top of it */
-@media (min-width: 821px) { .page-hero .hero-bg img[src*="hero_privacy"] { transform: scale(1.38); transform-origin: 0% 55%; } }
+@media (min-width: 821px) { .page-hero .hero-bg img[src*="hero_privacy"] { transform: scale(1.14); transform-origin: 0% 55%; } .page-hero:has(img[src*="hero_privacy"]) h1 { font-size: clamp(1.5rem, 3.2vw, 2.3rem); } }
