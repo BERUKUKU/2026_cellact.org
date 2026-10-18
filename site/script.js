@@ -244,6 +244,15 @@
     }
   }
 
+  // One display-synced loop (requestAnimationFrame) for the TOP/sub-page hero canvases: timers fire off the frame grid and make motion judder
+  var vsyncJobs = [], vsyncOn = false;
+  var vsync = function (fn) {
+    vsyncJobs.push(fn);
+    if (vsyncOn) return; vsyncOn = true;
+    var tick = function () { for (var i = 0; i < vsyncJobs.length; i++) vsyncJobs[i](); requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  };
+
   // Soft hexagon path (rounded corners) so the floating cells feel gentle rather than sharp
   var softHex = function (g, x, y, r, rot) {
     var v = [], i, a = 0.3;
@@ -312,7 +321,7 @@
         ctx.lineWidth = light ? 1.5 + c.z * 1.1 : 1.4 + c.z * 1.6;
         ctx.strokeStyle = 'rgba(' + ink + ',' + (light ? Math.min(1, c.a + 0.35) : c.a) * env * (innerWidth <= 820 && hero.classList.contains('hero') ? 0.4 : 0.6) + ')';
         ctx.fillStyle = light ? 'rgba(255,255,255,' + (0.4 * env) + ')' : 'rgba(' + ink + ',' + (c.a * 0.16) * env + ')';
-        if (light) { ctx.shadowColor = 'rgba(255,255,255,' + (0.9 * env) + ')'; ctx.shadowBlur = 8; }
+        if (light) { ctx.shadowBlur = 0; }
         else { ctx.shadowColor = 'rgba(8,40,50,.45)'; ctx.shadowBlur = 12; }
         hex(c); ctx.fill(); ctx.stroke();
         ctx.shadowBlur = 0;
@@ -325,7 +334,7 @@
       mx = (e.clientX - r.left) / r.width - .5; my = (e.clientY - r.top) / r.height - .5;
     });
     if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(hero);
-    setInterval(frame, 33);                                   // timer-driven: keeps running without window focus
+    vsync(frame);                                            // display-synced
 
   }
 
@@ -377,26 +386,27 @@
       for (var i = 0; i < n; i++) { var p = {}; dSpawn(p, true); dp.push(p); }
     };
     dSize(); addEventListener('resize', dSize);
-    setInterval(function () {
+    var mkSprite = function (sz) {                                            // pre-rendered soft glow + core, drawn with drawImage (cheap)
+      var s = d.createElement('canvas'); s.width = s.height = sz * 2; var g = s.getContext('2d'), c = sz;
+      var gr = g.createRadialGradient(c, c, 0, c, c, c); gr.addColorStop(0, 'rgba(255,255,255,.95)'); gr.addColorStop(0.18, 'rgba(255,255,255,.7)'); gr.addColorStop(0.45, 'rgba(255,252,238,.22)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+      g.fillStyle = gr; g.fillRect(0, 0, sz * 2, sz * 2); return s;
+    }, spS = mkSprite(32), dAcc = 0;
+    vsync(function () {
       if (scrollY > innerHeight * 1.3) return;
-      var now = Date.now(), dt = dLast ? Math.min((now - dLast) / 1000, 0.2) : 0.04, t0 = now / 1000; dLast = now;
+      var now = Date.now(), dt = dLast ? Math.min((now - dLast) / 1000, 0.1) : 0.016, t0 = now / 1000; dLast = now;
       dx.clearRect(0, 0, dW, dH);
-      dp.forEach(function (p) {
+      for (var i = 0; i < dp.length; i++) {
+        var p = dp[i];
         p.age += dt; if (p.age > p.life) { dSpawn(p, false); p.age = 0; }
-        p.x = p.ox + Math.sin(t0 * p.fx + p.ph) * p.sa; p.y = p.oy + Math.cos(t0 * p.fy + p.ph * 1.3) * p.sb;   // floats in place, no upward drift
+        var x = p.ox + Math.sin(t0 * p.fx + p.ph) * p.sa, y = p.oy + Math.cos(t0 * p.fy + p.ph * 1.3) * p.sb;
         var u = p.age / p.life, env = Math.sin(Math.PI * u), tw = 0.45 + 0.55 * Math.sin(t0 * p.tw + p.ph), a = Math.max(0, env) * tw;
-        if (a < 0.02) return;
-        var gl = dx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * (p.big ? 6 : 4.5));                  // soft glow halo
-        gl.addColorStop(0, 'rgba(255,255,255,' + (0.55 * a) + ')'); gl.addColorStop(0.35, 'rgba(255,252,235,' + (0.2 * a) + ')'); gl.addColorStop(1, 'rgba(255,255,255,0)');
-        dx.globalAlpha = 1; dx.fillStyle = gl; dx.beginPath(); dx.arc(p.x, p.y, p.r * (p.big ? 7 : 5), 0, 6.283); dx.fill();
-        dx.globalAlpha = Math.min(1, a * 1.1); dx.fillStyle = '#fff'; dx.shadowColor = 'rgba(255,255,255,1)'; dx.shadowBlur = p.big ? 12 : 7;
-        dx.beginPath(); dx.arc(p.x, p.y, p.r, 0, 6.283); dx.fill();
-        if (p.big) {                                                              // the few larger ones get a small cross flare
-          dx.shadowBlur = 0; dx.globalAlpha = a * 0.7; dx.fillRect(p.x - p.r * 3.6, p.y - 0.5, p.r * 7.2, 1); dx.fillRect(p.x - 0.5, p.y - p.r * 3.6, 1, p.r * 7.2);
-        }
-      });
-      dx.globalAlpha = 1; dx.shadowBlur = 0;
-    }, 40);
+        if (a < 0.02) continue;
+        var sz = p.r * (p.big ? 7 : 5.2);
+        dx.globalAlpha = Math.min(1, a * 1.15); dx.drawImage(spS, x - sz, y - sz, sz * 2, sz * 2);
+        if (p.big) { dx.globalAlpha = a * 0.7; dx.fillStyle = '#fff'; dx.fillRect(x - p.r * 3.6, y - 0.5, p.r * 7.2, 1); dx.fillRect(x - 0.5, y - p.r * 3.6, 1, p.r * 7.2); }
+      }
+      dx.globalAlpha = 1;
+    });
   }
 
   // Hero -> content: the hero recedes (slides up a little, dims) while the next section slides over it like a curtain
