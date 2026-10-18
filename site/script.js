@@ -361,11 +361,12 @@
     var dx = dc.getContext('2d'), dW = 0, dH = 0, ddpr = Math.min(devicePixelRatio || 1, 2), dp = [], dLast = 0;
     var dSpawn = function (p, first) {
       p.x = Math.random() * dW; p.y = Math.random() * dH;
-      p.r = 0.7 + Math.random() * 1.7; p.big = Math.random() < 0.07;
-      if (p.big) p.r = 2.2 + Math.random() * 1.4;
-      p.vx = (Math.random() - 0.3) * 5; p.vy = -(1.5 + Math.random() * 5);   // px per second, a slow upward/sideways drift
+      p.r = 1.1 + Math.random() * 2.0; p.big = Math.random() < 0.1;
+      if (p.big) p.r = 3.0 + Math.random() * 1.8;
+      p.ox = p.x; p.oy = p.y; p.sa = 5 + Math.random() * 11; p.sb = 4 + Math.random() * 9;   // hover around the spot: sway radii (px)
+      p.fx = 0.10 + Math.random() * 0.22; p.fy = 0.08 + Math.random() * 0.2;   // sway speeds
       p.ph = Math.random() * 6.283; p.tw = 0.6 + Math.random() * 1.6;           // twinkle phase / speed
-      p.life = 6 + Math.random() * 8; p.age = first ? Math.random() * p.life : 0;
+      p.life = 7 + Math.random() * 9; p.age = first ? Math.random() * p.life : 0;
     };
     var dSize = function () {
       var r = dBg.getBoundingClientRect(); dW = r.width; dH = r.height; dc.width = dW * ddpr; dc.height = dH * ddpr; dx.setTransform(ddpr, 0, 0, ddpr, 0, 0);
@@ -378,14 +379,17 @@
       var now = Date.now(), dt = dLast ? Math.min((now - dLast) / 1000, 0.2) : 0.04, t0 = now / 1000; dLast = now;
       dx.clearRect(0, 0, dW, dH);
       dp.forEach(function (p) {
-        p.age += dt; if (p.age > p.life) { dSpawn(p, false); p.y = p.vy < 0 ? dH + 4 : -4; p.age = 0; }
-        p.x += p.vx * dt + Math.sin(t0 * 0.3 + p.ph) * 0.12; p.y += p.vy * dt;
+        p.age += dt; if (p.age > p.life) { dSpawn(p, false); p.age = 0; }
+        p.x = p.ox + Math.sin(t0 * p.fx + p.ph) * p.sa; p.y = p.oy + Math.cos(t0 * p.fy + p.ph * 1.3) * p.sb;   // floats in place, no upward drift
         var u = p.age / p.life, env = Math.sin(Math.PI * u), tw = 0.45 + 0.55 * Math.sin(t0 * p.tw + p.ph), a = Math.max(0, env) * tw;
         if (a < 0.02) return;
-        dx.globalAlpha = Math.min(1, a * (p.big ? 1 : 0.9)); dx.fillStyle = '#fff'; dx.shadowColor = 'rgba(255,255,255,.95)'; dx.shadowBlur = p.big ? 9 : 4;
+        var gl = dx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * (p.big ? 7 : 5));                  // soft glow halo
+        gl.addColorStop(0, 'rgba(255,255,255,' + (0.55 * a) + ')'); gl.addColorStop(0.35, 'rgba(255,252,235,' + (0.2 * a) + ')'); gl.addColorStop(1, 'rgba(255,255,255,0)');
+        dx.globalAlpha = 1; dx.fillStyle = gl; dx.beginPath(); dx.arc(p.x, p.y, p.r * (p.big ? 7 : 5), 0, 6.283); dx.fill();
+        dx.globalAlpha = Math.min(1, a * 1.1); dx.fillStyle = '#fff'; dx.shadowColor = 'rgba(255,255,255,1)'; dx.shadowBlur = p.big ? 12 : 7;
         dx.beginPath(); dx.arc(p.x, p.y, p.r, 0, 6.283); dx.fill();
         if (p.big) {                                                              // the few larger ones get a small cross flare
-          dx.shadowBlur = 0; dx.globalAlpha = a * 0.55; dx.fillRect(p.x - p.r * 3.2, p.y - 0.4, p.r * 6.4, 0.8); dx.fillRect(p.x - 0.4, p.y - p.r * 3.2, 0.8, p.r * 6.4);
+          dx.shadowBlur = 0; dx.globalAlpha = a * 0.7; dx.fillRect(p.x - p.r * 3.6, p.y - 0.5, p.r * 7.2, 1); dx.fillRect(p.x - 0.5, p.y - p.r * 3.6, 1, p.r * 7.2);
         }
       });
       dx.globalAlpha = 1; dx.shadowBlur = 0;
