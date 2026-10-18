@@ -369,6 +369,20 @@
     addEventListener('scroll', pxTick, { passive: true }); addEventListener('resize', pxTick); pxTick();
   }
 
+  // Panoramic card pictures glide slowly sideways inside their frame
+  var panCards = Array.prototype.slice.call(d.querySelectorAll('img[data-pan]'));
+  if (panCards.length && !reduce) {
+    var panCardStart = Date.now();
+    setInterval(function () {
+      var t = (Date.now() - panCardStart) / 1000;
+      panCards.forEach(function (im, i) {
+        var r = im.getBoundingClientRect();
+        if (r.bottom < -80 || r.top > innerHeight + 80) return;
+        im.style.objectPosition = (50 - 50 * Math.cos(2 * Math.PI * (t + i * 17) / 120)).toFixed(2) + '% 50%';
+      });
+    }, 50);
+  }
+
   // Service cards: soft 3D tilt following the pointer
   if (finePointer) d.querySelectorAll('.service-card').forEach(function (card) {
     card.addEventListener('pointermove', function (e) {

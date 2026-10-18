@@ -45,7 +45,7 @@ SERVICES = [
          points=[('どんな治療か', 'ご自身の細胞を用いる再生医療です。'),
                  ('特徴', '細胞の品質と、それを支える技術の信頼性を重視しています。'),
                  ('安全への取り組み', '再生医療等安全性確保法を遵守し、安全かつ高度な実践に努めています。')]),
-    dict(id='immune', en='IMMUNE CELL TREATMENT', name='免疫細胞療法', img='cellact_immune.webp', yt=None,
+    dict(id='immune', en='IMMUNE CELL TREATMENT', name='免疫細胞療法', img='cellact_immune.webp?v=2', yt=None,
          short='患者様自身の免疫細胞を活性化させ、体の自然治癒力を高める治療法です。',
          lead='患者様自身の免疫細胞を活性化させ、体の自然治癒力を高める治療法です。',
          paras=['免疫細胞は、体を守る仕組みの中心を担う細胞です。ご自身の免疫細胞を体の外で培養・活性化させ、その働きを高めることを目指します。',
@@ -192,7 +192,7 @@ def build_index():
     cards = ''
     for s in SERVICES:
         cards += f'''<article class="service-card reveal"><a href="business.html#{s["id"]}" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;flex:1">
-<div class="thumb"><img src="images/{s["img"]}" alt="" loading="lazy" width="1500" height="857"></div>
+<div class="thumb"><img src="images/{s["img"]}" alt="" loading="lazy" width="1500" height="857"{" data-pan" if s["id"] == "immune" else ""}></div>
 <div class="body"><span class="en">{s["en"]}</span><h3>{s["name"]}</h3><p>{s["short"]}</p><span class="more" style="color:var(--teal-deep)">詳しく見る</span></div></a></article>'''
     ld = '''<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"一般社団法人 CELLACT","url":"https://n2cellact.or.jp/","logo":"https://n2cellact.or.jp/images/cellact_logo.png?v=151","telephone":"+81-3-3289-0202","email":"info@cellact.org","address":{"@type":"PostalAddress","postalCode":"104-0061","addressRegion":"東京都","addressLocality":"中央区","streetAddress":"銀座6-6-5 HULIC & New GINZA NAMIKI6 11F","addressCountry":"JP"}}</script>'''
     s = head(f'{ORG} | 再生医療クリニック',
@@ -201,7 +201,7 @@ def build_index():
     s += header('index.html')
     s += f'''<main id="main">
 <section class="hero">
-<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=188" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
+<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=189" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
 <div class="hero-intro" aria-hidden="true"><div class="hi-veil"></div><div class="hi-logo" data-capsule-intro>{CAPSULE_SVG}</div><button type="button" class="hi-skip">スキップ</button></div>
 <div class="container hero-inner">
 <p class="hero-eyebrow">CELLACT / REGENERATIVE MEDICINE</p>
@@ -249,7 +249,7 @@ def build_services():
     for sv in SERVICES:
         paras = ''.join(f'<p>{p}</p>' for p in sv['paras'])
         pts = ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in sv['points'])
-        s += f'''<article class="service-detail reveal" id="{sv["id"]}"><div class="sd-media"><img src="images/{sv["img"]}" alt="" loading="lazy" width="1500" height="857"></div>
+        s += f'''<article class="service-detail reveal" id="{sv["id"]}"><div class="sd-media"><img src="images/{sv["img"]}" alt="" loading="lazy" width="1500" height="857"{" data-pan" if sv["id"] == "immune" else ""}></div>
 <div class="sd-text"><p class="eyebrow" style="color:var(--peach-deep)">{sv["en"]}</p><h2>{sv["name"]}</h2><p class="sd-lead">{sv["lead"]}</p>{paras}<dl class="sd-points">{pts}</dl></div></article>'''
     s += '<p class="sd-note reveal">※ 治療の内容・期間・リスク・費用などについては、診察時に医師が個別にご説明します。治療の経過や感じ方には、個人差があります。</p>'
     s += '''</div></section>
