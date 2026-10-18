@@ -561,26 +561,27 @@ p, dd { font-size: 1rem; line-height: 1.95; }
 .hero .hero-bg img.intro-blur { will-change: filter; }
 .prose .sub-note { margin-top: 2em; font-size: .9rem; color: var(--ink-soft); text-align: right; }
 
-/* phones: copy sits on the open sky, the wide picture below it glides sideways, actions beneath */
+/* phones: the wide picture fills the first view from the top; the copy sits on its own sky; actions below the fold */
 .hero-actions-sp { display: none; }
 @media (max-width: 820px) {
-  .hero { min-height: 0; display: flex; flex-direction: column; justify-content: flex-start; background: #63e7fe; color: var(--ink); }
-  .hero .hero-inner { order: 1; position: relative; top: auto; left: auto; right: auto; display: block; padding-block: 34px 18px; z-index: 2; }
-  .hero .hero-inner .hero-actions { display: none; }
-  .hero .hero-bg { order: 2; position: relative; inset: auto; width: 100%; height: max(340px, calc(100svh - var(--header-h, 72px) - 54vw)); overflow: hidden; background: #63e7fe; z-index: 0; }
+  .hero { --hb: max(560px, calc(100svh - var(--header-h, 72px))); min-height: 0; display: flex; flex-direction: column; justify-content: flex-start; background: #63e7fe; color: var(--ink); }
+  .hero .hero-bg { order: 1; position: relative; inset: auto; width: 100%; height: var(--hb); overflow: hidden; background: #63e7fe; z-index: 0; }
   .hero .hero-bg picture { display: block; position: absolute; inset: 0; }
-  .hero .hero-bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; transform: none; -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,.6) 14%, #000 34%); mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,.6) 14%, #000 34%); }
-  .hero::after, .hero .hero-inner::before { display: none; }
-  .hero .hero-intro { inset: 0; height: auto; }
-  .hero .hero-actions-sp { order: 3; display: flex; flex-direction: column; gap: 6px; padding: 22px 20px 32px; background: var(--bg); position: relative; z-index: 2; }
+  .hero .hero-bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; transform: none; -webkit-mask-image: none; mask-image: none; }
+  .hero .hero-inner { position: absolute; top: 0; left: 0; right: 0; display: block; padding-block: 30px 0; z-index: 2; }
+  .hero .hero-inner .hero-actions { display: none; }
+  .hero::after { display: none; }
+  .hero .hero-inner::before { display: block; content: ""; position: absolute; z-index: -1; left: -6vw; right: -6vw; top: 8px; bottom: -26px; width: auto; height: auto; border-radius: 44px; background: rgba(255,255,255,.62); filter: blur(24px); pointer-events: none; }
+  .hero .hero-intro { inset: 0 0 auto 0; height: var(--hb); }
+  .hero .hero-actions-sp { order: 2; display: flex; flex-direction: column; gap: 6px; padding: 22px 20px 32px; background: var(--bg); position: relative; z-index: 2; }
   .hero .hero-actions-sp .btn-ghost { border: 0; background: none; min-height: 0; padding: 12px 6px 0; color: var(--teal-deep); box-shadow: none; }
   .hero .hero-actions-sp .btn-ghost:hover { background: none; color: var(--teal); box-shadow: none; }
   .hero .hero-eyebrow { font-size: .72rem; letter-spacing: .22em; margin-bottom: 12px; }
   .hero h1 { font-size: 7.2vw; margin-bottom: 12px; }
   .hero .hero-sub { font-size: .8rem; letter-spacing: .05em; white-space: normal; margin-bottom: 0; }
   .hero-intro .hi-logo { width: min(240px, 52vw); margin-top: -4vw; }
-  .hero .hero-fx { z-index: 1; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 30%); mask-image: linear-gradient(to bottom, transparent 0, #000 30%); }
-  .hero .scroll-hint { display: block; right: auto; left: 50%; top: auto; bottom: 178px; transform: translateX(-50%); z-index: 3; color: #0a4a63; opacity: 1; text-shadow: 0 0 8px rgba(255,255,255,.9); }
+  .hero .hero-fx { z-index: 1; -webkit-mask-image: none; mask-image: none; }
+  .hero .scroll-hint { display: block; right: auto; left: 50%; top: calc(var(--hb) - 86px); bottom: auto; transform: translateX(-50%); z-index: 3; color: #0a4a63; opacity: 1; text-shadow: 0 0 8px rgba(255,255,255,.9); }
   .hero .scroll-hint::after { background: #0a4a63; height: 40px; box-shadow: 0 0 6px rgba(255,255,255,.8); }
 }
 
