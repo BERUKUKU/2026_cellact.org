@@ -245,7 +245,7 @@ def build_index():
 def build_services():
     s = head('BUSINESS', '一般社団法人 CELLACT の事業内容。幹細胞療法、免疫細胞療法、幹細胞培養上清療法などの再生医療に取り組んでいます。', 'business.html')
     s += header('business.html')
-    s += page_hero('BUSINESS', '事業内容', 'hero_business.webp?v=7', [('index.html', 'TOP'), ('business.html', 'BUSINESS')], pos='50% 90%', mpos='80% 70%')
+    s += page_hero('BUSINESS', '事業内容', 'hero48_business.webp', [('index.html', 'TOP'), ('business.html', 'BUSINESS')], pos='50% 50%', mpos='74% 50%')
     s += '<main id="main"><section class="section"><div class="container">'
     s += section_head('FIELDS', '取り組んでいる再生医療', False, '細胞の力を活かした、3つの領域で医療を提供しています。')
     for sv in SERVICES:
@@ -281,7 +281,7 @@ def build_company():
     cards = ''.join(f'<article class="about-card reveal"><h3>{t}</h3><p>{p}</p></article>' for t, p in about)
     mapq = 'https://www.google.com/maps?q=%E9%8A%80%E5%BA%A76-6-5%20HULIC%20%26%20New%20GINZA%20NAMIKI6%2011F&output=embed'
     s = head('COMPANY', '一般社団法人 CELLACT の法人概要。再生医療の取り組みと、所在地・連絡先のご案内。', 'company.html')
-    s += header('company.html') + page_hero('COMPANY', '法人概要', 'hero_company.webp?v=4', [('index.html', 'TOP'), ('company.html', 'COMPANY')], pos='50% 14%', mpos='86% 30%')
+    s += header('company.html') + page_hero('COMPANY', '法人概要', 'hero48_company.webp', [('index.html', 'TOP'), ('company.html', 'COMPANY')], pos='50% 50%', mpos='50% 50%')
     s += f'''<main id="main"><section class="section"><div class="container split"><div class="split-head">{section_head('ABOUT US', '私たちについて')}</div><div class="about-grid">{cards}</div></div></section>
 <section class="section"><div class="container logo-meaning"><div class="lm-mark reveal" data-capsule>{CAPSULE_SVG}<button type="button" class="lm-replay">もう一度見る</button></div>
 <div class="lm-body">{section_head('LOGO', 'ロゴに込めた想い')}
@@ -309,7 +309,7 @@ def build_recruit():
     for t, rows in pos:
         cards += f'<article class="position reveal"><h3>{t}</h3><dl>' + ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows) + '</dl></article>'
     s = head('RECRUIT', '再生医療の現場で、医療の未来を共に築きませんか。看護師・受付スタッフの募集要項。', 'recruit.html', og_img='images/hero_recruit.webp')
-    s += header('recruit.html') + page_hero('RECRUIT', '採用情報', 'hero_recruit.webp?v=4', [('index.html', 'TOP'), ('recruit.html', 'RECRUIT')], pos='50% 62%', mpos='100% 55%', flip=True)
+    s += header('recruit.html') + page_hero('RECRUIT', '採用情報', 'hero48_recruit.webp', [('index.html', 'TOP'), ('recruit.html', 'RECRUIT')], pos='50% 50%', mpos='72% 50%', flip=True)
     s += f'''<main id="main"><section class="section"><div class="container split"><div class="split-head">{section_head('MESSAGE', '私たちの仕事は未来を再生すること。')}</div>
 <div class="reveal message"><p>再生医療の現場で、医療の未来を共に築きませんか？<br>私たちは、幹細胞療法や免疫細胞療法による再生医療のほか、幹細胞培養上清療法などを提供しています。</p>
 <p>未来の医療である「再生医療」の現場に、あなたのスキルと情熱を活かしませんか？<br>私たちは患者様の生活を再生し、希望を届けるために共に働ける仲間を探しています。</p>
@@ -323,14 +323,14 @@ def build_recruit():
 # ---------------------------------------------------------------- NEWS
 def build_news():
     s = head('NEWS', 'CELLACT からのお知らせ一覧。', 'news-archive.html', og_img='images/hero_top.webp')
-    s += header('news-archive.html') + page_hero('NEWS', 'お知らせ', 'hero_news.webp?v=5', [('index.html', 'TOP'), ('news-archive.html', 'NEWS')], pos='50% 40%', mpos='85% 40%')
+    s += header('news-archive.html') + page_hero('NEWS', 'お知らせ', 'hero48_news.webp', [('index.html', 'TOP'), ('news-archive.html', 'NEWS')], pos='50% 50%', mpos='84% 50%')
     s += f'<main id="main"><section class="section"><div class="container-narrow">{section_head("NEWS ARCHIVE", "お知らせ一覧")}{news_list(NEWS)}</div></section></main>' + footer()
     write('news-archive.html', s)
     for n in NEWS:
         w = ' warm' if n['warm'] else ''
         d = n['title']
         s = head(n['title'], n['excerpt'].replace('&amp;', '&'), n['slug'] + '.html', og_img='images/' + n['img'])
-        s += header('news-archive.html') + page_hero('NEWS', 'お知らせ', 'hero_news.webp?v=5', [('index.html', 'TOP'), ('news-archive.html', 'NEWS'), (n['slug'] + '.html', n['title'])], pos='50% 40%', mpos='85% 40%')
+        s += header('news-archive.html') + page_hero('NEWS', 'お知らせ', 'hero48_news.webp', [('index.html', 'TOP'), ('news-archive.html', 'NEWS'), (n['slug'] + '.html', n['title'])], pos='50% 50%', mpos='84% 50%')
         s += f'''<main id="main"><section class="section"><div class="container-narrow"><article class="article reveal">
 <header class="article-head"><div class="article-meta"><time datetime="{n["date"].replace(".", "-")}">{n["date"]}</time><span class="tag{w}">{n["tag"]}</span></div><h1>{n["title"]}</h1></header>
 {(f'<figure class="article-fig logo-over"><img class="article-img" src="images/{n["img"]}" alt="" width="1500" height="844"><img class="fig-logo" src="images/cellact_logo.png?v=2" alt="CELLACT" width="788" height="840"></figure>' if n.get('logo') else f'<img class="article-img" src="images/{n["img"]}" alt="" width="1500" height="844">')}
@@ -371,7 +371,7 @@ $purpose = (string)($old['purpose'] ?? ($_GET['purpose'] ?? ''));
 ?>
 '''
     s += head('CONTACT', '一般社団法人 CELLACT へのお問い合わせフォーム。治療・採用などのご質問を24時間受け付けています。', 'contact.php', og_img='images/hero_contact.webp')
-    s += header('contact.php') + page_hero('CONTACT', 'お問い合わせ', 'hero_contact.webp?v=5', [('index.html', 'TOP'), ('contact.php', 'CONTACT')], pos='50% 100%', mpos='78% 100%')
+    s += header('contact.php') + page_hero('CONTACT', 'お問い合わせ', 'hero48_contact.webp', [('index.html', 'TOP'), ('contact.php', 'CONTACT')], pos='50% 50%', mpos='62% 50%')
     s += '''<main id="main"><section class="section tint"><div class="container-narrow">
 <ol class="steps" aria-label="手順"><li class="on">1 入力</li><li>2 確認</li><li>3 完了</li></ol>
 <p class="lead" style="margin:0 auto 28px;text-align:center">フォームは24時間受け付けています。必須項目をご入力のうえ「確認画面へ」を押してください。</p>
@@ -435,7 +435,7 @@ $_SESSION['confirmed'] = true;
 ?>
 '''
     c += head('送信内容の確認', '入力内容をご確認ください。', 'contact_confirm.php', noindex=True)
-    c += header('contact.php') + page_hero('CONTACT', 'お問い合わせ', 'hero_contact.webp?v=5', [('index.html', 'TOP'), ('contact.php', 'CONTACT'), ('contact_confirm.php', '確認')], pos='50% 100%', mpos='78% 100%')
+    c += header('contact.php') + page_hero('CONTACT', 'お問い合わせ', 'hero48_contact.webp', [('index.html', 'TOP'), ('contact.php', 'CONTACT'), ('contact_confirm.php', '確認')], pos='50% 50%', mpos='62% 50%')
     c += '''<main id="main"><section class="section tint"><div class="container-narrow">
 <ol class="steps" aria-label="手順"><li>1 入力</li><li class="on">2 確認</li><li>3 完了</li></ol>
 <div class="form-card">
@@ -517,7 +517,7 @@ exit;
 
     # --- thanks
     t = head('お問い合わせありがとうございます', '送信が完了しました。', 'contact_thanks.html', noindex=True)
-    t += header('contact.php') + page_hero('CONTACT', 'お問い合わせ', 'hero_contact.webp?v=5', [('index.html', 'TOP'), ('contact.php', 'CONTACT'), ('contact_thanks.html', '完了')], pos='50% 100%', mpos='78% 100%')
+    t += header('contact.php') + page_hero('CONTACT', 'お問い合わせ', 'hero48_contact.webp', [('index.html', 'TOP'), ('contact.php', 'CONTACT'), ('contact_thanks.html', '完了')], pos='50% 50%', mpos='62% 50%')
     t += '''<main id="main"><section class="section tint"><div class="container-narrow">
 <ol class="steps" aria-label="手順"><li>1 入力</li><li>2 確認</li><li class="on">3 完了</li></ol>
 <div class="form-card" style="text-align:center"><h2 class="section-title" style="font-size:1.5rem">お問い合わせありがとうございます</h2>
@@ -530,7 +530,7 @@ exit;
 # ---------------------------------------------------------------- PRIVACY (DRAFT) / 404 / sitemap
 def build_misc():
     s = head('プライバシーポリシー', '一般社団法人 CELLACT のプライバシーポリシー。', 'privacy.html')
-    s += header('') + page_hero('PRIVACY', 'プライバシーポリシー', 'hero_privacy.webp?v=2', [('index.html', 'TOP'), ('privacy.html', 'プライバシーポリシー')], pos='50% 42%', mpos='50% 50%')
+    s += header('') + page_hero('PRIVACY', 'プライバシーポリシー', 'hero48_privacy.webp', [('index.html', 'TOP'), ('privacy.html', 'プライバシーポリシー')], pos='50% 50%', mpos='50% 50%')
     s += f'''<main id="main"><section class="section"><div class="container-narrow prose">
 <!-- 公開前に法務確認のうえ、内容を最終化してください -->
 <p>{ORG}（以下「当法人」）は、お問い合わせ・採用に関するご連絡などを通じてお預かりする個人情報の重要性を認識し、個人情報の保護に関する法律（個人情報保護法）その他の関係法令を遵守して、以下の方針に基づき適切に取り扱います。</p>
