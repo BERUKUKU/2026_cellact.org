@@ -201,7 +201,7 @@ def build_index():
     s += header('index.html')
     s += f'''<main id="main">
 <section class="hero">
-<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=198" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
+<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=199" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
 <div class="hero-intro" aria-hidden="true"><div class="hi-veil"></div><div class="hi-logo" data-capsule-intro>{CAPSULE_SVG}</div><button type="button" class="hi-skip">スキップ</button></div>
 <div class="container hero-inner">
 <p class="hero-eyebrow">CELLACT / REGENERATIVE MEDICINE</p>
@@ -279,7 +279,7 @@ def build_company():
     cards = ''.join(f'<article class="about-card reveal"><h3>{t}</h3><p>{p}</p></article>' for t, p in about)
     mapq = 'https://www.google.com/maps?q=%E9%8A%80%E5%BA%A76-6-5%20HULIC%20%26%20New%20GINZA%20NAMIKI6%2011F&output=embed'
     s = head('COMPANY', '一般社団法人 CELLACT の法人概要。再生医療の取り組みと、所在地・連絡先のご案内。', 'company.html')
-    s += header('company.html') + page_hero('COMPANY', '法人概要', 'hero_company.webp?v=3', [('index.html', 'TOP'), ('company.html', 'COMPANY')], pos='50% 0%')
+    s += header('company.html') + page_hero('COMPANY', '法人概要', 'hero_company.webp?v=4', [('index.html', 'TOP'), ('company.html', 'COMPANY')], pos='50% 14%', mpos='86% 30%')
     s += f'''<main id="main"><section class="section"><div class="container split"><div class="split-head">{section_head('ABOUT US', '私たちについて')}</div><div class="about-grid">{cards}</div></div></section>
 <section class="section"><div class="container logo-meaning"><div class="lm-mark reveal" data-capsule>{CAPSULE_SVG}<button type="button" class="lm-replay">もう一度見る</button></div>
 <div class="lm-body">{section_head('LOGO', 'ロゴに込めた想い')}
