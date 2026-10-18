@@ -310,8 +310,8 @@
         c.y += c.vy * c.z * 60 * dt; c.rot += c.vr * 60 * dt;
         var u = c.age / c.life, s = Math.sin(Math.PI * u), env = Math.max(0, Math.min(1, s * s * (3 - 2 * Math.min(1, s * 1.6))));
         ctx.lineWidth = light ? 1.5 + c.z * 1.1 : 1.4 + c.z * 1.6;
-        ctx.strokeStyle = 'rgba(' + ink + ',' + (light ? Math.min(1, c.a + 0.35) : c.a) * env * (innerWidth <= 820 && hero.classList.contains('hero') ? 0.55 : 1) + ')';
-        ctx.fillStyle = light ? 'rgba(255,255,255,' + (0.16 * env) + ')' : 'rgba(' + ink + ',' + (c.a * 0.16) * env + ')';
+        ctx.strokeStyle = 'rgba(' + ink + ',' + (light ? Math.min(1, c.a + 0.35) : c.a) * env * (innerWidth <= 820 && hero.classList.contains('hero') ? 0.4 : 0.6) + ')';
+        ctx.fillStyle = light ? 'rgba(255,255,255,' + (0.4 * env) + ')' : 'rgba(' + ink + ',' + (c.a * 0.16) * env + ')';
         if (light) { ctx.shadowColor = 'rgba(255,255,255,' + (0.9 * env) + ')'; ctx.shadowBlur = 8; }
         else { ctx.shadowColor = 'rgba(8,40,50,.45)'; ctx.shadowBlur = 12; }
         hex(c); ctx.fill(); ctx.stroke();
@@ -327,6 +327,18 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(hero);
     setInterval(frame, 33);                                   // timer-driven: keeps running without window focus
 
+  }
+
+  // Wide hero picture (PC): glides slowly sideways and back so the view can be taken in little by little
+  var panImg = d.querySelector('.hero .hero-bg img');
+  if (panImg && !reduce) {
+    var panStart = Date.now();
+    setInterval(function () {
+      if (innerWidth <= 820) { if (panImg.style.objectPosition) panImg.style.objectPosition = ''; return; }
+      if (scrollY > innerHeight * 1.2) return;
+      var t = (Date.now() - panStart) / 1000, p = 50 - 50 * Math.cos(2 * Math.PI * t / 90);   // 90 s per round trip
+      panImg.style.objectPosition = p.toFixed(2) + '% 50%';
+    }, 50);
   }
 
   // Service cards: soft 3D tilt following the pointer
@@ -372,7 +384,7 @@
       var dt = last ? Math.min((now - last) / 1000, 0.1) : 0.016; last = now;
       tx += (px - tx) * 0.07; ty += (py - ty) * 0.07;
       ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = 'rgba(15,107,134,.04)';
+      ctx.fillStyle = 'rgba(255,255,255,.4)';
       ctx.shadowColor = 'rgba(255,255,255,.7)'; ctx.shadowBlur = 3;
       hexes.forEach(function (h) {
         h.age += dt;
@@ -382,7 +394,7 @@
         var u = h.age / h.life;
         var env = Math.sin(Math.PI * u); env = env * env * (3 - 2 * Math.min(1, env * 1.6));   // soft in, soft out
         ctx.lineWidth = 1.2 + h.z * 0.9;
-        ctx.strokeStyle = 'rgba(15,107,134,.85)';
+        ctx.strokeStyle = 'rgba(15,107,134,.5)';
         softHex(ctx, h.x + tx * h.z * 18 + Math.sin(h.age * 0.8 + h.ph) * h.sa, h.y + ty * h.z * 18, h.r * (1 + 0.05 * Math.sin(h.age * 1.2 + h.ph)), h.rot + Math.sin(h.age * 0.55 + h.ph * 1.7) * 0.3);
         // fade out near the bottom-left corner so the card number stays readable
         var fx = Math.max(0, Math.min(1, (h.x - W * 0.2) / (W * 0.12)));
