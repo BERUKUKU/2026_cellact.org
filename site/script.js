@@ -335,7 +335,7 @@
     var panStart = Date.now();
     setInterval(function () {
       if (scrollY > innerHeight * 1.2) return;
-      var t = (Date.now() - panStart) / 1000, p = 50 - 50 * Math.cos(2 * Math.PI * t / (innerWidth <= 820 ? 70 : 90));   // 70 s (phone) / 90 s (PC) per round trip
+      var t = (Date.now() - panStart) / 1000, p = 50 - 50 * Math.cos(2 * Math.PI * t / (innerWidth <= 820 ? 170 : 120));   // 170 s (phone) / 120 s (PC) per round trip: a slow, seeping drift
       panImg.style.objectPosition = p.toFixed(2) + '% 50%';
     }, 50);
   }
