@@ -13,8 +13,8 @@
   --peach-deep: #11a38e;
   --radius: 10px;
   --subhero-h: clamp(240px, 22vw, 420px);   /* height of sub-page heroes on wide screens (original) */
-  --subhero-zoom: 1.05;                      /* wide screens: enlargement of the picture (room for the sideways glide); 1 = whole picture width */
-  --subhero-zoom-sp: 1.2;                    /* phones */
+  --subhero-zoom: 1.14;                      /* wide screens: enlargement of the picture (room for the sideways glide); 1 = whole picture width */
+  --subhero-zoom-sp: 1.3;                    /* phones */
   --shadow: 0 1px 2px rgba(10,74,99,.06), 0 10px 28px rgba(10,74,99,.08);
   --serif: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
   --sans: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
@@ -764,4 +764,3 @@ input, textarea, select { border-radius: 14px; }
 @media (max-width: 820px) { .page-hero .hero-bg::after { opacity: .75; } }
 @media (prefers-reduced-motion: reduce) { .hero .hero-bg::before, .page-hero .hero-bg::before, .page-hero .hero-bg::after { animation: none; } }
 
-.glitter-fx { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }

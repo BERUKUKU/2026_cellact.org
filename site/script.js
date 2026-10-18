@@ -335,7 +335,7 @@
     var panStart = Date.now();
     setInterval(function () {
       if (scrollY > innerHeight * 1.2) return;
-      var t = (Date.now() - panStart) / 1000, p = 50 - 50 * Math.cos(2 * Math.PI * t / (innerWidth <= 820 ? 210 : 150));   // 210 s (phone) / 150 s (PC) per round trip: a slow, seeping drift
+      var t = (Date.now() - panStart) / 1000, p = 50 - 50 * Math.cos(2 * Math.PI * t / (innerWidth <= 820 ? 120 : 90));   // 210 s (phone) / 150 s (PC) per round trip: a slow, seeping drift
       panImg.style.objectPosition = p.toFixed(2) + '% 50%';
       if (innerWidth > 820) panImg.style.translate = '0 ' + (Math.sin(2 * Math.PI * t / 29) * 8).toFixed(1) + 'px';   // gentle up-and-down swell (PC)
     }, 50);
@@ -347,45 +347,10 @@
     var subStart = Date.now();
     setInterval(function () {
       if (scrollY > innerHeight * 1.2) return;
-      var wide = innerWidth > 820, t = (Date.now() - subStart) / 1000, w = -Math.cos(2 * Math.PI * t / (wide ? 120 : 130));   // -1..1
+      var wide = innerWidth > 820, t = (Date.now() - subStart) / 1000, w = -Math.cos(2 * Math.PI * t / (wide ? 55 : 65));   // -1..1
       var z = parseFloat(getComputedStyle(d.documentElement).getPropertyValue(wide ? '--subhero-zoom' : '--subhero-zoom-sp')) || 1.15;
       subImg.style.setProperty('--px', (w * subImg.offsetWidth * (z - 1) / 2 * 0.85).toFixed(1) + 'px');   // stays inside the enlarged margin
-      subImg.style.setProperty('--py', (Math.sin(2 * Math.PI * t / 27) * Math.min(9, subImg.offsetHeight * (z - 1) / 2 * 0.9 + 8)).toFixed(1) + 'px');   // gentle up-and-down swell
-    }, 50);
-  }
-
-  // Water glitter: tiny white twinkles and short glints that fade in and out over the lower part of every hero picture
-  var gBg = d.querySelector('.hero .hero-bg, .page-hero .hero-bg');
-  if (gBg && !reduce) {
-    var gc = d.createElement('canvas'); gc.className = 'glitter-fx'; gc.setAttribute('aria-hidden', 'true'); gBg.appendChild(gc);
-    var gx = gc.getContext('2d'), gW = 0, gH = 0, gdpr = Math.min(devicePixelRatio || 1, 2), gs = [], gLast = 0;
-    var gSpawn = function (s, first) {
-      s.x = Math.random() * gW; s.y = gH * (0.42 + Math.random() * 0.56);
-      s.kind = Math.random() < 0.35 ? 0 : 1;                       // 0: four-point twinkle, 1: short horizontal glint
-      s.r = s.kind ? 7 + Math.random() * 14 : 2.5 + Math.random() * 3.5;
-      s.life = 2.2 + Math.random() * 3.2; s.age = first ? Math.random() * s.life : -Math.random() * 1.5;
-    };
-    var gSize = function () {
-      var r = gBg.getBoundingClientRect(); gW = r.width; gH = r.height; gc.width = gW * gdpr; gc.height = gH * gdpr; gx.setTransform(gdpr, 0, 0, gdpr, 0, 0);
-      var n = Math.round(Math.min(44, Math.max(14, gW * gH / 14000))); gs = [];
-      for (var i = 0; i < n; i++) { var s = {}; gSpawn(s, true); gs.push(s); }
-    };
-    gSize(); addEventListener('resize', gSize);
-    setInterval(function () {
-      if (scrollY > innerHeight * 1.3) return;
-      var now = Date.now(), dt = gLast ? Math.min((now - gLast) / 1000, 0.2) : 0.05; gLast = now;
-      gx.clearRect(0, 0, gW, gH);
-      gs.forEach(function (s) {
-        s.age += dt; if (s.age < 0) return; if (s.age > s.life) { gSpawn(s, false); return; }
-        var u = s.age / s.life, a = Math.sin(Math.PI * u); a = a * a;
-        gx.globalAlpha = a * 0.95; gx.fillStyle = '#fff'; gx.shadowColor = 'rgba(255,255,255,.9)'; gx.shadowBlur = 6;
-        if (s.kind) { gx.beginPath(); gx.ellipse(s.x, s.y, s.r, 1.1, 0, 0, 6.283); gx.fill(); }
-        else {
-          var r = s.r * (0.6 + 0.4 * a);
-          gx.beginPath(); gx.moveTo(s.x, s.y - r); gx.quadraticCurveTo(s.x, s.y, s.x + r, s.y); gx.quadraticCurveTo(s.x, s.y, s.x, s.y + r); gx.quadraticCurveTo(s.x, s.y, s.x - r, s.y); gx.quadraticCurveTo(s.x, s.y, s.x, s.y - r); gx.fill();
-        }
-      });
-      gx.globalAlpha = 1; gx.shadowBlur = 0;
+      subImg.style.setProperty('--py', (Math.sin(2 * Math.PI * t / 17) * Math.min(10, subImg.offsetHeight * (z - 1) / 2 * 0.9 + 8)).toFixed(1) + 'px');   // gentle up-and-down swell
     }, 50);
   }
 
