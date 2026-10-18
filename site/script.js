@@ -361,8 +361,8 @@
     var dx = dc.getContext('2d'), dW = 0, dH = 0, ddpr = Math.min(devicePixelRatio || 1, 2), dp = [], dLast = 0;
     var dSpawn = function (p, first) {
       p.x = Math.random() * dW; p.y = Math.random() * dH;
-      p.r = 1.1 + Math.random() * 2.0; p.big = Math.random() < 0.1;
-      if (p.big) p.r = 3.0 + Math.random() * 1.8;
+      p.r = 0.9 + Math.random() * 1.3; p.big = Math.random() < 0.08;
+      if (p.big) p.r = 2.1 + Math.random() * 1.2;
       p.ox = p.x; p.oy = p.y; p.sa = 5 + Math.random() * 11; p.sb = 4 + Math.random() * 9;   // hover around the spot: sway radii (px)
       p.fx = 0.10 + Math.random() * 0.22; p.fy = 0.08 + Math.random() * 0.2;   // sway speeds
       p.ph = Math.random() * 6.283; p.tw = 0.6 + Math.random() * 1.6;           // twinkle phase / speed
@@ -383,7 +383,7 @@
         p.x = p.ox + Math.sin(t0 * p.fx + p.ph) * p.sa; p.y = p.oy + Math.cos(t0 * p.fy + p.ph * 1.3) * p.sb;   // floats in place, no upward drift
         var u = p.age / p.life, env = Math.sin(Math.PI * u), tw = 0.45 + 0.55 * Math.sin(t0 * p.tw + p.ph), a = Math.max(0, env) * tw;
         if (a < 0.02) return;
-        var gl = dx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * (p.big ? 7 : 5));                  // soft glow halo
+        var gl = dx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * (p.big ? 6 : 4.5));                  // soft glow halo
         gl.addColorStop(0, 'rgba(255,255,255,' + (0.55 * a) + ')'); gl.addColorStop(0.35, 'rgba(255,252,235,' + (0.2 * a) + ')'); gl.addColorStop(1, 'rgba(255,255,255,0)');
         dx.globalAlpha = 1; dx.fillStyle = gl; dx.beginPath(); dx.arc(p.x, p.y, p.r * (p.big ? 7 : 5), 0, 6.283); dx.fill();
         dx.globalAlpha = Math.min(1, a * 1.1); dx.fillStyle = '#fff'; dx.shadowColor = 'rgba(255,255,255,1)'; dx.shadowBlur = p.big ? 12 : 7;
