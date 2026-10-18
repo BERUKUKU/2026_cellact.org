@@ -201,7 +201,7 @@ def build_index():
     s += header('index.html')
     s += f'''<main id="main">
 <section class="hero">
-<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=190" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
+<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=193" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
 <div class="hero-intro" aria-hidden="true"><div class="hi-veil"></div><div class="hi-logo" data-capsule-intro>{CAPSULE_SVG}</div><button type="button" class="hi-skip">スキップ</button></div>
 <div class="container hero-inner">
 <p class="hero-eyebrow">CELLACT / REGENERATIVE MEDICINE</p>
@@ -307,7 +307,7 @@ def build_recruit():
     for t, rows in pos:
         cards += f'<article class="position reveal"><h3>{t}</h3><dl>' + ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows) + '</dl></article>'
     s = head('RECRUIT', '再生医療の現場で、医療の未来を共に築きませんか。看護師・受付スタッフの募集要項。', 'recruit.html', og_img='images/hero_recruit.webp')
-    s += header('recruit.html') + page_hero('RECRUIT', '採用情報', 'hero_recruit.webp?v=3', [('index.html', 'TOP'), ('recruit.html', 'RECRUIT')], pos='50% 55%', flip=True)
+    s += header('recruit.html') + page_hero('RECRUIT', '採用情報', 'hero_recruit.webp?v=4', [('index.html', 'TOP'), ('recruit.html', 'RECRUIT')], pos='50% 62%', mpos='100% 55%', flip=True)
     s += f'''<main id="main"><section class="section"><div class="container split"><div class="split-head">{section_head('MESSAGE', '私たちの仕事は未来を再生すること。')}</div>
 <div class="reveal message"><p>再生医療の現場で、医療の未来を共に築きませんか？<br>私たちは、幹細胞療法や免疫細胞療法による再生医療のほか、幹細胞培養上清療法などを提供しています。</p>
 <p>未来の医療である「再生医療」の現場に、あなたのスキルと情熱を活かしませんか？<br>私たちは患者様の生活を再生し、希望を届けるために共に働ける仲間を探しています。</p>
