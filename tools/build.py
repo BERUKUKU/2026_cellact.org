@@ -201,7 +201,7 @@ def build_index():
     s += header('index.html')
     s += f'''<main id="main">
 <section class="hero">
-<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=197" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
+<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=198" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
 <div class="hero-intro" aria-hidden="true"><div class="hi-veil"></div><div class="hi-logo" data-capsule-intro>{CAPSULE_SVG}</div><button type="button" class="hi-skip">スキップ</button></div>
 <div class="container hero-inner">
 <p class="hero-eyebrow">CELLACT / REGENERATIVE MEDICINE</p>
@@ -243,7 +243,7 @@ def build_index():
 def build_services():
     s = head('BUSINESS', '一般社団法人 CELLACT の事業内容。幹細胞療法、免疫細胞療法、幹細胞培養上清療法などの再生医療に取り組んでいます。', 'business.html')
     s += header('business.html')
-    s += page_hero('BUSINESS', '事業内容', 'hero_business.webp?v=6', [('index.html', 'TOP'), ('business.html', 'BUSINESS')], pos='50% 50%', mpos='72% 50%')
+    s += page_hero('BUSINESS', '事業内容', 'hero_business.webp?v=7', [('index.html', 'TOP'), ('business.html', 'BUSINESS')], pos='50% 72%', mpos='80% 60%')
     s += '<main id="main"><section class="section"><div class="container">'
     s += section_head('FIELDS', '取り組んでいる再生医療', False, '細胞の力を活かした、3つの領域で医療を提供しています。')
     for sv in SERVICES:
