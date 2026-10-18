@@ -335,9 +335,22 @@
     var panStart = Date.now();
     setInterval(function () {
       if (scrollY > innerHeight * 1.2) return;
-      var t = (Date.now() - panStart) / 1000, p = 50 - 50 * Math.cos(2 * Math.PI * t / (innerWidth <= 820 ? 170 : 120));   // 170 s (phone) / 120 s (PC) per round trip: a slow, seeping drift
+      var t = (Date.now() - panStart) / 1000, p = 50 - 50 * Math.cos(2 * Math.PI * t / (innerWidth <= 820 ? 210 : 150));   // 210 s (phone) / 150 s (PC) per round trip: a slow, seeping drift
       panImg.style.objectPosition = p.toFixed(2) + '% 50%';
     }, 50);
+  }
+
+  // Hero -> content: the hero recedes (slides up a little, dims) while the next section slides over it like a curtain
+  var curHero = d.querySelector('main > .hero');
+  if (curHero && !reduce) {
+    var curInner = curHero.querySelector('.hero-inner'), curBg = curHero.querySelector('.hero-bg');
+    var curTick = function () {
+      var h = curHero.offsetHeight || 1, p = Math.max(0, Math.min(1, scrollY / h));
+      var wide = innerWidth > 820;
+      if (curBg) { curBg.style.transform = 'translate3d(0,' + (wide ? p * h * 0.18 : p * h * 0.08).toFixed(1) + 'px,0)'; curBg.style.filter = p > 0 ? 'brightness(' + (1 - 0.28 * p).toFixed(3) + ')' : ''; }
+      if (curInner && !curHero.classList.contains('intro-on')) { curInner.style.transform = 'translate3d(0,' + (-p * 46).toFixed(1) + 'px,0)'; curInner.style.opacity = String(Math.max(0, 1 - p * 1.5).toFixed(3)); }
+    };
+    addEventListener('scroll', curTick, { passive: true }); curTick();
   }
 
   // Service cards: soft 3D tilt following the pointer
