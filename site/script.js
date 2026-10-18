@@ -334,9 +334,8 @@
   if (panImg && !reduce) {
     var panStart = Date.now();
     setInterval(function () {
-      if (innerWidth <= 820) { if (panImg.style.objectPosition) panImg.style.objectPosition = ''; return; }
       if (scrollY > innerHeight * 1.2) return;
-      var t = (Date.now() - panStart) / 1000, p = 50 - 50 * Math.cos(2 * Math.PI * t / 90);   // 90 s per round trip
+      var t = (Date.now() - panStart) / 1000, p = 50 - 50 * Math.cos(2 * Math.PI * t / (innerWidth <= 820 ? 70 : 90));   // 70 s (phone) / 90 s (PC) per round trip
       panImg.style.objectPosition = p.toFixed(2) + '% 50%';
     }, 50);
   }
