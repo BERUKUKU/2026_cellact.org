@@ -747,3 +747,6 @@ input, textarea, select { border-radius: 14px; }
 /* header CONTACT button keeps its solid colour on hover and when it is the current page */
 .gnav a.nav-cta, .gnav a.nav-cta[aria-current="page"] { background: var(--teal); color: #fff; }
 .gnav a.nav-cta:hover, .gnav a.nav-cta[aria-current="page"]:hover { background: var(--teal-deep); color: #fff; }
+
+/* sub-page heroes are panoramas too: on wide screens the picture is enlarged a little so it can glide sideways */
+@media (min-width: 821px) { .page-hero .hero-bg img:not([src*="hero_privacy"]) { scale: 1.18; translate: var(--px, 0px) 0; will-change: translate; } }
