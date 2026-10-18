@@ -340,15 +340,14 @@
     }, 50);
   }
 
-  // Sub-page heroes: the panoramic picture glides slowly sideways (wide: translate inside an enlarged picture; phones: shift the focal x)
+  // Sub-page heroes: the panoramic picture glides slowly sideways inside an enlarged frame
   var subImg = d.querySelector('.page-hero .hero-bg img');
   if (subImg && !reduce && subImg.getAttribute('src').indexOf('hero_privacy') < 0) {
-    var subStart = Date.now(), subY = (subImg.style.getPropertyValue('--mpos') || '50% 50%').split(/\s+/)[1] || '50%';
+    var subStart = Date.now();
     setInterval(function () {
       if (scrollY > innerHeight * 1.2) return;
-      var wide = innerWidth > 820, t = (Date.now() - subStart) / 1000, w = -Math.cos(2 * Math.PI * t / (wide ? 160 : 210));   // -1..1
-      if (wide) { subImg.style.setProperty('--px', (w * subImg.offsetWidth * 0.075).toFixed(1) + 'px'); }
-      else { subImg.style.removeProperty('--px'); subImg.style.setProperty('--mpos', (50 + 50 * w).toFixed(2) + '% ' + subY); }
+      var wide = innerWidth > 820, t = (Date.now() - subStart) / 1000, w = -Math.cos(2 * Math.PI * t / (wide ? 110 : 120));   // -1..1
+      subImg.style.setProperty('--px', (w * subImg.offsetWidth * (wide ? 0.115 : 0.14)).toFixed(1) + 'px');
     }, 50);
   }
 

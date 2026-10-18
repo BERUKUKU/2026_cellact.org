@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Generates the static pages in ../site from one template so header/footer stay identical.
 Run:  python3 tools/build.py   (output goes to ./site). Edit content below, not the generated HTML."""
-import os, html
+import os, html, time
+ASSET_V = str(int(time.time()))   # cache-busting for styles.css / script.js, new on every build
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'site')
 BASE = 'https://cellact.org/'
@@ -174,6 +175,7 @@ def section_head(en, title, center=False, lead=''):
 
 
 def write(name, content):
+    content = content.replace('styles.css?v=151', 'styles.css?v=' + ASSET_V).replace('script.js?v=151', 'script.js?v=' + ASSET_V)
     with open(os.path.join(OUT, name), 'w', encoding='utf-8') as f:
         f.write(content)
 
