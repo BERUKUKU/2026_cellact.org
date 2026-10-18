@@ -337,6 +337,7 @@
       if (scrollY > innerHeight * 1.2) return;
       var t = (Date.now() - panStart) / 1000, p = 50 - 50 * Math.cos(2 * Math.PI * t / (innerWidth <= 820 ? 210 : 150));   // 210 s (phone) / 150 s (PC) per round trip: a slow, seeping drift
       panImg.style.objectPosition = p.toFixed(2) + '% 50%';
+      if (innerWidth > 820) panImg.style.translate = '0 ' + (Math.sin(2 * Math.PI * t / 29) * 8).toFixed(1) + 'px';   // gentle up-and-down swell (PC)
     }, 50);
   }
 
@@ -349,6 +350,7 @@
       var wide = innerWidth > 820, t = (Date.now() - subStart) / 1000, w = -Math.cos(2 * Math.PI * t / (wide ? 120 : 130));   // -1..1
       var z = parseFloat(getComputedStyle(d.documentElement).getPropertyValue(wide ? '--subhero-zoom' : '--subhero-zoom-sp')) || 1.15;
       subImg.style.setProperty('--px', (w * subImg.offsetWidth * (z - 1) / 2 * 0.85).toFixed(1) + 'px');   // stays inside the enlarged margin
+      subImg.style.setProperty('--py', (Math.sin(2 * Math.PI * t / 27) * Math.min(9, subImg.offsetHeight * (z - 1) / 2 * 0.9 + 8)).toFixed(1) + 'px');   // gentle up-and-down swell
     }, 50);
   }
 
