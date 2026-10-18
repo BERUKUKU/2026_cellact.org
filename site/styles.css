@@ -794,3 +794,12 @@ body { background: var(--bg); }
 /* inner picture parallax on phones too */
 @media (max-width: 820px) { .service-card .thumb img, .sd-media img { scale: 1.1; translate: 0 var(--py, 0px); will-change: translate; } }
 .section-head { will-change: translate; }
+
+/* ===== parallax bands: a window onto the world between sections; picture, mist and a big word each move at their own pace ===== */
+.world-band { position: relative; height: clamp(260px, 52vw, 520px); overflow: hidden; z-index: 1; isolation: isolate;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%); }
+.world-band img { position: absolute; left: 0; top: -22%; width: 100%; max-width: none; height: 144%; object-fit: cover; will-change: translate; translate: 0 var(--wy, 0px); }
+.world-band::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(90% 40% at 30% 100%, rgba(255,255,255,.75), rgba(255,255,255,0) 70%), radial-gradient(80% 36% at 80% 8%, rgba(255,246,250,.55), rgba(255,246,250,0) 70%); }
+.world-band .wb-word { position: absolute; z-index: 2; left: 0; top: 50%; margin-top: -.55em; white-space: nowrap; font-family: var(--serif); font-weight: 500; font-size: clamp(3rem, 15vw, 11rem); letter-spacing: .12em; line-height: 1;
+  color: rgba(255,255,255,.62); text-shadow: 0 2px 40px rgba(60,150,200,.35); will-change: translate; translate: var(--wx, 0px) 0; }
+@media (max-width: 820px) { .world-band { height: clamp(300px, 86vw, 420px); } .world-band img { width: 164%; left: -32%; translate: calc(var(--wxi, 0) * 1px) var(--wy, 0px); } }

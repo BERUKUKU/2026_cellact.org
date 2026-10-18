@@ -449,6 +449,7 @@
     world.innerHTML = '<i class="wf-a"></i><i class="wf-b"></i><i class="wf-c"></i><i class="wf-h1"></i><i class="wf-h2"></i>';
     d.body.insertBefore(world, d.body.firstChild);
     var dirSecs = Array.prototype.slice.call(d.querySelectorAll('.section, .cta, .site-footer'));
+    var dirBands = Array.prototype.slice.call(d.querySelectorAll('.world-band'));
     var dirCards = Array.prototype.slice.call(d.querySelectorAll('.service-card, .about-card, .position, .fact, .news-list li, .news-list a, .safety-photo, .info-table, .lm-mark'));
     var dirHeads = Array.prototype.slice.call(d.querySelectorAll('.section-head'));
     var dirPending = false, dirRun = function () {
@@ -458,6 +459,13 @@
       dirSecs.forEach(function (s) {
         var r = s.getBoundingClientRect(); if (r.bottom < -200 || r.top > vh + 200) return;
         s.style.setProperty('--sp', Math.max(-1.6, Math.min(1.6, (r.top + r.height / 2 - vh / 2) / vh)).toFixed(3));
+      });
+      dirBands.forEach(function (bd) {
+        var r = bd.getBoundingClientRect(); if (r.bottom < -80 || r.top > vh + 80) return;
+        var p = (r.top + r.height / 2 - vh / 2) / vh, im = bd.firstElementChild, w = bd.querySelector('.wb-word');
+        im.style.setProperty('--wy', (-p * r.height * 0.42).toFixed(1) + 'px');                       // picture travels slower than the page
+        if (phone) im.style.setProperty('--wxi', Math.max(-1, Math.min(1, p)) * -80);                                // and slides sideways a little
+        w.style.setProperty('--wx', (r.width * 0.45 - p * r.width * 0.9 - w.offsetWidth / 2).toFixed(1) + 'px');   // the big word crosses the band as you scroll
       });
       dirHeads.forEach(function (h) {
         var r = h.getBoundingClientRect(); if (r.bottom < -100 || r.top > vh + 100) return;

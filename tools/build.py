@@ -123,8 +123,13 @@ def header(current):
 '''
 
 
+def world_band(img, word, pos='50% 50%'):
+    return f'''<div class="world-band" aria-hidden="true"><img src="images/{img}" alt="" loading="lazy" style="object-position:{pos}"><span class="wb-word">{word}</span></div>
+'''
+
+
 def cta(heading='まずはお気軽にご相談ください'):
-    return f'''<section class="section cta">
+    return world_band('hero65_news.webp', 'REGENERATIVE MEDICINE', '30% 50%') + f'''<section class="section cta">
 <div class="container reveal">
 <p class="eyebrow" style="color:#fff;opacity:.85">CONTACT</p>
 <h2 class="section-title">{heading}</h2>
@@ -222,6 +227,7 @@ def build_index():
 </div>
 </section>
 
+{world_band('hero65_company.webp', 'CELL · CARE · FUTURE', '70% 50%')}
 <section class="section tint" id="business"><div class="container">
 {section_head('BUSINESS', '事業内容', True, '細胞の力を活かした3つの再生医療に取り組んでいます。')}
 <div class="service-list">{cards}</div>
