@@ -409,6 +409,13 @@
     });
   }
 
+  // Once the hero is fully covered it is hidden: the pinned (sticky) hero must not show through the contact under-layer further down
+  var hideHero = d.querySelector('main > .hero');
+  if (hideHero) {
+    var hideTick = function () { var gone = scrollY > hideHero.offsetHeight * 1.12; if (gone !== hideTick.g) { hideTick.g = gone; hideHero.style.visibility = gone ? 'hidden' : ''; } };
+    addEventListener('scroll', hideTick, { passive: true }); addEventListener('resize', hideTick); hideTick();
+  }
+
   // Hero -> content: the hero recedes (slides up a little, dims) while the next section slides over it like a curtain
   var curHero = d.querySelector('main > .hero');
   if (curHero && !reduce) {

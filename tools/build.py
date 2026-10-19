@@ -129,7 +129,7 @@ def world_band(img, word, pos='50% 50%'):
 
 
 def cta(heading='まずはお気軽にご相談ください'):
-    return f'''<section class="section cta">
+    return f'''<section class="section cta under">
 <div class="cta-bg" aria-hidden="true"><img src="images/band_arches.webp" alt="" loading="lazy"></div>
 <div class="container reveal">
 <p class="eyebrow" style="color:#fff;opacity:.85">CONTACT</p>
@@ -209,7 +209,7 @@ def build_index():
     s += header('index.html')
     s += f'''<main id="main">
 <section class="hero">
-<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=208" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
+<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=210" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
 <div class="hero-intro" aria-hidden="true"><div class="hi-veil"></div><div class="hi-logo" data-capsule-intro>{CAPSULE_SVG}</div><button type="button" class="hi-skip">スキップ</button></div>
 <div class="container hero-inner">
 <p class="hero-eyebrow">CELLACT / REGENERATIVE MEDICINE</p>
@@ -240,7 +240,6 @@ def build_index():
 <p style="margin-top:28px;text-align:center"><a class="btn btn-line" href="news-archive.html">過去の記事を見る {ICON_ARROW}</a></p>
 </div></section>
 
-{world_band('band_greenhouse.webp', '', '60% 50%')}
 {cta()}
 </main>
 '''
