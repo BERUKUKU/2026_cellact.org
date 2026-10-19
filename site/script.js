@@ -42,6 +42,13 @@
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var finePointer = window.matchMedia && matchMedia('(pointer: fine)').matches;
 
+  // TOP page: transparent header over the picture until the page is scrolled a little
+  var overHeader = d.querySelector('.site-header.over');
+  if (overHeader) {
+    var overTick = function () { overHeader.classList.toggle('solid', scrollY > 40); };
+    addEventListener('scroll', overTick, { passive: true }); overTick();
+  }
+
   // Scroll progress line under the header
   var bar = d.createElement('div');
   bar.className = 'progress'; bar.setAttribute('aria-hidden', 'true');
