@@ -115,7 +115,7 @@ def header(current):
     items += f'<li><a class="nav-cta" href="contact.php"{cur}>CONTACT</a></li>'
     return f'''<header class="site-header">
 <div class="container">
-<a class="brand" href="index.html" aria-label="{ORG} トップへ"><img src="images/cellact_logo.png?v=151" alt="" width="62" height="66"><span>{ORG}<small>REGENERATIVE MEDICINE</small></span></a>
+<a class="brand" href="index.html" aria-label="{ORG} トップへ"><img src="images/cellact_logo_white.png?v=151" alt="" width="62" height="66"><span>{ORG}<small>REGENERATIVE MEDICINE</small></span></a>
 <button class="menu-btn" aria-expanded="false" aria-controls="gnav" aria-label="メニュー"><span></span></button>
 <nav class="gnav" id="gnav" aria-label="メインメニュー"><ul>{items}</ul></nav>
 </div>
@@ -209,7 +209,7 @@ def build_index():
     s += header('index.html')
     s += f'''<main id="main">
 <section class="hero">
-<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=212" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
+<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=213" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
 <div class="hero-intro" aria-hidden="true"><div class="hi-veil"></div><div class="hi-logo" data-capsule-intro>{CAPSULE_SVG}</div><button type="button" class="hi-skip">スキップ</button></div>
 <div class="container hero-inner">
 <p class="hero-eyebrow">CELLACT / REGENERATIVE MEDICINE</p>

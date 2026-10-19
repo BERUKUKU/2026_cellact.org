@@ -40,7 +40,7 @@ $purpose = (string)($old['purpose'] ?? ($_GET['purpose'] ?? ''));
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&amp;family=Noto+Serif+JP:wght@500;600&amp;display=swap">
-<link rel="stylesheet" href="styles.css?v=1792382094">
+<link rel="stylesheet" href="styles.css?v=1792382207">
 <script>document.documentElement.classList.add('js')</script>
 
 </head>
@@ -48,7 +48,7 @@ $purpose = (string)($old['purpose'] ?? ($_GET['purpose'] ?? ''));
 <a class="skip" href="#main">本文へスキップ</a>
 <header class="site-header">
 <div class="container">
-<a class="brand" href="index.html" aria-label="一般社団法人 CELLACT トップへ"><img src="images/cellact_logo.png?v=151" alt="" width="62" height="66"><span>一般社団法人 CELLACT<small>REGENERATIVE MEDICINE</small></span></a>
+<a class="brand" href="index.html" aria-label="一般社団法人 CELLACT トップへ"><img src="images/cellact_logo_white.png?v=151" alt="" width="62" height="66"><span>一般社団法人 CELLACT<small>REGENERATIVE MEDICINE</small></span></a>
 <button class="menu-btn" aria-expanded="false" aria-controls="gnav" aria-label="メニュー"><span></span></button>
 <nav class="gnav" id="gnav" aria-label="メインメニュー"><ul><li><a href="index.html">TOP</a></li><li><a href="business.html">BUSINESS</a></li><li><a href="company.html">COMPANY</a></li><li><a href="recruit.html">RECRUIT</a></li><li><a href="news-archive.html">NEWS</a></li><li><a class="nav-cta" href="contact.php" aria-current="page">CONTACT</a></li></ul></nav>
 </div>
@@ -89,6 +89,6 @@ $purpose = (string)($old['purpose'] ?? ($_GET['purpose'] ?? ''));
 <div class="copy"><span>&copy; 2026 一般社団法人 CELLACT. All rights reserved.</span></div>
 </div>
 </footer>
-<script src="script.js?v=1792382094" defer></script>
+<script src="script.js?v=1792382207" defer></script>
 </body>
 </html>
