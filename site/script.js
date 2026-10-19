@@ -434,23 +434,53 @@
     if (t) bd.style.setProperty('--wb-top', t); if (b) bd.style.setProperty('--wb-bot', b);
   });
 
-  // Parallax bands (the picture windows between sections): picture, mist and the big word move at their own pace while scrolling
-  var dirBands = Array.prototype.slice.call(d.querySelectorAll('.world-band'));
-  if (dirBands.length && !reduce) {
-    var dirPending = false, dirRun = function () {
-      dirPending = false;
-      var vh = innerHeight, phone = innerWidth <= 820;
-      dirBands.forEach(function (bd) {
-        var r = bd.getBoundingClientRect(); if (r.bottom < -80 || r.top > vh + 80) return;
-        var p = (r.top + r.height / 2 - vh / 2) / vh, im = bd.firstElementChild, w = bd.querySelector('.wb-word');
-        im.style.setProperty('--wy', (-p * r.height * 0.42).toFixed(1) + 'px');
-        if (phone) im.style.setProperty('--wxi', Math.max(-1, Math.min(1, p)) * -80);
-        w.style.setProperty('--wx', (r.width * 0.45 - p * r.width * 0.9 - w.offsetWidth / 2).toFixed(1) + 'px');
-      });
+  // Picture bands between sections: the picture glides sideways, with drifting mist, soft hexagon cells and light dust on top
+  var bandEls = Array.prototype.slice.call(d.querySelectorAll('.world-band'));
+  bandEls.forEach(function (bd, bi) {
+    var img = bd.querySelector('img');
+    glide(img, bd, { period: function () { return innerWidth <= 820 ? 100 : 130; }, fy: function () { return 0.5; }, swell: 6, swells: 3, offset: bi * 29 });
+    if (reduce) return;
+    var cv = d.createElement('canvas'); cv.className = 'band-fx'; cv.setAttribute('aria-hidden', 'true'); bd.appendChild(cv);
+    var g = cv.getContext('2d'), W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2), hx = [], dp = [], last = 0;
+    var spr = (function () { var s = d.createElement('canvas'); s.width = s.height = 64; var q = s.getContext('2d'), gr = q.createRadialGradient(32, 32, 0, 32, 32, 32);
+      gr.addColorStop(0, 'rgba(255,255,255,.95)'); gr.addColorStop(0.18, 'rgba(255,255,255,.7)'); gr.addColorStop(0.45, 'rgba(255,252,238,.22)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); q.fillStyle = gr; q.fillRect(0, 0, 64, 64); return s; })();
+    var seedHex = function (h, first) {
+      h.x = Math.random() * W; h.y = H * (0.08 + Math.random() * 0.84); h.r = (8 + Math.random() * 18) * (innerWidth <= 820 ? 0.8 : 1);
+      h.rot = Math.random() * 6.28; h.ph = Math.random() * 6.28; h.sa = 6 + Math.random() * 12; h.fx = 0.1 + Math.random() * 0.2;
+      h.life = 8 + Math.random() * 6; h.age = first ? Math.random() * h.life : 0;
     };
-    var dirKick = function () { if (!dirPending) { dirPending = true; requestAnimationFrame(dirRun); } };
-    addEventListener('scroll', dirKick, { passive: true }); addEventListener('resize', dirKick); dirKick();
-  }
+    var seedDust = function (p, first) {
+      p.ox = Math.random() * W; p.oy = Math.random() * H; p.r = 0.9 + Math.random() * 1.3; p.big = Math.random() < 0.08; if (p.big) p.r = 2.1 + Math.random() * 1.2;
+      p.sa = 5 + Math.random() * 11; p.sb = 4 + Math.random() * 9; p.fx = 0.1 + Math.random() * 0.22; p.fy = 0.08 + Math.random() * 0.2; p.ph = Math.random() * 6.28; p.tw = 0.6 + Math.random() * 1.6;
+      p.life = 7 + Math.random() * 9; p.age = first ? Math.random() * p.life : 0;
+    };
+    var size = function () {
+      W = bd.clientWidth; H = bd.clientHeight; cv.width = W * dpr; cv.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var nh = innerWidth <= 820 ? 6 : 10, nd = Math.round(Math.min(90, Math.max(30, W * H / 5200))); hx = []; dp = [];
+      for (var i = 0; i < nh; i++) { var h = {}; seedHex(h, true); hx.push(h); } for (var k = 0; k < nd; k++) { var p = {}; seedDust(p, true); dp.push(p); }
+    };
+    size(); addEventListener('resize', size);
+    vsync(function () {
+      var r = bd.getBoundingClientRect(); if (r.bottom < -40 || r.top > innerHeight + 40) { last = 0; return; }
+      var now = Date.now(), dt = last ? Math.min((now - last) / 1000, 0.1) : 0.016, t = now / 1000; last = now;
+      g.clearRect(0, 0, W, H);
+      g.lineWidth = 1.5; g.lineJoin = 'round';
+      for (var i = 0; i < hx.length; i++) {
+        var h = hx[i]; h.age += dt; if (h.age > h.life) seedHex(h, false);
+        var u = h.age / h.life, env = Math.sin(Math.PI * u); env = env * env * (3 - 2 * Math.min(1, env * 1.6));
+        g.globalAlpha = Math.max(0, Math.min(1, env)); g.strokeStyle = 'rgba(15,107,134,.5)'; g.fillStyle = 'rgba(255,255,255,.4)';
+        softHex(g, h.x + Math.sin(t * h.fx + h.ph) * h.sa, h.y - h.age * 3, h.r * (1 + 0.05 * Math.sin(t * 1.2 + h.ph)), h.rot + Math.sin(t * 0.55 + h.ph * 1.7) * 0.3); g.fill(); g.stroke();
+      }
+      for (var k = 0; k < dp.length; k++) {
+        var p = dp[k]; p.age += dt; if (p.age > p.life) seedDust(p, false);
+        var x = p.ox + Math.sin(t * p.fx + p.ph) * p.sa, y = p.oy + Math.cos(t * p.fy + p.ph * 1.3) * p.sb;
+        var uu = p.age / p.life, a = Math.max(0, Math.sin(Math.PI * uu)) * (0.45 + 0.55 * Math.sin(t * p.tw + p.ph)); if (a < 0.02) continue;
+        var sz = p.r * (p.big ? 7 : 5.2); g.globalAlpha = Math.min(1, a * 1.15); g.drawImage(spr, x - sz, y - sz, sz * 2, sz * 2);
+        if (p.big) { g.globalAlpha = a * 0.7; g.fillStyle = '#fff'; g.fillRect(x - p.r * 3.6, y - 0.5, p.r * 7.2, 1); g.fillRect(x - 0.5, y - p.r * 3.6, 1, p.r * 7.2); }
+      }
+      g.globalAlpha = 1;
+    });
+  });
 
   // Service cards: soft 3D tilt following the pointer
   if (finePointer) d.querySelectorAll('.service-card').forEach(function (card) {
