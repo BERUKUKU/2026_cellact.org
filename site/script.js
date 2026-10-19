@@ -358,7 +358,9 @@
       anim = img.animate(kf, { duration: (o.period ? o.period() : 90) * 1000, iterations: Infinity, easing: 'linear', delay: -(o.offset || 0) * 1000 });
     };
     if (img.complete && img.naturalWidth) build(); else img.addEventListener('load', build, { once: true });
-    var rt = 0; addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(build, 120); });
+    var rt = 0, lw = 0, lh = 0, again = function () { clearTimeout(rt); rt = setTimeout(build, 120); };
+    addEventListener('resize', again);
+    if ('ResizeObserver' in window) new ResizeObserver(function () { if (frame.clientWidth !== lw || frame.clientHeight !== lh) { lw = frame.clientWidth; lh = frame.clientHeight; again(); } }).observe(frame);   // frame grew/shrank after fonts or layout changes
     if (img.parentNode && img.parentNode.tagName === 'PICTURE') img.addEventListener('load', build);
   };
   var focusY = function (img) { var m = (img.getAttribute('style') || '').match(/object-position:\s*[^;]*?\s(\d+(?:\.\d+)?)%/); return m ? parseFloat(m[1]) / 100 : 0.5; };
