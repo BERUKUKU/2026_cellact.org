@@ -66,7 +66,7 @@
     var copy = heroEl.querySelector('.hero-inner'), hint = heroEl.querySelector('.scroll-hint');
     var bgImg = heroEl.querySelector('.hero-bg img'), spAct = heroEl.querySelector('.hero-actions-sp');
     var setAux = function (v) { if (hint) hint.style.opacity = v; if (spAct) spAct.style.opacity = v; };
-    if (!reduce && !seen) {
+    if (!reduce && !seen && scrollY < heroEl.offsetHeight) {
       var iSvg = introEl.querySelector('svg'), iTravel = 66, iClose = 2.85;
       var T_BREAK = 3.9, T_FOCUS = 5.4, T_END = 6.0;                    // seconds: hexagon starts to break / picture sharp + logo gone / copy fully in
       var BLUR0 = 16;                                                   // px of blur on the picture at the start
@@ -146,6 +146,7 @@
         if (bgImg) { bgImg.style.filter = ''; bgImg.style.opacity = ''; bgImg.style.transform = ''; bgImg.classList.remove('intro-blur'); }
         layer.style.display = 'none';
       };
+      heroEl.__introFinish = iFinish;                                           // lets the scroll code end the intro if the page was restored far down
       introDelay = T_FOCUS - 0.15;                                              // headline starts as the picture comes into focus
       sizeBurst(); heroEl.classList.add('intro-on'); copy.style.opacity = 0; setAux(0);
       if (bgImg) bgImg.classList.add('intro-blur');
@@ -414,7 +415,7 @@
   // Once the hero is fully covered it is hidden: the pinned (sticky) hero must not show through the contact under-layer further down
   var hideHero = d.querySelector('main > .hero');
   if (hideHero) {
-    var hideTick = function () { var gone = scrollY > hideHero.offsetHeight * 1.12; if (gone !== hideTick.g) { hideTick.g = gone; hideHero.style.visibility = gone ? 'hidden' : ''; } };
+    var hideTick = function () { var gone = scrollY > hideHero.offsetHeight * 1.12; if (gone && hideHero.__introFinish) { hideHero.__introFinish(); hideHero.__introFinish = null; } if (gone !== hideTick.g) { hideTick.g = gone; hideHero.style.visibility = gone ? 'hidden' : ''; } };
     addEventListener('scroll', hideTick, { passive: true }); addEventListener('resize', hideTick); hideTick();
   }
 

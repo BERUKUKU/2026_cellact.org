@@ -817,3 +817,6 @@ main > section:has(+ .cta.under) { border-radius: 0 0 30px 30px; box-shadow: 0 2
   background: linear-gradient(to top, var(--navy-deep) 0, rgba(10,32,41,0) 56px),
     radial-gradient(ellipse 52% 86% at 50% 50%, rgba(15,44,56,.90) 0%, rgba(15,44,56,.78) 58%, rgba(15,44,56,.52) 100%),
     linear-gradient(rgba(15,44,56,.40), rgba(15,44,56,.40)); }
+
+/* a hidden (scrolled-past) hero must also hide its intro layer, whose own visibility would otherwise win */
+main > .hero[style*="hidden"] .hero-intro { visibility: hidden !important; display: none; }
