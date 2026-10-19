@@ -434,6 +434,10 @@
     if (t) bd.style.setProperty('--wb-top', t); if (b) bd.style.setProperty('--wb-bot', b);
   });
 
+  // CTA background: the picture glides sideways behind the veil
+  var ctaImg = d.querySelector('.cta-bg img');
+  if (ctaImg) glide(ctaImg, ctaImg.parentNode, { period: function () { return innerWidth <= 820 ? 110 : 150; }, fy: function () { return 0.6; }, swell: 5, swells: 2 });
+
   // Picture bands between sections: the picture glides sideways, with drifting mist, soft hexagon cells and light dust on top
   var bandEls = Array.prototype.slice.call(d.querySelectorAll('.world-band'));
   bandEls.forEach(function (bd, bi) {
