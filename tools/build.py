@@ -209,7 +209,7 @@ def build_index():
     s += header('index.html')
     s += f'''<main id="main">
 <section class="hero">
-<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=206" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
+<div class="hero-bg"><picture><source media="(max-width: 820px)" srcset="images/hero_top_sp.webp?v=6" width="1672" height="941"><img src="images/hero_top.webp?v=207" alt="" width="2000" height="667" fetchpriority="high"></picture></div>
 <div class="hero-intro" aria-hidden="true"><div class="hi-veil"></div><div class="hi-logo" data-capsule-intro>{CAPSULE_SVG}</div><button type="button" class="hi-skip">スキップ</button></div>
 <div class="container hero-inner">
 <p class="hero-eyebrow">CELLACT / REGENERATIVE MEDICINE</p>
@@ -228,14 +228,13 @@ def build_index():
 </div>
 </section>
 
-{world_band('band_greenhouse.webp', 'CELL · CARE · FUTURE', '60% 50%')}
 <section class="section tint" id="business"><div class="container">
 {section_head('BUSINESS', '事業内容', True, '細胞の力を活かした3つの再生医療に取り組んでいます。')}
 <div class="service-list">{cards}</div>
 <p style="text-align:center;margin-top:40px"><a class="btn btn-line" href="business.html">事業内容の詳細 {ICON_ARROW}</a></p>
 </div></section>
 
-{world_band('band_waterfall.webp', 'FROM CELLS TO LIFE', '50% 50%')}
+{world_band('band_greenhouse.webp', '', '60% 50%')}
 <section class="section warm" id="news"><div class="container">
 {section_head('NEWS', 'お知らせ', True)}
 {news_list(NEWS)}
