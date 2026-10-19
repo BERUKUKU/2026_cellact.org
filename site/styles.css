@@ -805,3 +805,7 @@ main > section:not(.hero):not(.cta) { z-index: 2; }
 .cta.under { position: sticky; bottom: 0; z-index: -1; }
 main > section:has(+ .cta.under) { border-radius: 0 0 30px 30px; box-shadow: 0 26px 50px rgba(40,100,140,.18); }
 @media (max-width: 820px) { main > section:has(+ .cta.under) { border-radius: 0 0 22px 22px; } }
+
+/* business page: the picture is positioned by the glide animation, so the frame keeps its own shape */
+.sd-media { aspect-ratio: 16 / 10; }
+.sd-media > img { position: absolute; }
