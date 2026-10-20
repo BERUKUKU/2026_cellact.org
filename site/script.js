@@ -441,17 +441,18 @@
   // Drifting fog over the whole TOP hero: soft white patches that appear at random places, drift, thin out and come back elsewhere
   var fogBg = d.querySelector('.hero .hero-bg');
   if (fogBg && !reduce) {
-    var fogCount = innerWidth <= 820 ? 5 : 7, fogPlace = function (f) {
+    var fogCount = innerWidth <= 820 ? 5 : 7, fogPlace = function (f, slot) {
       var w = 44 + Math.random() * 40, h = 24 + Math.random() * 26;                       // % of the frame
+      var cx = slot == null ? Math.random() * 100 : (slot + Math.random()) / fogCount * 100;   // initial patches are spread evenly across the width, later ones land anywhere
+      var cy = 12 + Math.random() * 76;
       f.style.setProperty('--fw', w.toFixed(1) + '%'); f.style.setProperty('--fh', h.toFixed(1) + '%');
-      f.style.left = (Math.random() * (100 - w * 0.6) - w * 0.2).toFixed(1) + '%'; f.style.top = (Math.random() * (100 - h * 0.5) - h * 0.25).toFixed(1) + '%';
+      f.style.left = (cx - w / 2).toFixed(1) + '%'; f.style.top = (cy - h / 2).toFixed(1) + '%';
       f.style.setProperty('--dx', ((Math.random() < 0.5 ? -1 : 1) * (6 + Math.random() * 14)).toFixed(1) + '%');
       f.style.setProperty('--o', (0.5 + Math.random() * 0.22).toFixed(2));
-      f.style.animationDuration = (20 + Math.random() * 18).toFixed(1) + 's';
     };
     for (var fi = 0; fi < fogCount; fi++) {
       var fg = d.createElement('i'); fg.className = 'fog-patch'; fg.setAttribute('aria-hidden', 'true');
-      fogPlace(fg); fg.style.animationDelay = (-Math.random() * 20).toFixed(1) + 's';
+      fogPlace(fg, fi); fg.style.animationDuration = (22 + Math.random() * 14).toFixed(1) + 's'; fg.style.animationDelay = (-Math.random() * 20).toFixed(1) + 's';   // duration is fixed per patch: changing it mid-run makes the animation jump (a visible flash)
       fg.addEventListener('animationiteration', (function (n) { return function () { fogPlace(n); }; })(fg));
       fogBg.appendChild(fg);
     }
