@@ -369,6 +369,7 @@
         var dur2 = ((o.mirror ? 2 : 1) * cw / (o.speed ? o.speed() : 16)) * 1000, f0 = o.startFrac ? o.startFrac() : 0;   // startFrac: where in the loop (0..1) the first view begins
         anim = track.animate(kf2, { duration: dur2, iterations: Infinity, easing: 'linear', delay: -(o.offset || 0) * 1000 - f0 * dur2 });
         if (prog != null) { anim.effect.updateTiming({ delay: 0 }); anim.currentTime = prog * dur2; }
+        var ctl = frame.__glideCtl = frame.__glideCtl || {}; ctl.anim = anim; ctl.cw = cw; ctl.dur = dur2;   // handle for drag-to-look-around
         return;
       }
       img.style.cssText += ';position:absolute;left:0;top:0;max-width:none;width:' + cw.toFixed(1) + 'px;height:' + ch.toFixed(1) + 'px;object-fit:fill;object-position:0 0';
@@ -390,6 +391,45 @@
   var focusY = function (img) { var m = (img.getAttribute('style') || '').match(/object-position:\s*[^;]*?\s(\d+(?:\.\d+)?)%/); return m ? parseFloat(m[1]) / 100 : 0.5; };
   var heroImg = d.querySelector('.hero .hero-bg img'), subHeroImg = d.querySelector('.page-hero .hero-bg img');
   if (heroImg) glide(heroImg, heroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 120 : 90; }, zoom: function () { return innerWidth <= 820 ? 0.62 : 1; }, startFrac: function () { return innerWidth <= 820 ? 0.285 : 0; }, speed: function () { return innerWidth <= 820 ? 14 : 18; }, loop: true, fy: function () { return innerWidth <= 820 ? 1 : 0.8; }, swell: 8, swells: 3 });   // PC: a 2.4:1 picture in a 2.3:1 frame has no spare width, so it is enlarged a little to leave room to glide
+  // Drag to look around: grab the TOP hero's panorama and move it by hand; it keeps a little momentum and then drifts on by itself again
+  (function () {
+    var hero = d.querySelector('main > .hero'), bg = hero && hero.querySelector('.hero-bg');
+    if (!hero || !bg || reduce) return;
+    var s = null, dragging = false, vel = 0, lastX = 0, lastT = 0, raf = 0;
+    var hint = d.createElement('div'); hint.className = 'drag-hint'; hint.setAttribute('aria-hidden', 'true'); hint.innerHTML = '<span>◀</span> ドラッグして景色を見る <span>▶</span>'; hero.appendChild(hint);
+    var hideHint = function () { hint.classList.remove('on'); };
+    setTimeout(function () { if (!hero.classList.contains('intro-on')) hint.classList.add('on'); }, 9500); setTimeout(hideHint, 17000);
+    var norm = function (p) { return ((p % 1) + 1) % 1; };
+    hero.addEventListener('pointerdown', function (e) {
+      var c = bg.__glideCtl; if (!c || !c.anim || hero.classList.contains('intro-on')) return;
+      if (e.target.closest('a, button')) return; if (e.pointerType === 'mouse' && e.button !== 0) return;
+      cancelAnimationFrame(raf); var p = c.anim.effect.getComputedTiming().progress; if (p == null) return;
+      c.anim.effect.updateTiming({ delay: 0 }); c.anim.currentTime = p * c.dur;
+      s = { x: e.clientX, y: e.clientY, p: p, id: e.pointerId }; dragging = false; vel = 0; lastX = e.clientX; lastT = performance.now();
+    });
+    hero.addEventListener('pointermove', function (e) {
+      if (!s) return; var c = bg.__glideCtl, dx = e.clientX - s.x, dy = e.clientY - s.y;
+      if (!dragging) {
+        if (Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy) * 1.2) { dragging = true; c.anim.pause(); hero.classList.add('dragging'); try { hero.setPointerCapture(s.id); } catch (er) {} hideHint(); }
+        else if (Math.abs(dy) > 10) { s = null; return; }
+      }
+      if (!dragging) return;
+      var now = performance.now(), dt = Math.max(1, now - lastT); vel = 0.8 * vel + 0.2 * ((e.clientX - lastX) / dt); lastX = e.clientX; lastT = now;
+      c.anim.currentTime = norm(s.p - dx / c.cw) * c.dur;                                   // dragging right = looking left
+    });
+    var release = function () {
+      if (!s) return; var c = bg.__glideCtl, was = dragging; s = null; dragging = false; hero.classList.remove('dragging'); if (!was || !c.anim) return;
+      var last = performance.now(), v = vel;                                                // px per ms
+      var step = function () {
+        var now = performance.now(), dt = now - last; last = now; v *= Math.pow(0.94, dt / 16.7);
+        var p = c.anim.effect.getComputedTiming().progress || 0; c.anim.currentTime = norm(p - v * dt / c.cw) * c.dur;
+        if (Math.abs(v) > 0.03) raf = requestAnimationFrame(step); else c.anim.play();
+      };
+      raf = requestAnimationFrame(step);
+    };
+    hero.addEventListener('pointerup', release); hero.addEventListener('pointercancel', release);
+  })();
+
   if (subHeroImg) glide(subHeroImg, subHeroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 65 : 55; }, zoom: function () { return parseFloat(getComputedStyle(d.documentElement).getPropertyValue(innerWidth <= 820 ? '--subhero-zoom-sp' : '--subhero-zoom')) || 1.1; }, fy: function () { return focusY(subHeroImg); }, swell: 10, swells: 3 });
 
   // Light dust: many tiny white particles drift slowly and twinkle across the whole hero picture (a different role from the hexagon cells)

@@ -853,3 +853,14 @@ main > .hero[style*="hidden"] .hero-intro { visibility: hidden !important; displ
   .hero::after { display: none; }
   .hero::before { -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 52%, transparent 76%); mask-image: linear-gradient(to bottom, #000 0, #000 52%, transparent 76%); }
 }
+
+/* drag to look around (TOP hero) */
+main > .hero { touch-action: pan-y; cursor: grab; }
+main > .hero a, main > .hero button { cursor: pointer; }
+main > .hero.dragging { cursor: grabbing; user-select: none; -webkit-user-select: none; }
+.drag-hint { position: absolute; z-index: 3; right: 90px; bottom: 34px; padding: 8px 16px; border-radius: 999px; font-size: .78rem; letter-spacing: .08em; color: #0a4a63; background: rgba(255,255,255,.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 4px 16px rgba(10,74,99,.14); opacity: 0; transform: translateY(6px); transition: opacity .8s ease, transform .8s ease; pointer-events: none; }
+.drag-hint.on { opacity: 1; transform: none; animation: dragNudge 2.4s ease-in-out infinite; }
+.drag-hint span { display: inline-block; opacity: .6; font-size: .7em; }
+@keyframes dragNudge { 0%, 100% { translate: 0 0; } 50% { translate: 6px 0; } }
+@media (max-width: 820px) { .drag-hint { right: auto; left: 50%; bottom: 120px; margin-left: -88px; } }
+@media (prefers-reduced-motion: reduce) { .drag-hint { display: none; } }
