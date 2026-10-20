@@ -353,12 +353,13 @@
       if (o.loop) { cw = Math.round(cw); ch = Math.round(ch); my = Math.max(0, ch - H);   // whole pixels so tiles meet exactly                                                   // endless mirror-tiled strip: A | A' | A | A' ... slides one full period and starts over without stopping
         var track = frame.querySelector('.glide-track');
         if (!track) {
+          var cs = img.currentSrc; if (cs) img.src = cs;                    // keep the size chosen by <picture> once the image leaves it
           track = d.createElement('div'); track.className = 'glide-track'; track.setAttribute('aria-hidden', 'true');
           frame.insertBefore(track, frame.firstChild); track.appendChild(img);
           for (var k = 1; k < (o.mirror ? 4 : 3); k++) { var cl = img.cloneNode(); cl.removeAttribute('style'); cl.removeAttribute('fetchpriority'); cl.removeAttribute('loading'); cl.className = 'glide-tile'; track.appendChild(cl); }
           var pic = frame.querySelector('picture'); if (pic && !pic.firstElementChild) pic.style.display = 'none';
         }
-        var tiles = track.children, ay2 = Math.min(o.swell == null ? 8 : o.swell, my * 0.45), base2 = -my * fy, N2 = 240, kf2 = [];
+        var tiles = track.children, ay2 = Math.min(o.swell == null ? 8 : o.swell, my * 0.45), base2 = ch >= H ? -my * fy : (H - ch) * fy, N2 = 240, kf2 = [];   // picture shorter than its frame: it is anchored by fy (1 = bottom)
         for (var t = 0; t < tiles.length; t++) {
           tiles[t].style.cssText += ';position:absolute;top:0;max-width:none;object-fit:fill;object-position:0 0;width:' + (cw + 2) + 'px;height:' + ch + 'px;left:' + (t * cw) + 'px;translate:none;scale:' + (o.mirror && t % 2 ? '-1 1' : 'none');
         }
@@ -384,7 +385,7 @@
   };
   var focusY = function (img) { var m = (img.getAttribute('style') || '').match(/object-position:\s*[^;]*?\s(\d+(?:\.\d+)?)%/); return m ? parseFloat(m[1]) / 100 : 0.5; };
   var heroImg = d.querySelector('.hero .hero-bg img'), subHeroImg = d.querySelector('.page-hero .hero-bg img');
-  if (heroImg) glide(heroImg, heroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 120 : 90; }, zoom: function () { return 1; }, speed: function () { return innerWidth <= 820 ? 14 : 18; }, loop: true, fy: function () { return 0.8; }, swell: 8, swells: 3 });   // PC: a 2.4:1 picture in a 2.3:1 frame has no spare width, so it is enlarged a little to leave room to glide
+  if (heroImg) glide(heroImg, heroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 120 : 90; }, zoom: function () { return innerWidth <= 820 ? 0.62 : 1; }, speed: function () { return innerWidth <= 820 ? 14 : 18; }, loop: true, fy: function () { return innerWidth <= 820 ? 1 : 0.8; }, swell: 8, swells: 3 });   // PC: a 2.4:1 picture in a 2.3:1 frame has no spare width, so it is enlarged a little to leave room to glide
   if (subHeroImg) glide(subHeroImg, subHeroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 65 : 55; }, zoom: function () { return parseFloat(getComputedStyle(d.documentElement).getPropertyValue(innerWidth <= 820 ? '--subhero-zoom-sp' : '--subhero-zoom')) || 1.1; }, fy: function () { return focusY(subHeroImg); }, swell: 10, swells: 3 });
 
   // Light dust: many tiny white particles drift slowly and twinkle across the whole hero picture (a different role from the hexagon cells)
