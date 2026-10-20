@@ -846,3 +846,10 @@ main > .hero[style*="hidden"] .hero-intro { visibility: hidden !important; displ
   background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,.95) 0%, rgba(255,255,255,.72) 42%, rgba(255,255,255,0) 76%); animation: fogLife 28s ease-in-out infinite; }
 @keyframes fogLife { 0% { opacity: 0; transform: translate3d(0,0,0) scale(.92); } 50% { opacity: var(--o, .3); } 100% { opacity: 0; transform: translate3d(var(--dx, 10%),0,0) scale(1.08); } }
 @media (prefers-reduced-motion: reduce) { .fog-patch { display: none; } }
+
+/* TOP hero: no always-on fog at the lower left — the haze only backs the headline area (fades out below it) and the rest is the random fog patches */
+.hero .hero-bg::after { display: none; }
+@media (min-width: 821px) {
+  .hero::after { display: none; }
+  .hero::before { -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 52%, transparent 76%); mask-image: linear-gradient(to bottom, #000 0, #000 52%, transparent 76%); }
+}
