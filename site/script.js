@@ -441,12 +441,12 @@
   // Drifting fog over the whole TOP hero: soft white patches that appear at random places, drift, thin out and come back elsewhere
   var fogBg = d.querySelector('.hero .hero-bg');
   if (fogBg && !reduce) {
-    var fogCount = innerWidth <= 820 ? 6 : 9, fogPlace = function (f) {
-      var w = 52 + Math.random() * 46, h = 30 + Math.random() * 30;                       // % of the frame
+    var fogCount = innerWidth <= 820 ? 5 : 7, fogPlace = function (f) {
+      var w = 44 + Math.random() * 40, h = 24 + Math.random() * 26;                       // % of the frame
       f.style.setProperty('--fw', w.toFixed(1) + '%'); f.style.setProperty('--fh', h.toFixed(1) + '%');
       f.style.left = (Math.random() * (100 - w * 0.6) - w * 0.2).toFixed(1) + '%'; f.style.top = (Math.random() * (100 - h * 0.5) - h * 0.25).toFixed(1) + '%';
       f.style.setProperty('--dx', ((Math.random() < 0.5 ? -1 : 1) * (6 + Math.random() * 14)).toFixed(1) + '%');
-      f.style.setProperty('--o', (0.5 + Math.random() * 0.25).toFixed(2));
+      f.style.setProperty('--o', (0.34 + Math.random() * 0.2).toFixed(2));
       f.style.animationDuration = (20 + Math.random() * 18).toFixed(1) + 's';
     };
     for (var fi = 0; fi < fogCount; fi++) {

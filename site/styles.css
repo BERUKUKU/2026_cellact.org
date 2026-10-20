@@ -831,8 +831,8 @@ main > .hero[style*="hidden"] .hero-intro { visibility: hidden !important; displ
 /* TOP hero haze (PC): anchored to the hero's own left edge instead of the centred text column, so it never stops short of the screen edge */
 @media (min-width: 821px) {
   .hero .hero-inner::before { display: none; }
-  .hero::before { content: ""; position: absolute; z-index: -1; left: 0; top: 0; bottom: 0; width: min(80vw, 1400px); pointer-events: none;
-    background: radial-gradient(ellipse 100% 130% at 0% 46%, rgba(247,255,251,.82) 0%, rgba(247,255,251,.58) 40%, rgba(247,255,251,0) 80%); filter: blur(6px); }
+  .hero::before { content: ""; position: absolute; z-index: -1; left: 0; top: 0; bottom: 0; width: min(50vw, 880px); pointer-events: none;
+    background: radial-gradient(ellipse 100% 120% at 0% 46%, rgba(247,255,251,.80) 0%, rgba(247,255,251,.52) 34%, rgba(247,255,251,0) 70%); filter: blur(6px); }
 }
 
 /* phone TOP hero: the wide picture sits in the lower half; the sky colour of its top edge fills the space above for the copy */
