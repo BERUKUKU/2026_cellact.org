@@ -384,7 +384,7 @@
   };
   var focusY = function (img) { var m = (img.getAttribute('style') || '').match(/object-position:\s*[^;]*?\s(\d+(?:\.\d+)?)%/); return m ? parseFloat(m[1]) / 100 : 0.5; };
   var heroImg = d.querySelector('.hero .hero-bg img'), subHeroImg = d.querySelector('.page-hero .hero-bg img');
-  if (heroImg) glide(heroImg, heroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 120 : 90; }, zoom: function () { return innerWidth <= 820 ? 1.25 : 1.4; }, speed: function () { return innerWidth <= 820 ? 14 : 18; }, loop: true, fy: function () { return 0.8; }, swell: 8, swells: 3 });   // PC: a 2.4:1 picture in a 2.3:1 frame has no spare width, so it is enlarged a little to leave room to glide
+  if (heroImg) glide(heroImg, heroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 120 : 90; }, zoom: function () { return 1; }, speed: function () { return innerWidth <= 820 ? 14 : 18; }, loop: true, fy: function () { return 0.8; }, swell: 8, swells: 3 });   // PC: a 2.4:1 picture in a 2.3:1 frame has no spare width, so it is enlarged a little to leave room to glide
   if (subHeroImg) glide(subHeroImg, subHeroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 65 : 55; }, zoom: function () { return parseFloat(getComputedStyle(d.documentElement).getPropertyValue(innerWidth <= 820 ? '--subhero-zoom-sp' : '--subhero-zoom')) || 1.1; }, fy: function () { return focusY(subHeroImg); }, swell: 10, swells: 3 });
 
   // Light dust: many tiny white particles drift slowly and twinkle across the whole hero picture (a different role from the hexagon cells)

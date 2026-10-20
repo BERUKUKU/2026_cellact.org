@@ -209,7 +209,7 @@ def build_index():
     s += header('index.html')
     s += f'''<main id="main">
 <section class="hero">
-<div class="hero-bg"><picture><img src="images/hero_top.webp?v=223" alt="" width="1940" height="667" fetchpriority="high"></picture></div>
+<div class="hero-bg"><picture><img src="images/hero_top.webp?v=224" alt="" width="1940" height="333" fetchpriority="high"></picture></div>
 <div class="hero-intro" aria-hidden="true"><div class="hi-veil"></div><div class="hi-logo" data-capsule-intro>{CAPSULE_SVG}</div><button type="button" class="hi-skip">スキップ</button></div>
 <div class="container hero-inner">
 <p class="hero-eyebrow">CELLACT / REGENERATIVE MEDICINE</p>
