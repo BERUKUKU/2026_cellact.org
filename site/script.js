@@ -365,7 +365,8 @@
         }
         track.style.cssText = 'position:absolute;left:0;top:0;height:' + ch.toFixed(1) + 'px;width:' + (cw * tiles.length).toFixed(1) + 'px;will-change:translate';
         for (var q = 0; q <= N2; q++) { var u2 = q / N2; kf2.push({ translate: (-(o.mirror ? 2 : 1) * cw * u2).toFixed(2) + 'px ' + (base2 + ay2 * Math.sin(2 * Math.PI * u2 * (o.swells || 3))).toFixed(2) + 'px' }); }
-        anim = track.animate(kf2, { duration: ((o.mirror ? 2 : 1) * cw / (o.speed ? o.speed() : 16)) * 1000, iterations: Infinity, easing: 'linear', delay: -(o.offset || 0) * 1000 });
+        var dur2 = ((o.mirror ? 2 : 1) * cw / (o.speed ? o.speed() : 16)) * 1000, f0 = o.startFrac ? o.startFrac() : 0;   // startFrac: where in the loop (0..1) the first view begins
+        anim = track.animate(kf2, { duration: dur2, iterations: Infinity, easing: 'linear', delay: -(o.offset || 0) * 1000 - f0 * dur2 });
         return;
       }
       img.style.cssText += ';position:absolute;left:0;top:0;max-width:none;width:' + cw.toFixed(1) + 'px;height:' + ch.toFixed(1) + 'px;object-fit:fill;object-position:0 0';
@@ -385,7 +386,7 @@
   };
   var focusY = function (img) { var m = (img.getAttribute('style') || '').match(/object-position:\s*[^;]*?\s(\d+(?:\.\d+)?)%/); return m ? parseFloat(m[1]) / 100 : 0.5; };
   var heroImg = d.querySelector('.hero .hero-bg img'), subHeroImg = d.querySelector('.page-hero .hero-bg img');
-  if (heroImg) glide(heroImg, heroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 120 : 90; }, zoom: function () { return innerWidth <= 820 ? 0.62 : 1; }, speed: function () { return innerWidth <= 820 ? 14 : 18; }, loop: true, fy: function () { return innerWidth <= 820 ? 1 : 0.8; }, swell: 8, swells: 3 });   // PC: a 2.4:1 picture in a 2.3:1 frame has no spare width, so it is enlarged a little to leave room to glide
+  if (heroImg) glide(heroImg, heroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 120 : 90; }, zoom: function () { return innerWidth <= 820 ? 0.62 : 1; }, startFrac: function () { return innerWidth <= 820 ? 0.30 : 0; }, speed: function () { return innerWidth <= 820 ? 14 : 18; }, loop: true, fy: function () { return innerWidth <= 820 ? 1 : 0.8; }, swell: 8, swells: 3 });   // PC: a 2.4:1 picture in a 2.3:1 frame has no spare width, so it is enlarged a little to leave room to glide
   if (subHeroImg) glide(subHeroImg, subHeroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 65 : 55; }, zoom: function () { return parseFloat(getComputedStyle(d.documentElement).getPropertyValue(innerWidth <= 820 ? '--subhero-zoom-sp' : '--subhero-zoom')) || 1.1; }, fy: function () { return focusY(subHeroImg); }, swell: 10, swells: 3 });
 
   // Light dust: many tiny white particles drift slowly and twinkle across the whole hero picture (a different role from the hexagon cells)
