@@ -349,6 +349,23 @@
       if (!nw || !nh || !W || !H) return;
       var z = o.zoom ? o.zoom() : 1, sc = Math.max(W / nw, H / nh) * z, cw = nw * sc, ch = nh * sc;
       var fy = o.fy ? o.fy() : 0.5, rx = Math.max(0, cw - W), my = Math.max(0, ch - H);
+      if (o.loop) {                                                   // endless mirror-tiled strip: A | A' | A | A' ... slides one full period and starts over without stopping
+        var track = frame.querySelector('.glide-track');
+        if (!track) {
+          track = d.createElement('div'); track.className = 'glide-track'; track.setAttribute('aria-hidden', 'true');
+          frame.insertBefore(track, frame.firstChild); track.appendChild(img);
+          for (var k = 1; k < 4; k++) { var cl = img.cloneNode(); cl.removeAttribute('fetchpriority'); cl.removeAttribute('loading'); cl.className = 'glide-tile'; track.appendChild(cl); }
+          var pic = frame.querySelector('picture'); if (pic && !pic.firstElementChild) pic.style.display = 'none';
+        }
+        var tiles = track.children, ay2 = Math.min(o.swell == null ? 8 : o.swell, my * 0.45), base2 = -my * fy, N2 = 240, kf2 = [];
+        for (var t = 0; t < tiles.length; t++) {
+          tiles[t].style.cssText += ';position:absolute;top:0;max-width:none;object-fit:fill;object-position:0 0;width:' + cw.toFixed(1) + 'px;height:' + ch.toFixed(1) + 'px;left:' + (t * cw).toFixed(1) + 'px;translate:none;scale:' + (t % 2 ? '-1 1' : 'none');
+        }
+        track.style.cssText = 'position:absolute;left:0;top:0;height:' + ch.toFixed(1) + 'px;width:' + (cw * 4).toFixed(1) + 'px;will-change:translate';
+        for (var q = 0; q <= N2; q++) { var u2 = q / N2; kf2.push({ translate: (-2 * cw * u2).toFixed(2) + 'px ' + (base2 + ay2 * Math.sin(2 * Math.PI * u2 * (o.swells || 3))).toFixed(2) + 'px' }); }
+        anim = track.animate(kf2, { duration: (2 * cw / (o.speed ? o.speed() : 16)) * 1000, iterations: Infinity, easing: 'linear', delay: -(o.offset || 0) * 1000 });
+        return;
+      }
       img.style.cssText += ';position:absolute;left:0;top:0;max-width:none;width:' + cw.toFixed(1) + 'px;height:' + ch.toFixed(1) + 'px;object-fit:fill;object-position:0 0';
       var ay = Math.min(o.swell == null ? 8 : o.swell, my * 0.45), base = -my * fy, N = 240, kf = [], px = o.prop === 'transform';
       for (var i = 0; i <= N; i++) {
@@ -366,7 +383,7 @@
   };
   var focusY = function (img) { var m = (img.getAttribute('style') || '').match(/object-position:\s*[^;]*?\s(\d+(?:\.\d+)?)%/); return m ? parseFloat(m[1]) / 100 : 0.5; };
   var heroImg = d.querySelector('.hero .hero-bg img'), subHeroImg = d.querySelector('.page-hero .hero-bg img');
-  if (heroImg) glide(heroImg, heroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 120 : 90; }, zoom: function () { return innerWidth <= 820 ? 1 : 1.2; }, fy: function () { return 0.55; }, swell: 8, swells: 3 });   // PC: a 2.4:1 picture in a 2.3:1 frame has no spare width, so it is enlarged a little to leave room to glide
+  if (heroImg) glide(heroImg, heroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 120 : 90; }, zoom: function () { return 1; }, speed: function () { return innerWidth <= 820 ? 14 : 18; }, loop: true, fy: function () { return 0.55; }, swell: 8, swells: 3 });   // PC: a 2.4:1 picture in a 2.3:1 frame has no spare width, so it is enlarged a little to leave room to glide
   if (subHeroImg) glide(subHeroImg, subHeroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 65 : 55; }, zoom: function () { return parseFloat(getComputedStyle(d.documentElement).getPropertyValue(innerWidth <= 820 ? '--subhero-zoom-sp' : '--subhero-zoom')) || 1.1; }, fy: function () { return focusY(subHeroImg); }, swell: 10, swells: 3 });
 
   // Light dust: many tiny white particles drift slowly and twinkle across the whole hero picture (a different role from the hexagon cells)
