@@ -832,7 +832,7 @@ main > .hero[style*="hidden"] .hero-intro { visibility: hidden !important; displ
 @media (min-width: 821px) {
   .hero .hero-inner::before { display: none; }
   .hero::before { content: ""; position: absolute; z-index: -1; left: 0; top: 0; bottom: 0; width: min(50vw, 880px); pointer-events: none;
-    background: radial-gradient(ellipse 100% 120% at 0% 46%, rgba(247,255,251,.80) 0%, rgba(247,255,251,.52) 34%, rgba(247,255,251,0) 70%); filter: blur(6px); }
+    background: radial-gradient(ellipse 100% 120% at 0% 46%, rgba(247,255,251,.92) 0%, rgba(247,255,251,.70) 36%, rgba(247,255,251,0) 74%); filter: blur(6px); }
 }
 
 /* phone TOP hero: the wide picture sits in the lower half; the sky colour of its top edge fills the space above for the copy */
@@ -843,7 +843,7 @@ main > .hero[style*="hidden"] .hero-intro { visibility: hidden !important; displ
 
 /* drifting fog patches over the TOP hero (compositor-only: transform + opacity) */
 .fog-patch { position: absolute; z-index: 1; display: block; width: var(--fw, 50%); height: var(--fh, 30%); pointer-events: none; opacity: 0; will-change: transform, opacity;
-  background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,.95) 0%, rgba(255,255,255,.72) 42%, rgba(255,255,255,0) 76%); animation: fogLife 28s ease-in-out infinite; }
+  background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,.82) 44%, rgba(255,255,255,0) 78%); animation: fogLife 28s ease-in-out infinite; }
 @keyframes fogLife { 0% { opacity: 0; transform: translate3d(0,0,0) scale(.92); } 50% { opacity: var(--o, .3); } 100% { opacity: 0; transform: translate3d(var(--dx, 10%),0,0) scale(1.08); } }
 @media (prefers-reduced-motion: reduce) { .fog-patch { display: none; } }
 

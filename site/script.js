@@ -446,7 +446,7 @@
       f.style.setProperty('--fw', w.toFixed(1) + '%'); f.style.setProperty('--fh', h.toFixed(1) + '%');
       f.style.left = (Math.random() * (100 - w * 0.6) - w * 0.2).toFixed(1) + '%'; f.style.top = (Math.random() * (100 - h * 0.5) - h * 0.25).toFixed(1) + '%';
       f.style.setProperty('--dx', ((Math.random() < 0.5 ? -1 : 1) * (6 + Math.random() * 14)).toFixed(1) + '%');
-      f.style.setProperty('--o', (0.34 + Math.random() * 0.2).toFixed(2));
+      f.style.setProperty('--o', (0.5 + Math.random() * 0.22).toFixed(2));
       f.style.animationDuration = (20 + Math.random() * 18).toFixed(1) + 's';
     };
     for (var fi = 0; fi < fogCount; fi++) {
