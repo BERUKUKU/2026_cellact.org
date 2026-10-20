@@ -438,6 +438,25 @@
     addEventListener('scroll', hideTick, { passive: true }); addEventListener('resize', hideTick); hideTick();
   }
 
+  // Drifting fog over the whole TOP hero: soft white patches that appear at random places, drift, thin out and come back elsewhere
+  var fogBg = d.querySelector('.hero .hero-bg');
+  if (fogBg && !reduce) {
+    var fogCount = innerWidth <= 820 ? 5 : 7, fogPlace = function (f) {
+      var w = 34 + Math.random() * 40, h = 18 + Math.random() * 26;                       // % of the frame
+      f.style.setProperty('--fw', w.toFixed(1) + '%'); f.style.setProperty('--fh', h.toFixed(1) + '%');
+      f.style.left = (Math.random() * (100 - w * 0.6) - w * 0.2).toFixed(1) + '%'; f.style.top = (Math.random() * (100 - h * 0.5) - h * 0.25).toFixed(1) + '%';
+      f.style.setProperty('--dx', ((Math.random() < 0.5 ? -1 : 1) * (6 + Math.random() * 14)).toFixed(1) + '%');
+      f.style.setProperty('--o', (0.22 + Math.random() * 0.2).toFixed(2));
+      f.style.animationDuration = (20 + Math.random() * 18).toFixed(1) + 's';
+    };
+    for (var fi = 0; fi < fogCount; fi++) {
+      var fg = d.createElement('i'); fg.className = 'fog-patch'; fg.setAttribute('aria-hidden', 'true');
+      fogPlace(fg); fg.style.animationDelay = (-Math.random() * 20).toFixed(1) + 's';
+      fg.addEventListener('animationiteration', (function (n) { return function () { fogPlace(n); }; })(fg));
+      fogBg.appendChild(fg);
+    }
+  }
+
   // Hero -> content: the hero recedes (slides up a little, dims) while the next section slides over it like a curtain
   var curHero = d.querySelector('main > .hero');
   if (curHero && !reduce) {

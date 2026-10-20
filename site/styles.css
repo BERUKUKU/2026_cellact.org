@@ -840,3 +840,9 @@ main > .hero[style*="hidden"] .hero-intro { visibility: hidden !important; displ
   .hero .hero-bg { background: linear-gradient(#3ddffc, #4fe5fc); }
   .hero .hero-bg .glide-track img { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14%); mask-image: linear-gradient(to bottom, transparent 0, #000 14%); }
 }
+
+/* drifting fog patches over the TOP hero (compositor-only: transform + opacity) */
+.fog-patch { position: absolute; z-index: 1; display: block; width: var(--fw, 50%); height: var(--fh, 30%); pointer-events: none; opacity: 0; will-change: transform, opacity;
+  background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,.85) 0%, rgba(255,255,255,.55) 38%, rgba(255,255,255,0) 72%); animation: fogLife 28s ease-in-out infinite; }
+@keyframes fogLife { 0% { opacity: 0; transform: translate3d(0,0,0) scale(.92); } 50% { opacity: var(--o, .3); } 100% { opacity: 0; transform: translate3d(var(--dx, 10%),0,0) scale(1.08); } }
+@media (prefers-reduced-motion: reduce) { .fog-patch { display: none; } }
