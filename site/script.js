@@ -344,8 +344,8 @@
   // Web Animation (sampled sine path), so the motion is smooth instead of stepping; a gentle up-and-down swell rides on top.
   var glide = function (img, frame, o) {
     if (!img || !frame || reduce) return;
-    var anim = null, build = function () {
-      if (anim) { anim.cancel(); anim = null; }
+    var anim = null, prog = null, build = function () {
+      if (anim) { var pg = anim.effect.getComputedTiming().progress; if (pg != null) prog = pg; anim.cancel(); anim = null; }   // a rebuild (resize, picture swap, late layout) must continue from where the motion is, not restart
       var nw = img.naturalWidth, nh = img.naturalHeight, W = frame.clientWidth, H = frame.clientHeight;
       if (!nw || !nh || !W || !H) return;
       var z = o.zoom ? o.zoom() : 1, sc = Math.max(W / nw, H / nh) * z, cw = nw * sc, ch = nh * sc;
@@ -367,6 +367,7 @@
         for (var q = 0; q <= N2; q++) { var u2 = q / N2; kf2.push({ translate: (-(o.mirror ? 2 : 1) * cw * u2).toFixed(2) + 'px ' + (base2 + ay2 * Math.sin(2 * Math.PI * u2 * (o.swells || 3))).toFixed(2) + 'px' }); }
         var dur2 = ((o.mirror ? 2 : 1) * cw / (o.speed ? o.speed() : 16)) * 1000, f0 = o.startFrac ? o.startFrac() : 0;   // startFrac: where in the loop (0..1) the first view begins
         anim = track.animate(kf2, { duration: dur2, iterations: Infinity, easing: 'linear', delay: -(o.offset || 0) * 1000 - f0 * dur2 });
+        if (prog != null) { anim.effect.updateTiming({ delay: 0 }); anim.currentTime = prog * dur2; }
         return;
       }
       img.style.cssText += ';position:absolute;left:0;top:0;max-width:none;width:' + cw.toFixed(1) + 'px;height:' + ch.toFixed(1) + 'px;object-fit:fill;object-position:0 0';
@@ -377,6 +378,7 @@
       }
       if (!px) img.style.setProperty('scale', 'none');
       anim = img.animate(kf, { duration: (o.period ? o.period() : 90) * 1000, iterations: Infinity, easing: 'linear', delay: -(o.offset || 0) * 1000 });
+      if (prog != null) { anim.effect.updateTiming({ delay: 0 }); anim.currentTime = prog * (o.period ? o.period() : 90) * 1000; }
     };
     if (img.complete && img.naturalWidth) build(); else img.addEventListener('load', build, { once: true });
     var rt = 0, lw = 0, lh = 0, again = function () { clearTimeout(rt); rt = setTimeout(build, 120); };
