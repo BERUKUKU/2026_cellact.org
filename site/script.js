@@ -64,7 +64,8 @@
     var seen = false;   // plays on every visit / reload (set to a sessionStorage check to show it once per tab)
     var layer = heroEl.querySelector('.hero-intro'), veil = heroEl.querySelector('.hi-veil');
     var copy = heroEl.querySelector('.hero-inner'), hint = heroEl.querySelector('.scroll-hint');
-    var bgImg = heroEl.querySelector('.hero-bg img'), spAct = heroEl.querySelector('.hero-actions-sp');
+    var bgPic = heroEl.querySelector('.hero-bg img'), spAct = heroEl.querySelector('.hero-actions-sp');
+    var bgTarget = function () { var t = heroEl.querySelector('.glide-track'); if (t && bgPic) { bgPic.style.filter = ''; bgPic.style.opacity = ''; bgPic.style.transform = ''; } return t || bgPic; };   // intro blur/fade goes on the whole strip once it exists
     var setAux = function (v) { if (hint) hint.style.opacity = v; if (spAct) spAct.style.opacity = v; };
     if (!reduce && !seen && scrollY < heroEl.offsetHeight) {
       var iSvg = introEl.querySelector('svg'), iTravel = 66, iClose = 2.85;
@@ -128,14 +129,14 @@
           introEl.style.transform = 'translateY(' + (-14 * lo).toFixed(2) + 'px) scale(' + (1 + 0.06 * lo).toFixed(4) + ')';
           introEl.style.filter = 'blur(' + (6 * lo).toFixed(2) + 'px)';
           veil.style.opacity = 1 - iEase(t, T_BREAK + 0.2, T_FOCUS + 0.8);
-          if (bgImg) { bgImg.style.opacity = 1; bgImg.style.transform = 'translateY(' + (18 * (1 - pi)).toFixed(2) + 'px) scale(' + (1 + 0.04 * (1 - pi)).toFixed(4) + ')'; bgImg.style.filter = 'blur(' + (16 * (1 - pi)).toFixed(2) + 'px)'; }   // the picture is there from the start, soft and misted, and comes into focus
+          var bgImg = bgTarget(); if (bgImg) { bgImg.style.opacity = 1; bgImg.style.transform = 'translateY(' + (18 * (1 - pi)).toFixed(2) + 'px) scale(' + (1 + 0.04 * (1 - pi)).toFixed(4) + ')'; bgImg.style.filter = 'blur(' + (16 * (1 - pi)).toFixed(2) + 'px)'; }   // the picture is there from the start, soft and misted, and comes into focus
           copy.style.opacity = cq; copy.style.transform = 'translateY(' + (12 * (1 - cq)).toFixed(2) + 'px)'; setAux(cq);
           return;
         }
         var go = iEase(t, T_BREAK, T_FOCUS);
         introEl.style.opacity = 1 - iEase(t, T_BREAK + 0.15, T_BREAK + 1.2);   // the logo dissolves while its hexagon breaks apart
         veil.style.opacity = 1 - iEase(t, T_BREAK, T_FOCUS - 0.3);
-        if (bgImg) bgImg.style.filter = 'blur(' + (BLUR0 * (1 - go)).toFixed(2) + 'px)';
+        var bgImg2 = bgTarget(); if (bgImg2) bgImg2.style.filter = 'blur(' + (BLUR0 * (1 - go)).toFixed(2) + 'px)';
         var cp = iEase(t, T_BREAK + 0.6, T_FOCUS + 1.0);                          // copy fades in once the picture is nearly sharp
         copy.style.opacity = cp; setAux(cp);
       };
@@ -143,13 +144,13 @@
         if (iDone) return; iDone = true; clearInterval(iTimer);
         heroEl.classList.remove('intro-on');
         copy.style.opacity = ''; copy.style.transform = ''; setAux('');
-        if (bgImg) { bgImg.style.filter = ''; bgImg.style.opacity = ''; bgImg.style.transform = ''; bgImg.classList.remove('intro-blur'); }
+        [bgPic, heroEl.querySelector('.glide-track')].forEach(function (n) { if (n) { n.style.filter = ''; n.style.opacity = ''; n.style.transform = ''; n.classList.remove('intro-blur'); } });
         layer.style.display = 'none';
       };
       heroEl.__introFinish = iFinish;                                           // lets the scroll code end the intro if the page was restored far down
       introDelay = T_FOCUS - 0.15;                                              // headline starts as the picture comes into focus
       sizeBurst(); heroEl.classList.add('intro-on'); copy.style.opacity = 0; setAux(0);
-      if (bgImg) bgImg.classList.add('intro-blur');
+      if (bgPic) bgPic.classList.add('intro-blur');
       iScene(0);
       var iStart = Date.now(), madeParts = false;
       iTimer = setInterval(function () {
@@ -354,16 +355,16 @@
         if (!track) {
           track = d.createElement('div'); track.className = 'glide-track'; track.setAttribute('aria-hidden', 'true');
           frame.insertBefore(track, frame.firstChild); track.appendChild(img);
-          for (var k = 1; k < 4; k++) { var cl = img.cloneNode(); cl.removeAttribute('fetchpriority'); cl.removeAttribute('loading'); cl.className = 'glide-tile'; track.appendChild(cl); }
+          for (var k = 1; k < (o.mirror ? 4 : 3); k++) { var cl = img.cloneNode(); cl.removeAttribute('style'); cl.removeAttribute('fetchpriority'); cl.removeAttribute('loading'); cl.className = 'glide-tile'; track.appendChild(cl); }
           var pic = frame.querySelector('picture'); if (pic && !pic.firstElementChild) pic.style.display = 'none';
         }
         var tiles = track.children, ay2 = Math.min(o.swell == null ? 8 : o.swell, my * 0.45), base2 = -my * fy, N2 = 240, kf2 = [];
         for (var t = 0; t < tiles.length; t++) {
-          tiles[t].style.cssText += ';position:absolute;top:0;max-width:none;object-fit:fill;object-position:0 0;width:' + cw.toFixed(1) + 'px;height:' + ch.toFixed(1) + 'px;left:' + (t * cw).toFixed(1) + 'px;translate:none;scale:' + (t % 2 ? '-1 1' : 'none');
+          tiles[t].style.cssText += ';position:absolute;top:0;max-width:none;object-fit:fill;object-position:0 0;width:' + cw.toFixed(1) + 'px;height:' + ch.toFixed(1) + 'px;left:' + (t * cw).toFixed(1) + 'px;translate:none;scale:' + (o.mirror && t % 2 ? '-1 1' : 'none');
         }
-        track.style.cssText = 'position:absolute;left:0;top:0;height:' + ch.toFixed(1) + 'px;width:' + (cw * 4).toFixed(1) + 'px;will-change:translate';
-        for (var q = 0; q <= N2; q++) { var u2 = q / N2; kf2.push({ translate: (-2 * cw * u2).toFixed(2) + 'px ' + (base2 + ay2 * Math.sin(2 * Math.PI * u2 * (o.swells || 3))).toFixed(2) + 'px' }); }
-        anim = track.animate(kf2, { duration: (2 * cw / (o.speed ? o.speed() : 16)) * 1000, iterations: Infinity, easing: 'linear', delay: -(o.offset || 0) * 1000 });
+        track.style.cssText = 'position:absolute;left:0;top:0;height:' + ch.toFixed(1) + 'px;width:' + (cw * tiles.length).toFixed(1) + 'px;will-change:translate';
+        for (var q = 0; q <= N2; q++) { var u2 = q / N2; kf2.push({ translate: (-(o.mirror ? 2 : 1) * cw * u2).toFixed(2) + 'px ' + (base2 + ay2 * Math.sin(2 * Math.PI * u2 * (o.swells || 3))).toFixed(2) + 'px' }); }
+        anim = track.animate(kf2, { duration: ((o.mirror ? 2 : 1) * cw / (o.speed ? o.speed() : 16)) * 1000, iterations: Infinity, easing: 'linear', delay: -(o.offset || 0) * 1000 });
         return;
       }
       img.style.cssText += ';position:absolute;left:0;top:0;max-width:none;width:' + cw.toFixed(1) + 'px;height:' + ch.toFixed(1) + 'px;object-fit:fill;object-position:0 0';
