@@ -129,8 +129,8 @@
           introEl.style.transform = 'translateY(' + (-14 * lo).toFixed(2) + 'px) scale(' + (1 + 0.06 * lo).toFixed(4) + ')';
           introEl.style.filter = 'blur(' + (6 * lo).toFixed(2) + 'px)';
           veil.style.opacity = 1 - iEase(t, T_BREAK + 0.2, T_FOCUS + 0.8);
-          // (no scale on the picture here: scaling the very wide strip around its centre slides it sideways)
-          var bgImg = bgTarget(); if (bgImg) { bgImg.style.opacity = 1; bgImg.style.transform = 'translateY(' + (18 * (1 - pi)).toFixed(2) + 'px)'; bgImg.style.filter = 'blur(' + (16 * (1 - pi)).toFixed(2) + 'px)'; }   // the picture is there from the start, soft and misted, and comes into focus
+          // (no scale or rise on the picture here: scaling the very wide strip slides it sideways, and a rise reads as a diagonal push-up)
+          var bgImg = bgTarget(); if (bgImg) { bgImg.style.opacity = 1; bgImg.style.filter = 'blur(' + (16 * (1 - pi)).toFixed(2) + 'px)'; }   // the picture is there from the start, soft and misted, and comes into focus
           copy.style.opacity = cq; copy.style.transform = 'translateY(' + (12 * (1 - cq)).toFixed(2) + 'px)'; setAux(cq);
           return;
         }
