@@ -862,7 +862,7 @@ main > .hero.dragging { cursor: grabbing; user-select: none; -webkit-user-select
 .drag-hint.on { opacity: 1; transform: none; animation: dragNudge 2.4s ease-in-out infinite; }
 .drag-hint span { display: inline-block; opacity: .6; font-size: .7em; }
 @keyframes dragNudge { 0%, 100% { translate: 0 0; } 50% { translate: 6px 0; } }
-@media (max-width: 820px) { .drag-hint { right: 10px; left: auto; bottom: 12px; margin: 0; padding: 6px 12px; font-size: .7rem; } }
+@media (max-width: 820px) { .drag-hint { display: none; } }
 @media (prefers-reduced-motion: reduce) { .drag-hint { display: none; } }
 
 /* hexagon motif (logo shape): heading ornament */
