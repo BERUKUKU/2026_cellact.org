@@ -375,7 +375,7 @@
       img.style.cssText += ';position:absolute;left:0;top:0;max-width:none;width:' + cw.toFixed(1) + 'px;height:' + ch.toFixed(1) + 'px;object-fit:fill;object-position:0 0';
       var ay = Math.min(o.swell == null ? 8 : o.swell, my * 0.45), base = -my * fy, N = 240, kf = [], px = o.prop === 'transform';
       for (var i = 0; i <= N; i++) {
-        var u = i / N, x = -rx * (0.5 - 0.5 * Math.cos(2 * Math.PI * u)) * 0.92 - rx * 0.04, y = base + ay * Math.sin(2 * Math.PI * u * (o.swells || 3));
+        var u = i / N, x = -rx * (o.range ? o.range[0] + (o.range[1] - o.range[0]) * (0.5 - 0.5 * Math.cos(2 * Math.PI * u)) : (0.5 - 0.5 * Math.cos(2 * Math.PI * u)) * 0.92 + 0.04), y = base + ay * Math.sin(2 * Math.PI * u * (o.swells || 3));
         kf.push(px ? { transform: 'translate3d(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px,0)' } : { translate: x.toFixed(2) + 'px ' + y.toFixed(2) + 'px' });
       }
       if (!px) img.style.setProperty('scale', 'none');
@@ -538,8 +538,9 @@
   // Panoramic card pictures glide slowly sideways inside their frame
   Array.prototype.slice.call(d.querySelectorAll('img[data-pan]')).forEach(function (im, i) {
     // the immune-cell card begins on its signature view (capsules over the city = middle of the strip); each card restarts there when it first scrolls into view
-    var off = /immune/.test(im.getAttribute('src') || '') ? 30 : i * 37;
-    glide(im, im.parentNode, { prop: 'transform', period: function () { return 120; }, offset: off, swell: 0, swells: 1 });
+    var src = im.getAttribute('src') || '', rng = /immune/.test(src) ? [0.3, 0.7] : /super/.test(src) ? [0.86, 1] : null;
+    var off = rng ? 30 : i * 37;   // ranged cards only drift around their motif and begin in the middle of that range
+    glide(im, im.parentNode, { prop: 'transform', period: function () { return 120; }, offset: off, swell: 0, swells: 1, range: rng });
     if ('IntersectionObserver' in window && !reduce) {
       var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (!e.isIntersecting) return; io.disconnect();
         var an = im.getAnimations && im.getAnimations()[0]; if (an) an.currentTime = 0; }); }, { threshold: 0.35 });
