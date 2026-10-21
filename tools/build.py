@@ -536,7 +536,7 @@ exit;
 # ---------------------------------------------------------------- PRIVACY (DRAFT) / 404 / sitemap
 def build_misc():
     s = head('プライバシーポリシー', '一般社団法人 CELLACT のプライバシーポリシー。', 'privacy.html')
-    s += header('') + page_hero('PRIVACY', 'プライバシーポリシー', 'hero65_privacy.webp', [('index.html', 'TOP'), ('privacy.html', 'プライバシーポリシー')], pos='50% 50%', mpos='50% 50%')
+    s += header('') + page_hero('PRIVACY', 'プライバシーポリシー', 'hero65_privacy.webp', [('index.html', 'TOP'), ('privacy.html', 'プライバシーポリシー')], pos='50% 50%', mpos='56% 50%')
     s += f'''<main id="main"><section class="section"><div class="container-narrow prose">
 <!-- 公開前に法務確認のうえ、内容を最終化してください -->
 <p>{ORG}（以下「当法人」）は、お問い合わせ・採用に関するご連絡などを通じてお預かりする個人情報の重要性を認識し、個人情報の保護に関する法律（個人情報保護法）その他の関係法令を遵守して、以下の方針に基づき適切に取り扱います。</p>
