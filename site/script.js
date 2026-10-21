@@ -550,7 +550,7 @@
     glide(im, im.parentNode, { prop: 'transform', period: function () { return cardPeriod; }, offset: off, swell: 0, swells: 1, range: rng });
     if ('IntersectionObserver' in window && !reduce) {
       var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (!e.isIntersecting) return; io.disconnect();
-        var an = (tuned || bizImmune) && im.getAnimations && im.getAnimations()[0]; if (an) an.currentTime = 0; }); }, { threshold: 0.35 });
+        var an = (tuned || bizImmune) && im.getAnimations && im.getAnimations()[0]; if (an) an.currentTime = off * 1000 + (an.effect.getTiming().delay || 0); }); }, { threshold: 0.35 });   // local time = currentTime - delay; a rebuild may have zeroed the delay
       io.observe(im.parentNode);
     }
   });
