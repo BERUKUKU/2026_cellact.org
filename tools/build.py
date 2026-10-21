@@ -20,7 +20,7 @@ NEWS = [  # newest first
 <ul><li>募集職種：看護師（正看護師・准看護師）、受付スタッフ</li><li>勤務形態：正社員（試用期間あり）</li><li>勤務地：セルアクト クリニック銀座（CELLACT CLINIC GINZA）（東京都中央区銀座）</li><li>歓迎スキル：英語対応、再生医療・美容医療経験、ホスピタリティを重視した接遇</li></ul>
 <p>教育・研修はチームでサポートし、未経験の方も段階的に業務を習得できる環境を整えています。ライフステージに合わせた働き方についてもお気軽にご相談ください。</p>
 <p>応募・詳細は <a href="recruit.html">採用情報</a> をご覧のうえ、<a href="contact.php">お問い合わせ</a> からご連絡ください。担当者より折り返しご案内いたします。</p>'''),
-    dict(slug='news-20270101-rename', date='2027.01.01', tag='クリニック情報', warm=False, img='cellact_super.webp?v=2',
+    dict(slug='news-20270101-rename', date='2027.01.01', tag='クリニック情報', warm=False, img='cellact_super.webp?v=3',
          title='N2クリニック銀座本院は「セルアクト クリニック銀座（CELLACT CLINIC GINZA）」へ名称変更しました。',
          excerpt='N2クリニック銀座本院は、この度「セルアクト クリニック銀座（CELLACT CLINIC GINZA）」へ名称を変更いたしました。',
          body='''<p>日頃よりご愛顧いただき、誠にありがとうございます。</p>
@@ -38,7 +38,7 @@ NEWS = [  # newest first
 ]
 
 SERVICES = [
-    dict(id='stem', en='STEM CELL TREATMENT', name='幹細胞療法', img='cellact_stem.webp?v=3', yt=None,
+    dict(id='stem', en='STEM CELL TREATMENT', name='幹細胞療法', img='cellact_stem.webp?v=4', yt=None,
          short='自己の幹細胞を用いた再生医療により、損傷した組織の修復・再生を促します。',
          lead='ご自身の幹細胞を用いた再生医療により、損傷した組織の修復・再生を促します。',
          paras=['幹細胞は、さまざまな細胞に変化する力と、自らを複製する力をもつ細胞です。この性質を医療に活かし、加齢や損傷によって傷んだ組織の回復を支えることを目指します。',
@@ -46,7 +46,7 @@ SERVICES = [
          points=[('どんな治療か', 'ご自身の細胞を用いる再生医療です。'),
                  ('特徴', '細胞の品質と、それを支える技術の信頼性を重視しています。'),
                  ('安全への取り組み', '再生医療等安全性確保法を遵守し、安全かつ高度な実践に努めています。')]),
-    dict(id='immune', en='IMMUNE CELL TREATMENT', name='免疫細胞療法', img='cellact_immune.webp?v=2', yt=None,
+    dict(id='immune', en='IMMUNE CELL TREATMENT', name='免疫細胞療法', img='cellact_immune.webp?v=3', yt=None,
          short='患者様自身の免疫細胞を活性化させ、体の自然治癒力を高める治療法です。',
          lead='患者様自身の免疫細胞を活性化させ、体の自然治癒力を高める治療法です。',
          paras=['免疫細胞は、体を守る仕組みの中心を担う細胞です。ご自身の免疫細胞を体の外で培養・活性化させ、その働きを高めることを目指します。',
@@ -54,7 +54,7 @@ SERVICES = [
          points=[('どんな治療か', 'ご自身の免疫細胞を活用する再生医療です。'),
                  ('特徴', '一人ひとりの状態に合わせて、治療計画を設計します。'),
                  ('安全への取り組み', '細胞の品質管理と、法令の遵守を徹底しています。')]),
-    dict(id='super', en='STEMCELL SUPERNATANT', name='幹細胞培養上清療法', img='cellact_super.webp?v=2', yt=None,
+    dict(id='super', en='STEMCELL SUPERNATANT', name='幹細胞培養上清療法', img='cellact_super.webp?v=3', yt=None,
          short='細胞間の情報伝達を担うサイトカインが豊富な培養上清で、細胞本来の活性をサポートします。',
          lead='細胞間の情報伝達を担うサイトカインが豊富な培養上清で、細胞本来の活性をサポートします。',
          paras=['幹細胞培養上清とは、幹細胞を培養する過程で、培養液に分泌される成分を取り出したものです。細胞間の情報伝達を担うサイトカインが豊富に含まれています。',
@@ -168,7 +168,7 @@ def page_hero(en, title, bg, crumbs, pos='50% 50%', flip=False, tall=False, mpos
     bc = ' &gt; '.join(f'<a href="{h}">{l}</a>' for h, l in crumbs[:-1])
     bc = (bc + ' &gt; ' if bc else '') + esc(crumbs[-1][1])
     return f'''<section class="page-hero{" tall" if tall else ""}{" flip" if flip else ""}">
-<div class="hero-bg"><img src="images/{bg}?v=9" alt="" width="2041" height="314" style="object-position:{pos};--mpos:{mpos}"></div>
+<div class="hero-bg"><img src="images/{bg}?v=10" alt="" width="2041" height="314" style="object-position:{pos};--mpos:{mpos}"></div>
 <div class="container" data-en="{en}"><p class="eyebrow">{en}</p><h1>{title}</h1><nav class="breadcrumb" aria-label="パンくず">{bc}</nav></div>
 </section>
 '''
@@ -251,7 +251,7 @@ def build_index():
 def build_services():
     s = head('BUSINESS', '一般社団法人 CELLACT の事業内容。幹細胞療法、免疫細胞療法、幹細胞培養上清療法などの再生医療に取り組んでいます。', 'business.html')
     s += header('business.html')
-    s += page_hero('BUSINESS', '事業内容', 'hero65_business.webp', [('index.html', 'TOP'), ('business.html', 'BUSINESS')], pos='50% 50%', mpos='60% 50%')
+    s += page_hero('BUSINESS', '事業内容', 'hero65_business.webp', [('index.html', 'TOP'), ('business.html', 'BUSINESS')], pos='50% 50%', mpos='74% 50%')
     s += '<main id="main"><section class="section"><div class="container">'
     s += section_head('FIELDS', '取り組んでいる再生医療', False, '細胞の力を活かした、3つの領域で医療を提供しています。')
     for sv in SERVICES:
@@ -315,7 +315,7 @@ def build_recruit():
     for t, rows in pos:
         cards += f'<article class="position reveal"><h3>{t}</h3><dl>' + ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows) + '</dl></article>'
     s = head('RECRUIT', '再生医療の現場で、医療の未来を共に築きませんか。看護師・受付スタッフの募集要項。', 'recruit.html', og_img='images/hero_recruit.webp')
-    s += header('recruit.html') + page_hero('RECRUIT', '採用情報', 'hero65_recruit.webp', [('index.html', 'TOP'), ('recruit.html', 'RECRUIT')], pos='50% 50%', mpos='40% 50%')
+    s += header('recruit.html') + page_hero('RECRUIT', '採用情報', 'hero65_recruit.webp', [('index.html', 'TOP'), ('recruit.html', 'RECRUIT')], pos='50% 50%', mpos='72% 50%', flip=True)
     s += f'''<main id="main"><section class="section"><div class="container split"><div class="split-head">{section_head('MESSAGE', '私たちの仕事は未来を再生すること。')}</div>
 <div class="reveal message"><p>再生医療の現場で、医療の未来を共に築きませんか？<br>私たちは、幹細胞療法や免疫細胞療法による再生医療のほか、幹細胞培養上清療法などを提供しています。</p>
 <p>未来の医療である「再生医療」の現場に、あなたのスキルと情熱を活かしませんか？<br>私たちは患者様の生活を再生し、希望を届けるために共に働ける仲間を探しています。</p>
