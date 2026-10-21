@@ -542,8 +542,8 @@
   // Panoramic card pictures glide slowly sideways inside their frame
   Array.prototype.slice.call(d.querySelectorAll('img[data-pan]')).forEach(function (im, i) {
     // the immune-cell card begins on its signature view (capsules over the city = middle of the strip); each card restarts there when it first scrolls into view
-    var src = im.getAttribute('src') || '', rng = /immune/.test(src) ? [0.3, 0.7] : /super/.test(src) ? [0.86, 1] : null;
-    var off = rng ? 30 : i * 37;   // ranged cards only drift around their motif and begin in the middle of that range
+    var src = im.getAttribute('src') || '', rng = /immune/.test(src) ? [0.25, 0.75] : /super/.test(src) ? [0.5, 1] : [0.2, 0.7];
+    var off = 30;   // every card drifts over the same width in the same time (same speed) and begins in the middle of its range
     glide(im, im.parentNode, { prop: 'transform', period: function () { return 120; }, offset: off, swell: 0, swells: 1, range: rng });
     if ('IntersectionObserver' in window && !reduce) {
       var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (!e.isIntersecting) return; io.disconnect();
