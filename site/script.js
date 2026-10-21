@@ -537,7 +537,14 @@
 
   // Panoramic card pictures glide slowly sideways inside their frame
   Array.prototype.slice.call(d.querySelectorAll('img[data-pan]')).forEach(function (im, i) {
-    glide(im, im.parentNode, { prop: 'transform', period: function () { return 120; }, offset: i * 37, swell: 0, swells: 1 });
+    // the immune-cell card begins on its signature view (capsules over the city = middle of the strip); each card restarts there when it first scrolls into view
+    var off = /immune/.test(im.getAttribute('src') || '') ? 30 : i * 37;
+    glide(im, im.parentNode, { prop: 'transform', period: function () { return 120; }, offset: off, swell: 0, swells: 1 });
+    if ('IntersectionObserver' in window && !reduce) {
+      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (!e.isIntersecting) return; io.disconnect();
+        var an = im.getAnimations && im.getAnimations()[0]; if (an) an.currentTime = 0; }); }, { threshold: 0.35 });
+      io.observe(im.parentNode);
+    }
   });
 
   // Each band fades into the colour of the section above and below it (read from the neighbours), and is opaque so nothing shows through
