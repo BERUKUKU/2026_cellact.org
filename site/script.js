@@ -545,7 +545,7 @@
     var src = im.getAttribute('src') || '', onTop = !!im.closest('.service-card'), bizImmune = !onTop && /immune/.test(src);   // tuned speeds / ranges: TOP cards, and the immune picture on the business page
     var rng = bizImmune ? [0.35, 0.85] : !onTop ? null : /immune/.test(src) ? [0.25, 0.75] : /super/.test(src) ? [0.5, 1] : [0.2, 0.7];
     var cardPeriod = bizImmune ? 220 : !onTop ? 120 : innerWidth <= 820 ? (/stem/.test(src) ? 130 : 180) : 120;
-    var off = bizImmune ? cardPeriod * 0.265 : onTop ? cardPeriod * (/super/.test(src) ? 0.4 : 0.25) : i * 37;   // these begin on their motif (inside their range)
+    var off = bizImmune ? cardPeriod * 0.15 : onTop ? cardPeriod * (/super/.test(src) ? 0.4 : 0.25) : i * 37;   // these begin on their motif (inside their range)
     glide(im, im.parentNode, { prop: 'transform', period: function () { return cardPeriod; }, offset: off, swell: 0, swells: 1, range: rng });
     if ('IntersectionObserver' in window && !reduce) {
       var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (!e.isIntersecting) return; io.disconnect();
