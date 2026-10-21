@@ -544,7 +544,7 @@
     // the immune-cell card begins on its signature view (capsules over the city = middle of the strip); each card restarts there when it first scrolls into view
     var src = im.getAttribute('src') || '', onTop = !!im.closest('.service-card');   // the tuned speeds / ranges below are for the TOP cards only
     var rng = !onTop ? null : /immune/.test(src) ? [0.25, 0.75] : /super/.test(src) ? [0.5, 1] : [0.2, 0.7];
-    var cardPeriod = !onTop ? 120 : innerWidth <= 820 ? (/stem/.test(src) ? 130 : 180) : 120, off = onTop ? cardPeriod / 4 : i * 37;   // TOP cards begin in the middle of their range
+    var cardPeriod = !onTop ? 120 : innerWidth <= 820 ? (/stem/.test(src) ? 130 : 180) : 120, off = onTop ? cardPeriod * (/super/.test(src) ? 0.4 : 0.25) : i * 37;   // TOP cards begin in the middle of their range
     glide(im, im.parentNode, { prop: 'transform', period: function () { return cardPeriod; }, offset: off, swell: 0, swells: 1, range: rng });
     if ('IntersectionObserver' in window && !reduce) {
       var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (!e.isIntersecting) return; io.disconnect();
