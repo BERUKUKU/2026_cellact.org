@@ -396,7 +396,7 @@
     var hero = d.querySelector('main > .hero'), bg = hero && hero.querySelector('.hero-bg');
     if (!hero || !bg || reduce) return;
     var s = null, dragging = false, vel = 0, lastX = 0, lastT = 0, raf = 0;
-    var hint = d.createElement('div'); hint.className = 'drag-hint'; hint.setAttribute('aria-hidden', 'true'); hint.innerHTML = '<span>◀</span> ドラッグして景色を見る <span>▶</span>'; hero.appendChild(hint);
+    var hint = d.createElement('div'); hint.className = 'drag-hint'; hint.setAttribute('aria-hidden', 'true'); hint.innerHTML = '<span>◀</span> ドラッグして景色を見る <span>▶</span>'; bg.appendChild(hint);
     var hideHint = function () { hint.classList.remove('on'); };
     setTimeout(function () { if (!hero.classList.contains('intro-on')) hint.classList.add('on'); }, 9500); setTimeout(hideHint, 17000);
     var norm = function (p) { return ((p % 1) + 1) % 1; };
