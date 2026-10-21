@@ -20,7 +20,7 @@ NEWS = [  # newest first
 <ul><li>募集職種：看護師（正看護師・准看護師）、受付スタッフ</li><li>勤務形態：正社員（試用期間あり）</li><li>勤務地：セルアクト クリニック銀座（CELLACT CLINIC GINZA）（東京都中央区銀座）</li><li>歓迎スキル：英語対応、再生医療・美容医療経験、ホスピタリティを重視した接遇</li></ul>
 <p>教育・研修はチームでサポートし、未経験の方も段階的に業務を習得できる環境を整えています。ライフステージに合わせた働き方についてもお気軽にご相談ください。</p>
 <p>応募・詳細は <a href="recruit.html">採用情報</a> をご覧のうえ、<a href="contact.php">お問い合わせ</a> からご連絡ください。担当者より折り返しご案内いたします。</p>'''),
-    dict(slug='news-20270101-rename', date='2027.01.01', tag='クリニック情報', warm=False, img='cellact_super.webp?v=4',
+    dict(slug='news-20270101-rename', date='2027.01.01', tag='クリニック情報', warm=False, img='cellact_super.webp?v=5',
          title='N2クリニック銀座本院は「セルアクト クリニック銀座（CELLACT CLINIC GINZA）」へ名称変更しました。',
          excerpt='N2クリニック銀座本院は、この度「セルアクト クリニック銀座（CELLACT CLINIC GINZA）」へ名称を変更いたしました。',
          body='''<p>日頃よりご愛顧いただき、誠にありがとうございます。</p>
@@ -54,7 +54,7 @@ SERVICES = [
          points=[('どんな治療か', 'ご自身の免疫細胞を活用する再生医療です。'),
                  ('特徴', '一人ひとりの状態に合わせて、治療計画を設計します。'),
                  ('安全への取り組み', '細胞の品質管理と、法令の遵守を徹底しています。')]),
-    dict(id='super', en='STEMCELL SUPERNATANT', name='幹細胞培養上清療法', img='cellact_super.webp?v=4', yt=None,
+    dict(id='super', en='STEMCELL SUPERNATANT', name='幹細胞培養上清療法', img='cellact_super.webp?v=5', yt=None,
          short='細胞間の情報伝達を担うサイトカインが豊富な培養上清で、細胞本来の活性をサポートします。',
          lead='細胞間の情報伝達を担うサイトカインが豊富な培養上清で、細胞本来の活性をサポートします。',
          paras=['幹細胞培養上清とは、幹細胞を培養する過程で、培養液に分泌される成分を取り出したものです。細胞間の情報伝達を担うサイトカインが豊富に含まれています。',
@@ -168,7 +168,7 @@ def page_hero(en, title, bg, crumbs, pos='50% 50%', flip=False, tall=False, mpos
     bc = ' &gt; '.join(f'<a href="{h}">{l}</a>' for h, l in crumbs[:-1])
     bc = (bc + ' &gt; ' if bc else '') + esc(crumbs[-1][1])
     return f'''<section class="page-hero{" tall" if tall else ""}{" flip" if flip else ""}">
-<div class="hero-bg"><img src="images/{bg}?v=11" alt="" width="2041" height="314" style="object-position:{pos};--mpos:{mpos}"></div>
+<div class="hero-bg"><img src="images/{bg}?v=12" alt="" width="2041" height="314" style="object-position:{pos};--mpos:{mpos}"></div>
 <div class="container" data-en="{en}"><p class="eyebrow">{en}</p><h1>{title}</h1><nav class="breadcrumb" aria-label="パンくず">{bc}</nav></div>
 </section>
 '''
@@ -251,7 +251,7 @@ def build_index():
 def build_services():
     s = head('BUSINESS', '一般社団法人 CELLACT の事業内容。幹細胞療法、免疫細胞療法、幹細胞培養上清療法などの再生医療に取り組んでいます。', 'business.html')
     s += header('business.html')
-    s += page_hero('BUSINESS', '事業内容', 'hero65_business.webp', [('index.html', 'TOP'), ('business.html', 'BUSINESS')], pos='50% 50%', mpos='74% 50%')
+    s += page_hero('BUSINESS', '事業内容', 'hero65_business.webp', [('index.html', 'TOP'), ('business.html', 'BUSINESS')], pos='50% 50%', mpos='82% 50%')
     s += '<main id="main"><section class="section"><div class="container">'
     s += section_head('FIELDS', '取り組んでいる再生医療', False, '細胞の力を活かした、3つの領域で医療を提供しています。')
     for sv in SERVICES:
