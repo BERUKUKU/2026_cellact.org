@@ -442,11 +442,12 @@
     Array.prototype.forEach.call(secs, function (sec, i) {
       var el = d.createElement('div'); el.className = 'hex-cluster' + (i % 2 ? ' left' : ''); el.innerHTML = svg(i);
       sec.insertBefore(el, sec.firstChild); list.push({ sec: sec, el: el, dir: i % 2 ? 1 : -1 });
+      if (sec.offsetHeight > 1100) { var e2 = d.createElement('div'); e2.className = 'hex-cluster mid' + (i % 2 ? '' : ' left'); e2.innerHTML = svg(i + 'm'); sec.insertBefore(e2, sec.firstChild); list.push({ sec: sec, el: e2, dir: i % 2 ? -1 : 1 }); }
     });
     if (reduce) return;
     var tick = function () { var vh = innerHeight;
       list.forEach(function (o) { var r = o.sec.getBoundingClientRect(); if (r.bottom < -200 || r.top > vh + 200) return;
-        o.el.style.setProperty('--py', Math.round(((r.top + r.height / 2) - vh / 2) * 0.16 * o.dir) + 'px'); }); };
+        o.el.style.setProperty('--py', Math.round(Math.max(-70, Math.min(70, ((r.top + r.height / 2) - vh / 2) * 0.12)) * o.dir) + 'px'); }); };
     addEventListener('scroll', tick, { passive: true }); addEventListener('resize', tick); tick();
   })();
   if (subHeroImg) glide(subHeroImg, subHeroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 65 : 55; }, zoom: function () { return parseFloat(getComputedStyle(d.documentElement).getPropertyValue(innerWidth <= 820 ? '--subhero-zoom-sp' : '--subhero-zoom')) || 1.1; }, fy: function () { return focusY(subHeroImg); }, swell: 10, swells: 3 });

@@ -875,3 +875,4 @@ main > .hero.dragging { cursor: grabbing; user-select: none; -webkit-user-select
 .hex-cluster svg { display: block; width: 100%; height: auto; animation: hexDriftB 40s ease-in-out infinite alternate; }
 @media (max-width: 820px) { .hex-cluster { width: 168px; right: -14px; top: 12px; } .hex-cluster.left { left: -14px; bottom: 8px; } }
 @media (prefers-reduced-motion: reduce) { .hex-cluster svg { animation: none; } }
+.hex-cluster.mid { top: 56%; bottom: auto; }
