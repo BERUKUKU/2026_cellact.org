@@ -168,7 +168,7 @@ def page_hero(en, title, bg, crumbs, pos='50% 50%', flip=False, tall=False, mpos
     bc = ' &gt; '.join(f'<a href="{h}">{l}</a>' for h, l in crumbs[:-1])
     bc = (bc + ' &gt; ' if bc else '') + esc(crumbs[-1][1])
     return f'''<section class="page-hero{" tall" if tall else ""}{" flip" if flip else ""}">
-<div class="hero-bg"><img src="images/{bg}?v=13" alt="" width="2041" height="314" style="object-position:{pos};--mpos:{mpos}"></div>
+<div class="hero-bg"><img src="images/{bg}?v=14" alt="" width="2041" height="314" style="object-position:{pos};--mpos:{mpos}"></div>
 <div class="container" data-en="{en}"><p class="eyebrow">{en}</p><h1>{title}</h1><nav class="breadcrumb" aria-label="パンくず">{bc}</nav></div>
 </section>
 '''
@@ -329,14 +329,14 @@ def build_recruit():
 # ---------------------------------------------------------------- NEWS
 def build_news():
     s = head('NEWS', 'CELLACT からのお知らせ一覧。', 'news-archive.html', og_img='images/hero_top.webp')
-    s += header('news-archive.html') + page_hero('NEWS', 'お知らせ', 'hero65_news.webp', [('index.html', 'TOP'), ('news-archive.html', 'NEWS')], pos='50% 50%', mpos='78% 50%')
+    s += header('news-archive.html') + page_hero('NEWS', 'お知らせ', 'hero65_news.webp', [('index.html', 'TOP'), ('news-archive.html', 'NEWS')], pos='50% 50%', mpos='60% 50%')
     s += f'<main id="main"><section class="section"><div class="container-narrow">{section_head("NEWS ARCHIVE", "お知らせ一覧")}{news_list(NEWS)}</div></section></main>' + footer()
     write('news-archive.html', s)
     for n in NEWS:
         w = ' warm' if n['warm'] else ''
         d = n['title']
         s = head(n['title'], n['excerpt'].replace('&amp;', '&'), n['slug'] + '.html', og_img='images/' + n['img'])
-        s += header('news-archive.html') + page_hero('NEWS', 'お知らせ', 'hero65_news.webp', [('index.html', 'TOP'), ('news-archive.html', 'NEWS'), (n['slug'] + '.html', n['title'])], pos='50% 50%', mpos='78% 50%')
+        s += header('news-archive.html') + page_hero('NEWS', 'お知らせ', 'hero65_news.webp', [('index.html', 'TOP'), ('news-archive.html', 'NEWS'), (n['slug'] + '.html', n['title'])], pos='50% 50%', mpos='60% 50%')
         s += f'''<main id="main"><section class="section"><div class="container-narrow"><article class="article reveal">
 <header class="article-head"><div class="article-meta"><time datetime="{n["date"].replace(".", "-")}">{n["date"]}</time><span class="tag{w}">{n["tag"]}</span></div><h1>{n["title"]}</h1></header>
 {(f'<figure class="article-fig logo-over"><img class="article-img" src="images/{n["img"]}" alt="" width="1500" height="844"><img class="fig-logo" src="images/cellact_logo.png?v=2" alt="CELLACT" width="788" height="840"></figure>' if n.get('logo') else f'<img class="article-img" src="images/{n["img"]}" alt="" width="1500" height="844">')}
@@ -536,7 +536,7 @@ exit;
 # ---------------------------------------------------------------- PRIVACY (DRAFT) / 404 / sitemap
 def build_misc():
     s = head('プライバシーポリシー', '一般社団法人 CELLACT のプライバシーポリシー。', 'privacy.html')
-    s += header('') + page_hero('PRIVACY', 'プライバシーポリシー', 'hero65_privacy.webp', [('index.html', 'TOP'), ('privacy.html', 'プライバシーポリシー')], pos='50% 50%', mpos='56% 50%')
+    s += header('') + page_hero('PRIVACY', 'プライバシーポリシー', 'hero65_privacy.webp', [('index.html', 'TOP'), ('privacy.html', 'プライバシーポリシー')], pos='50% 50%', mpos='40% 50%')
     s += f'''<main id="main"><section class="section"><div class="container-narrow prose">
 <!-- 公開前に法務確認のうえ、内容を最終化してください -->
 <p>{ORG}（以下「当法人」）は、お問い合わせ・採用に関するご連絡などを通じてお預かりする個人情報の重要性を認識し、個人情報の保護に関する法律（個人情報保護法）その他の関係法令を遵守して、以下の方針に基づき適切に取り扱います。</p>
