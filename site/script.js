@@ -430,6 +430,25 @@
     hero.addEventListener('pointerup', release); hero.addEventListener('pointercancel', release);
   })();
 
+  // honeycomb clusters in tinted sections (logo shape): scroll-parallaxed, one cell tinted
+  (function () {
+    var secs = d.querySelectorAll('main .section.tint, main .section.warm'); if (!secs.length) return;
+    var P = '<polygon points="0,-50 43.3,-25 43.3,25 0,50 -43.3,25 -43.3,-25"';
+    var svg = function (id) { return '<svg viewBox="-80 -62 300 224" aria-hidden="true"><defs><linearGradient id="hc' + id + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fdcf7" stop-opacity=".55"/><stop offset="1" stop-color="#c9bff5" stop-opacity=".55"/></linearGradient></defs>' +
+      '<g stroke="#fff" stroke-width="1.6" stroke-linejoin="round" fill="rgba(255,255,255,.26)">' +
+      '<g transform="translate(0 0)">' + P + '/></g><g transform="translate(86.6 0)">' + P + '/></g><g transform="translate(173.2 0)">' + P + ' fill="none"/></g>' +
+      '<g transform="translate(43.3 75)">' + P + ' fill="url(#hc' + id + ')"/></g><g transform="translate(129.9 75)">' + P + '/></g><g transform="translate(86.6 150)">' + P + ' fill="none"/></g></g></svg>'; };
+    var list = [];
+    Array.prototype.forEach.call(secs, function (sec, i) {
+      var el = d.createElement('div'); el.className = 'hex-cluster' + (i % 2 ? ' left' : ''); el.innerHTML = svg(i);
+      sec.insertBefore(el, sec.firstChild); list.push({ sec: sec, el: el, dir: i % 2 ? 1 : -1 });
+    });
+    if (reduce) return;
+    var tick = function () { var vh = innerHeight;
+      list.forEach(function (o) { var r = o.sec.getBoundingClientRect(); if (r.bottom < -200 || r.top > vh + 200) return;
+        o.el.style.setProperty('--py', Math.round(((r.top + r.height / 2) - vh / 2) * 0.16 * o.dir) + 'px'); }); };
+    addEventListener('scroll', tick, { passive: true }); addEventListener('resize', tick); tick();
+  })();
   if (subHeroImg) glide(subHeroImg, subHeroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 65 : 55; }, zoom: function () { return parseFloat(getComputedStyle(d.documentElement).getPropertyValue(innerWidth <= 820 ? '--subhero-zoom-sp' : '--subhero-zoom')) || 1.1; }, fy: function () { return focusY(subHeroImg); }, swell: 10, swells: 3 });
 
   // Light dust: many tiny white particles drift slowly and twinkle across the whole hero picture (a different role from the hexagon cells)
