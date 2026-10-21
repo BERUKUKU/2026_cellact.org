@@ -877,3 +877,5 @@ main > .hero.dragging { cursor: grabbing; user-select: none; -webkit-user-select
 @media (prefers-reduced-motion: reduce) { .hex-cluster svg { animation: none; } }
 .hex-cluster.mid { top: 56%; bottom: auto; }
 .section.tint, .section.warm { isolation: isolate; }
+/* card pictures drift very slowly: keep them on their own GPU layer so the sub-pixel motion stays smooth */
+.service-card .thumb img[data-pan] { will-change: transform; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
