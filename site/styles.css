@@ -196,7 +196,7 @@ a:hover { color: var(--peach-deep); }
 
 /* CTA */
 .cta { position: relative; isolation: isolate; overflow: hidden; text-align: center; color: #fff; background: #0a4a63; }
-.cta .section-title::after { background: #fff; margin-inline: auto; }
+.cta .section-title::after { margin-inline: auto; }
 .cta .eyebrow::before { display: none; }
 .cta p { max-width: 36em; margin: 14px auto 28px; opacity: .95; }
 .cta .tel { font-family: var(--serif); font-size: 1.5rem; letter-spacing: .08em; margin-top: 22px; }
