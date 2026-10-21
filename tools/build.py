@@ -168,7 +168,7 @@ def page_hero(en, title, bg, crumbs, pos='50% 50%', flip=False, tall=False, mpos
     bc = ' &gt; '.join(f'<a href="{h}">{l}</a>' for h, l in crumbs[:-1])
     bc = (bc + ' &gt; ' if bc else '') + esc(crumbs[-1][1])
     return f'''<section class="page-hero{" tall" if tall else ""}{" flip" if flip else ""}">
-<div class="hero-bg"><img src="images/{bg}?v=12" alt="" width="2041" height="314" style="object-position:{pos};--mpos:{mpos}"></div>
+<div class="hero-bg"><img src="images/{bg}?v=13" alt="" width="2041" height="314" style="object-position:{pos};--mpos:{mpos}"></div>
 <div class="container" data-en="{en}"><p class="eyebrow">{en}</p><h1>{title}</h1><nav class="breadcrumb" aria-label="パンくず">{bc}</nav></div>
 </section>
 '''
@@ -251,7 +251,7 @@ def build_index():
 def build_services():
     s = head('BUSINESS', '一般社団法人 CELLACT の事業内容。幹細胞療法、免疫細胞療法、幹細胞培養上清療法などの再生医療に取り組んでいます。', 'business.html')
     s += header('business.html')
-    s += page_hero('BUSINESS', '事業内容', 'hero65_business.webp', [('index.html', 'TOP'), ('business.html', 'BUSINESS')], pos='50% 50%', mpos='82% 50%')
+    s += page_hero('BUSINESS', '事業内容', 'hero65_business.webp', [('index.html', 'TOP'), ('business.html', 'BUSINESS')], pos='50% 50%', mpos='60% 50%')
     s += '<main id="main"><section class="section"><div class="container">'
     s += section_head('FIELDS', '取り組んでいる再生医療', False, '細胞の力を活かした、3つの領域で医療を提供しています。')
     for sv in SERVICES:
@@ -287,7 +287,7 @@ def build_company():
     cards = ''.join(f'<article class="about-card reveal"><h3>{t}</h3><p>{p}</p></article>' for t, p in about)
     mapq = 'https://www.google.com/maps?q=%E9%8A%80%E5%BA%A76-6-5%20HULIC%20%26%20New%20GINZA%20NAMIKI6%2011F&output=embed'
     s = head('COMPANY', '一般社団法人 CELLACT の法人概要。再生医療の取り組みと、所在地・連絡先のご案内。', 'company.html')
-    s += header('company.html') + page_hero('COMPANY', '法人概要', 'hero65_company.webp', [('index.html', 'TOP'), ('company.html', 'COMPANY')], pos='50% 50%', mpos='60% 50%')
+    s += header('company.html') + page_hero('COMPANY', '法人概要', 'hero65_company.webp', [('index.html', 'TOP'), ('company.html', 'COMPANY')], pos='50% 50%', mpos='82% 50%')
     s += f'''<main id="main"><section class="section"><div class="container split"><div class="split-head">{section_head('ABOUT US', '私たちについて')}</div><div class="about-grid">{cards}</div></div></section>
 <section class="section"><div class="container logo-meaning"><div class="lm-mark reveal" data-capsule>{CAPSULE_SVG}<button type="button" class="lm-replay">もう一度見る</button></div>
 <div class="lm-body">{section_head('LOGO', 'ロゴに込めた想い')}

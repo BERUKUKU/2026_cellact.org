@@ -40,7 +40,7 @@ $purpose = (string)($old['purpose'] ?? ($_GET['purpose'] ?? ''));
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&amp;family=Noto+Serif+JP:wght@500;600&amp;display=swap">
-<link rel="stylesheet" href="styles.css?v=1792553284">
+<link rel="stylesheet" href="styles.css?v=1792553329">
 <script>document.documentElement.classList.add('js')</script>
 
 </head>
@@ -54,7 +54,7 @@ $purpose = (string)($old['purpose'] ?? ($_GET['purpose'] ?? ''));
 </div>
 </header>
 <section class="page-hero">
-<div class="hero-bg"><img src="images/hero65_contact.webp?v=12" alt="" width="2041" height="314" style="object-position:50% 50%;--mpos:62% 50%"></div>
+<div class="hero-bg"><img src="images/hero65_contact.webp?v=13" alt="" width="2041" height="314" style="object-position:50% 50%;--mpos:62% 50%"></div>
 <div class="container" data-en="CONTACT"><p class="eyebrow">CONTACT</p><h1>お問い合わせ</h1><nav class="breadcrumb" aria-label="パンくず"><a href="index.html">TOP</a> &gt; CONTACT</nav></div>
 </section>
 <main id="main"><section class="section tint"><div class="container-narrow">
@@ -89,6 +89,6 @@ $purpose = (string)($old['purpose'] ?? ($_GET['purpose'] ?? ''));
 <div class="copy"><span>&copy; 2026 一般社団法人 CELLACT. All rights reserved.</span></div>
 </div>
 </footer>
-<script src="script.js?v=1792553284" defer></script>
+<script src="script.js?v=1792553329" defer></script>
 </body>
 </html>
