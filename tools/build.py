@@ -28,7 +28,7 @@ NEWS = [  # newest first
 <ul><li>新名称：セルアクト クリニック銀座（CELLACT CLINIC GINZA）</li><li>所在地：〒104-0061 東京都中央区銀座6-6-5 HULIC &amp; New GINZA NAMIKI6 11F</li><li>電話番号：<a href="tel:0332890202">03-3289-0202</a>（変更ありません）</li></ul>
 <p>住所・電話番号に変更はございません。今後とも変わらぬご支援を賜りますよう、お願い申し上げます。</p>
 <p>ご不明な点は、<a href="contact.php">お問い合わせフォーム</a>、またはお電話でお寄せください。</p>'''),
-    dict(slug='news-20270101-renewal', date='2027.01.01', tag='お知らせ', warm=False, img='hero_top.webp', logo=True,
+    dict(slug='news-20270101-renewal', date='2027.01.01', tag='お知らせ', warm=False, img='news_renewal.webp',
          title='公式サイトをリニューアルしました。',
          excerpt='一般社団法人 CELLACT の公式サイトを、新しいデザインでリニューアルしました。',
          body='''<p>いつもご覧いただき、ありがとうございます。一般社団法人 CELLACT の公式サイトを、全面的にリニューアルいたしました。</p>

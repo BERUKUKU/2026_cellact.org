@@ -883,3 +883,7 @@ main > .hero.dragging { cursor: grabbing; user-select: none; -webkit-user-select
 /* clinic photos (new set) */
 .safety-photo img { object-position: 55% 50%; }
 .info-wrap img { aspect-ratio: 3 / 2; }
+
+/* article: a proper card with breathing room */
+.article { padding: clamp(24px, 4.5vw, 52px); border-radius: var(--radius); box-shadow: 0 14px 40px rgba(60,110,150,.12); }
+.article-img, .article-fig { margin-bottom: 32px; }
