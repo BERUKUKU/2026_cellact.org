@@ -369,7 +369,7 @@
         var dur2 = ((o.mirror ? 2 : 1) * cw / (o.speed ? o.speed() : 16)) * 1000, f0 = o.startFrac ? o.startFrac() : 0;   // startFrac: where in the loop (0..1) the first view begins
         anim = track.animate(kf2, { duration: dur2, iterations: Infinity, easing: 'linear', delay: -(o.offset || 0) * 1000 - f0 * dur2 });
         if (prog != null) { anim.effect.updateTiming({ delay: 0 }); anim.currentTime = prog * dur2; }
-        var ctl = frame.__glideCtl = frame.__glideCtl || {}; ctl.anim = anim; ctl.cw = cw; ctl.dur = dur2;   // handle for drag-to-look-around
+        var ctl = frame.__glideCtl = frame.__glideCtl || {}; ctl.anim = anim; ctl.cw = cw * (o.mirror ? 2 : 1); ctl.dur = dur2;   // handle for drag-to-look-around
         return;
       }
       img.style.cssText += ';position:absolute;left:0;top:0;max-width:none;width:' + cw.toFixed(1) + 'px;height:' + ch.toFixed(1) + 'px;object-fit:fill;object-position:0 0';
@@ -390,7 +390,7 @@
   };
   var focusY = function (img) { var m = (img.getAttribute('style') || '').match(/object-position:\s*[^;]*?\s(\d+(?:\.\d+)?)%/); return m ? parseFloat(m[1]) / 100 : 0.5; };
   var heroImg = d.querySelector('.hero .hero-bg img'), subHeroImg = d.querySelector('.page-hero .hero-bg img');
-  if (heroImg) glide(heroImg, heroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 120 : 90; }, zoom: function () { return innerWidth <= 820 ? 0.62 : 1; }, startFrac: function () { return innerWidth <= 820 ? 0.255 : 0; }, speed: function () { return innerWidth <= 820 ? 14 : 18; }, loop: true, fy: function () { return innerWidth <= 820 ? 1 : 0.8; }, swell: 8, swells: 3 });   // PC: a 2.4:1 picture in a 2.3:1 frame has no spare width, so it is enlarged a little to leave room to glide
+  if (heroImg) glide(heroImg, heroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 120 : 90; }, zoom: function () { return innerWidth <= 820 ? 0.62 : 1; }, startFrac: function () { return innerWidth <= 820 ? 0.255 : 0; }, speed: function () { return innerWidth <= 820 ? 14 : 18; }, loop: true, mirror: true, fy: function () { return innerWidth <= 820 ? 1 : 0.8; }, swell: 8, swells: 3 });   // PC: a 2.4:1 picture in a 2.3:1 frame has no spare width, so it is enlarged a little to leave room to glide
   // Drag to look around: grab the TOP hero's panorama and move it by hand; it keeps a little momentum and then drifts on by itself again
   (function () {
     var hero = d.querySelector('main > .hero'), bg = hero && hero.querySelector('.hero-bg');
