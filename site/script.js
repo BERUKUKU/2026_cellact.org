@@ -509,14 +509,14 @@
   // Drifting fog over the whole TOP hero: soft white patches that appear at random places, drift, thin out and come back elsewhere
   var fogBg = d.querySelector('.hero .hero-bg');
   if (fogBg && !reduce) {
-    var fogCount = innerWidth <= 820 ? 5 : 7, fogPlace = function (f, slot) {
+    var phoneFog = innerWidth <= 820, fogCount = phoneFog ? 3 : 7, fogPlace = function (f, slot) {
       var w = 44 + Math.random() * 40, h = 24 + Math.random() * 26;                       // % of the frame
       var cx = slot == null ? Math.random() * 100 : (slot + Math.random()) / fogCount * 100;   // initial patches are spread evenly across the width, later ones land anywhere
       var cy = 12 + Math.random() * 76;
       f.style.setProperty('--fw', w.toFixed(1) + '%'); f.style.setProperty('--fh', h.toFixed(1) + '%');
       f.style.left = (cx - w / 2).toFixed(1) + '%'; f.style.top = (cy - h / 2).toFixed(1) + '%';
       f.style.setProperty('--dx', ((Math.random() < 0.5 ? -1 : 1) * (6 + Math.random() * 14)).toFixed(1) + '%');
-      f.style.setProperty('--o', (0.5 + Math.random() * 0.22).toFixed(2));
+      f.style.setProperty('--o', (phoneFog ? 0.26 + Math.random() * 0.14 : 0.5 + Math.random() * 0.22).toFixed(2));   // phone: fewer, fainter patches so the picture stays clear
     };
     for (var fi = 0; fi < fogCount; fi++) {
       var fg = d.createElement('i'); fg.className = 'fog-patch'; fg.setAttribute('aria-hidden', 'true');
