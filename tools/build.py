@@ -20,7 +20,7 @@ NEWS = [  # newest first
 <ul><li>募集職種：看護師（正看護師・准看護師）、受付スタッフ</li><li>勤務形態：正社員（試用期間あり）</li><li>勤務地：セルアクト クリニック銀座（CELLACT CLINIC GINZA）（東京都中央区銀座）</li><li>歓迎スキル：英語対応、再生医療・美容医療経験、ホスピタリティを重視した接遇</li></ul>
 <p>教育・研修はチームでサポートし、未経験の方も段階的に業務を習得できる環境を整えています。ライフステージに合わせた働き方についてもお気軽にご相談ください。</p>
 <p>応募・詳細は <a href="recruit.html">採用情報</a> をご覧のうえ、<a href="contact.php">お問い合わせ</a> からご連絡ください。担当者より折り返しご案内いたします。</p>'''),
-    dict(slug='news-20270101-rename', date='2027.01.01', tag='クリニック情報', warm=False, img='cellact_super.webp?v=5',
+    dict(slug='news-20270101-rename', date='2027.01.01', tag='クリニック情報', warm=False, img='photo_logo.webp',
          title='N2クリニック銀座本院は「セルアクト クリニック銀座（CELLACT CLINIC GINZA）」へ名称変更しました。',
          excerpt='N2クリニック銀座本院は、この度「セルアクト クリニック銀座（CELLACT CLINIC GINZA）」へ名称を変更いたしました。',
          body='''<p>日頃よりご愛顧いただき、誠にありがとうございます。</p>
