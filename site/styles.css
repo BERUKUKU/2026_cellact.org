@@ -879,3 +879,7 @@ main > .hero.dragging { cursor: grabbing; user-select: none; -webkit-user-select
 .section.tint, .section.warm { isolation: isolate; }
 /* card pictures drift very slowly: keep them on their own GPU layer so the sub-pixel motion stays smooth */
 .service-card .thumb img[data-pan] { will-change: transform; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+
+/* clinic photos (new set) */
+.safety-photo img { object-position: 55% 50%; }
+.info-wrap img { aspect-ratio: 3 / 2; }

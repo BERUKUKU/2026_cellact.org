@@ -13,7 +13,7 @@ NAV = [('index.html', 'TOP'), ('business.html', 'BUSINESS'), ('company.html', 'C
        ('recruit.html', 'RECRUIT'), ('news-archive.html', 'NEWS')]
 
 NEWS = [  # newest first
-    dict(slug='news-20270110-recruit', date='2027.01.10', tag='採用情報', warm=True, img='clinic_corridor.webp',
+    dict(slug='news-20270110-recruit', date='2027.01.10', tag='採用情報', warm=True, img='photo_glass1.webp',
          title='医療スタッフ募集のお知らせ',
          excerpt='看護師・受付スタッフを募集しています。',
          body='''<p>再生医療の現場をともに支える仲間を募集します。患者様に寄り添い、技術と温かさを両立させた医療を届けることのできる方をお待ちしています。</p>
@@ -261,7 +261,7 @@ def build_services():
 <div class="sd-text"><p class="eyebrow" style="color:var(--peach-deep)">{sv["en"]}</p><h2>{sv["name"]}</h2><p class="sd-lead">{sv["lead"]}</p>{paras}<dl class="sd-points">{pts}</dl></div></article>'''
     s += '<p class="sd-note reveal">※ 治療の内容・期間・リスク・費用などについては、診察時に医師が個別にご説明します。治療の経過や感じ方には、個人差があります。</p>'
     s += '''</div></section>
-<section class="section tint"><div class="container safety-grid"><figure class="safety-photo reveal"><img src="images/safety_room.webp" alt="クリニックの処置室" loading="lazy" width="1400" height="1400"></figure><div>''' + section_head('SAFETY', '安全への姿勢') + '''
+<section class="section tint"><div class="container safety-grid"><figure class="safety-photo reveal"><img src="images/photo_ope.webp" alt="クリニックの処置室" loading="lazy" width="1536" height="1024"></figure><div>''' + section_head('SAFETY', '安全への姿勢') + '''
 <div class="reveal"><p>日本では、2014年に再生医療等安全性確保法が施行され、再生医療には厳格な規制のもとでの実施が求められています。私たちはこの法律を遵守し、安全かつ高度な再生医療の実践に努めています。</p>
 <p>治療に用いる細胞の品質と、それを支える技術の信頼性は極めて重要です。徹底した品質管理のもとで培養された細胞を用い、患者様一人ひとりに安心して治療を受けていただける環境を整えています。</p></div>
 </div></div></section>
@@ -301,7 +301,7 @@ def build_company():
 <div><dt>全体</dt><dd>細胞の力と医療が、人の健康と希望を支えるかたち。</dd></div>
 </dl></div></div></section>
 <section class="section tint"><div class="container">{section_head('INFORMATION', '法人情報')}
-<div class="info-wrap reveal"><img src="images/lounge.webp?v=8" alt="大きな窓のあるクリニックの待合スペース" loading="lazy" width="1458" height="1228"><dl class="info-table">{info}</dl></div>
+<div class="info-wrap reveal"><img src="images/photo_sofa.webp" alt="大きな窓のあるクリニックの待合スペース" loading="lazy" width="1536" height="1024"><dl class="info-table">{info}</dl></div>
 <div class="map reveal"><iframe title="所在地の地図" src="{mapq}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
 </div></section>{cta()}</main>''' + footer()
     write('company.html', s)
@@ -320,7 +320,7 @@ def build_recruit():
 <div class="reveal message"><p>再生医療の現場で、医療の未来を共に築きませんか？<br>私たちは、幹細胞療法や免疫細胞療法による再生医療のほか、幹細胞培養上清療法などを提供しています。</p>
 <p>未来の医療である「再生医療」の現場に、あなたのスキルと情熱を活かしませんか？<br>私たちは患者様の生活を再生し、希望を届けるために共に働ける仲間を探しています。</p>
 <p>技術や経験はもちろん、何より「医療の可能性を信じ、成長したい」という意欲を重視します。</p></div></div>
-<div class="container"><div class="photo-row reveal"><img src="images/clinic_corridor.webp" alt="クリニックの廊下" loading="lazy" width="1600" height="1065"><img src="images/clinic_ope.webp" alt="施術風景" loading="lazy" width="1200" height="1200"><img src="images/lounge.webp" alt="ラウンジ" loading="lazy" width="1458" height="1228"></div></div></section>
+<div class="container"><div class="photo-row reveal"><img src="images/photo_glass2.webp" alt="ガラス張りの待合スペース" loading="lazy" width="1536" height="1024"><img src="images/photo_logo.webp" alt="CELLACT CLINIC GINZAのエントランス" loading="lazy" width="1536" height="1024"><img src="images/photo_window.webp" alt="大きな窓のあるラウンジ" loading="lazy" width="1672" height="941"></div></div></section>
 <section class="section tint"><div class="container">{section_head('POSITIONS', '募集要項')}<div class="positions">{cards}</div>
 <p style="text-align:center;margin-top:36px"><a class="btn btn-teal" href="contact.php?purpose=recruit">採用に関するお問い合わせ {ICON_ARROW}</a></p></div></section></main>''' + footer()
     write('recruit.html', s)
