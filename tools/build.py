@@ -213,7 +213,7 @@ def build_index():
 <div class="hero-intro" aria-hidden="true"><div class="hi-veil"></div><div class="hi-logo" data-capsule-intro>{CAPSULE_SVG}</div><button type="button" class="hi-skip">スキップ</button></div>
 <div class="container hero-inner">
 <p class="hero-eyebrow">CELLACT / REGENERATIVE MEDICINE</p>
-<h1>再生する力で、<br>健康と希望の未来を創る。</h1>
+<h1>再生する力で、<br>健康と希望の<br class="sp-br">未来を創る。</h1>
 <p class="hero-sub">Advancing Health and Hope Through Regeneration.</p>
 <div class="hero-actions"><a class="btn btn-primary" href="business.html">事業内容を見る {ICON_ARROW}</a><a class="btn btn-ghost" href="contact.php">お問い合わせ</a></div>
 </div>

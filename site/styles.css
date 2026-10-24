@@ -903,3 +903,7 @@ main > .hero.dragging { cursor: grabbing; user-select: none; -webkit-user-select
 
 /* phone TOP hero: a compact block (copy on the sky, the wide picture as a band under it) so there is no empty half-screen */
 
+
+/* phone TOP headline: three lines so it can be set larger than the 13-character line allows */
+.sp-br { display: none; }
+@media (max-width: 820px) { .sp-br { display: inline; } .hero h1 { font-size: 9vw; line-height: 1.45; letter-spacing: .03em; } }
