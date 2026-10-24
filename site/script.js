@@ -417,7 +417,7 @@
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
       panAsp = img.naturalWidth / img.naturalHeight; ready = true; dirty = true;
     };
-    var yaw = 0.47 * 6.2831853, vel = 0, dirty = true, W = 0, H = 0, tanH = 1, asp = 1, hz = 0;
+    var yaw = 0.185 * 6.2831853, vel = 0, dirty = true, W = 0, H = 0, tanH = 1, asp = 1, hz = 0;
     var phone = function () { return innerWidth <= 820; };
     var layout = function () {
       var fw = frame.clientWidth, fh = frame.clientHeight; if (!fw || !fh) return;
@@ -425,12 +425,12 @@
       cv.style.height = ph + 'px'; cv.style.top = phone() ? 'auto' : '0'; cv.style.bottom = phone() ? '0' : 'auto';
       W = Math.round(fw * dpr); H = Math.round(ph * dpr); cv.width = W; cv.height = H;
       asp = fw / ph; tanH = Math.tan((phone() ? 54 : 92) * Math.PI / 360);
-      var cylH = 6.2831853 / panAsp, halfV = tanH / asp; hz = halfV > cylH * 0.5 ? halfV - cylH * 0.5 : (cylH * 0.5 - halfV) * 0.85;   // a view taller than the picture sits the picture's bottom edge on the canvas bottom; otherwise the picture's top is kept in view (the domes are never cut)
+      var cylH = 6.2831853 / panAsp, halfV = tanH / asp; hz = halfV > cylH * 0.5 ? halfV - cylH * 0.5 : 0;   // a view taller than the picture sits the picture's bottom edge on the canvas bottom; otherwise the picture's top is kept in view (the domes are never cut)
       dirty = true; if (typeof draw === 'function') { draw(); dirty = false; }   // resizing clears a canvas: paint again at once, not a frame later
     };
     var draw = function () {
       if (!ready || !W) return; gl.viewport(0, 0, W, H);
-      gl.uniform1f(U('yaw'), yaw); gl.uniform1f(U('tanH'), tanH); gl.uniform1f(U('asp'), asp); gl.uniform1f(U('hz'), hz); gl.uniform1f(U('panAsp'), panAsp); gl.uniform1f(U('k'), phone() ? 0.7 : 0.72); gl.uniform3f(U('sky'), 0.47, 0.9, 0.93);
+      gl.uniform1f(U('yaw'), yaw); gl.uniform1f(U('tanH'), tanH); gl.uniform1f(U('asp'), asp); gl.uniform1f(U('hz'), hz); gl.uniform1f(U('panAsp'), panAsp); gl.uniform1f(U('k'), phone() ? 0.7 : 0.72); gl.uniform3f(U('sky'), 0.29, 0.86, 0.98);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     };
     frame.insertBefore(cv, frame.firstChild);

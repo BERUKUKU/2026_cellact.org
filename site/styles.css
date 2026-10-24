@@ -837,7 +837,7 @@ main > .hero[style*="hidden"] .hero-intro { visibility: hidden !important; displ
 
 /* phone TOP hero: the wide picture sits in the lower half; the sky colour of its top edge fills the space above for the copy */
 @media (max-width: 820px) {
-  .hero .hero-bg { background: linear-gradient(#62dfe9, #78e6ee); }
+  .hero .hero-bg { background: linear-gradient(#45d8f6, #4cdbf8); }
   .hero .hero-bg .glide-track img { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 32%); mask-image: linear-gradient(to bottom, transparent 0, #000 32%); }
 }
 
