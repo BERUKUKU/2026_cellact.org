@@ -130,7 +130,7 @@ def world_band(img, word, pos='50% 50%'):
 
 def cta(heading='まずはお気軽にご相談ください'):
     return f'''<section class="section cta under">
-<div class="cta-bg" aria-hidden="true"><img src="images/band_arches.webp" alt="" loading="lazy"></div>
+<div class="cta-bg" aria-hidden="true"><img src="images/band_arches.webp?v=2" alt="" loading="lazy"></div>
 <div class="container reveal">
 <p class="eyebrow" style="color:#fff;opacity:.85">CONTACT</p>
 <h2 class="section-title">{heading}</h2>
