@@ -424,7 +424,7 @@
       var ph = phone() ? Math.min(fh, Math.round(fw * 1.05)) : fh, dpr = Math.min(devicePixelRatio || 1, phone() ? 1.5 : 2);
       cv.style.height = ph + 'px'; cv.style.top = phone() ? 'auto' : '0'; cv.style.bottom = phone() ? '0' : 'auto';
       W = Math.round(fw * dpr); H = Math.round(ph * dpr); cv.width = W; cv.height = H;
-      asp = fw / ph; tanH = Math.tan((phone() ? 54 : 100) * Math.PI / 360);
+      asp = fw / ph; tanH = Math.tan((phone() ? 50 : 86) * Math.PI / 360);
       var cylH = 6.2831853 / panAsp, halfV = tanH / asp; hz = Math.max(halfV - cylH * 0.5, -0.04);   // a view taller than the picture sits the picture's bottom edge on the canvas bottom; otherwise it is centred
       dirty = true; if (typeof draw === 'function') { draw(); dirty = false; }   // resizing clears a canvas: paint again at once, not a frame later
     };
