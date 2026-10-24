@@ -591,10 +591,12 @@
   // Drifting fog over the whole TOP hero: soft white patches that appear at random places, drift, thin out and come back elsewhere
   var fogBg = d.querySelector('.hero .hero-bg');
   if (fogBg && !reduce) {
+    var FOG_TINTS = [['255,255,255', '236,232,251'], ['255,250,240', '255,226,214'], ['244,255,252', '205,243,236'], ['255,255,255', '214,236,255'], ['255,248,252', '246,222,240']];   // white to lavender / peach / mint / sky / pink
     var phoneFog = innerWidth <= 820, fogCount = phoneFog ? 3 : 7, fogPlace = function (f, slot) {
       var w = 44 + Math.random() * 40, h = 24 + Math.random() * 26;                       // % of the frame
       var cx = slot == null ? Math.random() * 100 : (slot + Math.random()) / fogCount * 100;   // initial patches are spread evenly across the width, later ones land anywhere
       var cy = 12 + Math.random() * 76;
+      var pal = FOG_TINTS[Math.floor(Math.random() * FOG_TINTS.length)]; f.style.setProperty('--c1', pal[0]); f.style.setProperty('--c2', pal[1]);   // each patch is a soft two-colour gradient
       f.style.setProperty('--fw', w.toFixed(1) + '%'); f.style.setProperty('--fh', h.toFixed(1) + '%');
       f.style.left = (cx - w / 2).toFixed(1) + '%'; f.style.top = (cy - h / 2).toFixed(1) + '%';
       f.style.setProperty('--dx', ((Math.random() < 0.5 ? -1 : 1) * (6 + Math.random() * 14)).toFixed(1) + '%');
