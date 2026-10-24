@@ -399,8 +399,8 @@
     if (!gl) return false;
     var mkShader = function (t, src) { var o = gl.createShader(t); gl.shaderSource(o, src); gl.compileShader(o); return gl.getShaderParameter(o, gl.COMPILE_STATUS) ? o : null; };
     var vsO = mkShader(gl.VERTEX_SHADER, 'attribute vec2 p;varying vec2 q;void main(){q=p;gl_Position=vec4(p,0.,1.);}');
-    var fsO = mkShader(gl.FRAGMENT_SHADER, 'precision highp float;varying vec2 q;uniform sampler2D t;uniform float yaw,tanH,asp,hz,panAsp;uniform vec3 sky;' +
-      'void main(){float tx=q.x*tanH;float ty=q.y*tanH/asp;float th=atan(tx);float h=ty/sqrt(1.+tx*tx);' +
+    var fsO = mkShader(gl.FRAGMENT_SHADER, 'precision highp float;varying vec2 q;uniform sampler2D t;uniform float yaw,tanH,asp,hz,panAsp,k;uniform vec3 sky;' +
+      'void main(){float tx=q.x*tanH;float ty=q.y*tanH/asp;float th=atan(k*tx)/k;float h=ty/sqrt(1.+k*k*tx*tx);' +   // k: 1 = full cylinder curve, 0 = flat
       'float u=fract((yaw+th)/6.2831853);float v=0.5+(h+hz)/(6.2831853/panAsp);' +
       'vec3 c=texture2D(t,vec2(u,clamp(v,0.,1.))).rgb;c=mix(c,sky,smoothstep(0.93,1.06,v));gl_FragColor=vec4(c,1.);}');
     if (!vsO || !fsO) return false;
@@ -424,13 +424,13 @@
       var ph = phone() ? Math.min(fh, Math.round(fw * 1.05)) : fh, dpr = Math.min(devicePixelRatio || 1, phone() ? 1.5 : 2);
       cv.style.height = ph + 'px'; cv.style.top = phone() ? 'auto' : '0'; cv.style.bottom = phone() ? '0' : 'auto';
       W = Math.round(fw * dpr); H = Math.round(ph * dpr); cv.width = W; cv.height = H;
-      asp = fw / ph; tanH = Math.tan((phone() ? 50 : 86) * Math.PI / 360);
+      asp = fw / ph; tanH = Math.tan((phone() ? 54 : 92) * Math.PI / 360);
       var cylH = 6.2831853 / panAsp, halfV = tanH / asp; hz = Math.max(halfV - cylH * 0.5, -0.04);   // a view taller than the picture sits the picture's bottom edge on the canvas bottom; otherwise it is centred
       dirty = true; if (typeof draw === 'function') { draw(); dirty = false; }   // resizing clears a canvas: paint again at once, not a frame later
     };
     var draw = function () {
       if (!ready || !W) return; gl.viewport(0, 0, W, H);
-      gl.uniform1f(U('yaw'), yaw); gl.uniform1f(U('tanH'), tanH); gl.uniform1f(U('asp'), asp); gl.uniform1f(U('hz'), hz); gl.uniform1f(U('panAsp'), panAsp); gl.uniform3f(U('sky'), 0.47, 0.9, 0.93);
+      gl.uniform1f(U('yaw'), yaw); gl.uniform1f(U('tanH'), tanH); gl.uniform1f(U('asp'), asp); gl.uniform1f(U('hz'), hz); gl.uniform1f(U('panAsp'), panAsp); gl.uniform1f(U('k'), phone() ? 0.55 : 0.45); gl.uniform3f(U('sky'), 0.47, 0.9, 0.93);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     };
     frame.insertBefore(cv, frame.firstChild);
