@@ -38,7 +38,7 @@ NEWS = [  # newest first
 ]
 
 SERVICES = [
-    dict(id='stem', en='STEM CELL TREATMENT', name='幹細胞療法', img='cellact_stem.webp?v=4', yt=None,
+    dict(id='stem', en='STEM CELL TREATMENT', name='幹細胞療法', img='cellact_stem.webp?v=5', yt=None,
          short='自己の幹細胞を用いた再生医療により、損傷した組織の修復・再生を促します。',
          lead='ご自身の幹細胞を用いた再生医療により、損傷した組織の修復・再生を促します。',
          paras=['幹細胞は、さまざまな細胞に変化する力と、自らを複製する力をもつ細胞です。この性質を医療に活かし、加齢や損傷によって傷んだ組織の回復を支えることを目指します。',
@@ -46,7 +46,7 @@ SERVICES = [
          points=[('どんな治療か', 'ご自身の細胞を用いる再生医療です。'),
                  ('特徴', '細胞の品質と、それを支える技術の信頼性を重視しています。'),
                  ('安全への取り組み', '再生医療等安全性確保法を遵守し、安全かつ高度な実践に努めています。')]),
-    dict(id='immune', en='IMMUNE CELL TREATMENT', name='免疫細胞療法', img='cellact_immune.webp?v=3', yt=None,
+    dict(id='immune', en='IMMUNE CELL TREATMENT', name='免疫細胞療法', img='cellact_immune.webp?v=4', yt=None,
          short='患者様自身の免疫細胞を活性化させ、体の自然治癒力を高める治療法です。',
          lead='患者様自身の免疫細胞を活性化させ、体の自然治癒力を高める治療法です。',
          paras=['免疫細胞は、体を守る仕組みの中心を担う細胞です。ご自身の免疫細胞を体の外で培養・活性化させ、その働きを高めることを目指します。',
@@ -54,7 +54,7 @@ SERVICES = [
          points=[('どんな治療か', 'ご自身の免疫細胞を活用する再生医療です。'),
                  ('特徴', '一人ひとりの状態に合わせて、治療計画を設計します。'),
                  ('安全への取り組み', '細胞の品質管理と、法令の遵守を徹底しています。')]),
-    dict(id='super', en='STEMCELL SUPERNATANT', name='幹細胞培養上清療法', img='cellact_super.webp?v=5', yt=None,
+    dict(id='super', en='STEMCELL SUPERNATANT', name='幹細胞培養上清療法', img='cellact_super.webp?v=6', yt=None,
          short='細胞間の情報伝達を担うサイトカインが豊富な培養上清で、細胞本来の活性をサポートします。',
          lead='細胞間の情報伝達を担うサイトカインが豊富な培養上清で、細胞本来の活性をサポートします。',
          paras=['幹細胞培養上清とは、幹細胞を培養する過程で、培養液に分泌される成分を取り出したものです。細胞間の情報伝達を担うサイトカインが豊富に含まれています。',
