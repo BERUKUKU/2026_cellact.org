@@ -591,7 +591,7 @@
   // Drifting fog over the whole TOP hero: soft white patches that appear at random places, drift, thin out and come back elsewhere
   var fogBg = d.querySelector('.hero .hero-bg');
   if (fogBg && !reduce) {
-    var FOG_TINTS = [['255,255,255', '236,232,251'], ['255,250,240', '255,226,214'], ['244,255,252', '205,243,236'], ['255,255,255', '214,236,255'], ['255,248,252', '246,222,240']];   // white to lavender / peach / mint / sky / pink
+    var FOG_TINTS = [['248,244,255', '200,184,246'], ['255,246,236', '255,196,170'], ['238,255,250', '150,232,212'], ['244,250,255', '150,205,255'], ['255,242,250', '240,176,220']];   // soft centre to a clearly tinted rim: lavender / peach / mint / sky / pink
     var phoneFog = innerWidth <= 820, fogCount = phoneFog ? 3 : 7, fogPlace = function (f, slot) {
       var w = 44 + Math.random() * 40, h = 24 + Math.random() * 26;                       // % of the frame
       var cx = slot == null ? Math.random() * 100 : (slot + Math.random()) / fogCount * 100;   // initial patches are spread evenly across the width, later ones land anywhere
