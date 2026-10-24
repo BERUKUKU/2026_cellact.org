@@ -630,7 +630,7 @@
     // the immune-cell card begins on its signature view (capsules over the city = middle of the strip); each card restarts there when it first scrolls into view
     var src = im.getAttribute('src') || '', onTop = !!im.closest('.service-card'), bizImmune = !onTop && /immune/.test(src);   // tuned speeds / ranges: TOP cards, and the immune picture on the business page
     var tuned = onTop || /super/.test(src);   // the supernatant picture moves exactly like its TOP card on the business page too
-    var rng = bizImmune ? [0.35, 0.85] : !tuned ? null : /immune/.test(src) ? [0.25, 0.75] : /super/.test(src) ? [0.5, 1] : [0.2, 0.7];
+    var rng = bizImmune ? [0.08, 0.55] : !tuned ? null : /immune/.test(src) ? [0.05, 0.5] : /super/.test(src) ? [0.5, 1] : [0.2, 0.7];
     var cardPeriod = bizImmune ? 220 : !tuned ? 120 : innerWidth <= 820 ? (/stem/.test(src) ? 130 : 180) : 120;
     var off = bizImmune ? cardPeriod * 0.15 : tuned ? cardPeriod * (/super/.test(src) ? 0.4 : 0.25) : i * 37;   // these begin on their motif (inside their range)
     glide(im, im.parentNode, { prop: 'transform', period: function () { return cardPeriod; }, offset: off, swell: 0, swells: 1, range: rng });
