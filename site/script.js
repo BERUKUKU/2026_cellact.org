@@ -419,15 +419,15 @@
     };
     var yaw = 0.087 * 6.2831853, vel = 0, dirty = true, W = 0, H = 0, tanH = 1, asp = 1, hz = 0;
     var phone = function () { return innerWidth <= 820; };
-    if (phone()) yaw = 0.13 * 6.2831853;   // phone picture: begin on picture 1's big dome
+    if (phone()) yaw = 0.087 * 6.2831853;   // phone picture: begin on picture 1's big dome
     var layout = function () {
       var fw = frame.clientWidth, fh = frame.clientHeight; if (!fw || !fh) return;
       var ph = phone() ? fh : fh, dpr = Math.min(devicePixelRatio || 1, phone() ? 1.5 : 2);
       cv.style.height = ph + 'px'; cv.style.top = phone() ? 'auto' : '0'; cv.style.bottom = phone() ? '0' : 'auto';
       W = Math.round(fw * dpr); H = Math.round(ph * dpr); cv.width = W; cv.height = H;
       asp = fw / ph; var cylH = 6.2831853 / panAsp;
-      tanH = phone() ? 0.5 * (0.76 - 0.1) * cylH * 0.833 : Math.tan(92 * Math.PI / 360);   // phone: the picture fills the whole hero at one fixed zoom (about 47 degrees wide), its sea at the bottom; the sky above the domes is the picture's own sky, so nothing hides the domes
-      var halfV = tanH / asp; hz = halfV > cylH * 0.5 ? halfV - cylH * 0.5 : phone() ? (0.1 - 0.5) * cylH + halfV : 0;   // phones look down at the islands (they sit low in the picture)   // a view taller than the picture sits the picture's bottom edge on the canvas bottom; otherwise the picture's top is kept in view (the domes are never cut)
+      tanH = Math.tan((phone() ? 60 : 92) * Math.PI / 360);   // phone: the picture fills the whole hero at one fixed zoom (about 47 degrees wide), its sea at the bottom; the sky above the domes is the picture's own sky, so nothing hides the domes
+      var halfV = tanH / asp; hz = halfV > cylH * 0.5 ? halfV - cylH * 0.5 : phone() ? (0.02 - 0.5) * cylH + halfV : 0;   // phones look down at the islands (they sit low in the picture)   // a view taller than the picture sits the picture's bottom edge on the canvas bottom; otherwise the picture's top is kept in view (the domes are never cut)
       dirty = true; if (typeof draw === 'function') { draw(); dirty = false; }   // resizing clears a canvas: paint again at once, not a frame later
     };
     var draw = function () {

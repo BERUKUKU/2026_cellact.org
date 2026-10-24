@@ -898,3 +898,6 @@ main > .hero.dragging { cursor: grabbing; user-select: none; -webkit-user-select
 /* TOP hero: a lighter overall haze (glow layer and fog patches fainter) */
 @keyframes heroGlow { from { opacity: .22; transform: translateY(0); } to { opacity: .5; transform: translateY(-6px); } }
 .hero .hero-bg::before { animation-name: heroGlow; }
+
+/* phone TOP hero: a compact block (copy on the sky, the wide picture as a band under it) so there is no empty half-screen */
+@media (max-width: 820px) { .hero { --hb: 560px; } }
