@@ -163,12 +163,12 @@ def footer():
 '''
 
 
-def page_hero(en, title, bg, crumbs, pos='50% 50%', flip=False, tall=False, mpos=None):
+def page_hero(en, title, bg, crumbs, pos='50% 50%', flip=False, tall=False, mpos=None, zoom=None):
     mpos = mpos or pos
     bc = ' &gt; '.join(f'<a href="{h}">{l}</a>' for h, l in crumbs[:-1])
     bc = (bc + ' &gt; ' if bc else '') + esc(crumbs[-1][1])
     return f'''<section class="page-hero{" tall" if tall else ""}{" flip" if flip else ""}">
-<div class="hero-bg"><img src="images/{bg}?v=16" alt="" width="2600" height="400" style="object-position:{pos};--mpos:{mpos}"></div>
+<div class="hero-bg"><img src="images/{bg}?v=16" alt="" width="2600" height="400" style="object-position:{pos};--mpos:{mpos}{(";--zoom:" + str(zoom)) if zoom else ""}"></div>
 <div class="container" data-en="{en}"><p class="eyebrow">{en}</p><h1>{title}</h1><nav class="breadcrumb" aria-label="パンくず">{bc}</nav></div>
 </section>
 '''
@@ -315,7 +315,7 @@ def build_recruit():
     for t, rows in pos:
         cards += f'<article class="position reveal"><h3>{t}</h3><dl>' + ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows) + '</dl></article>'
     s = head('RECRUIT', '再生医療の現場で、医療の未来を共に築きませんか。看護師・受付スタッフの募集要項。', 'recruit.html', og_img='images/hero_recruit.webp')
-    s += header('recruit.html') + page_hero('RECRUIT', '採用情報', 'hero65_recruit.webp', [('index.html', 'TOP'), ('recruit.html', 'RECRUIT')], pos='50% 50%', mpos='45% 50%')
+    s += header('recruit.html') + page_hero('RECRUIT', '採用情報', 'hero65_recruit.webp', [('index.html', 'TOP'), ('recruit.html', 'RECRUIT')], pos='50% 6%', mpos='45% 50%', zoom=1.18)
     s += f'''<main id="main"><section class="section"><div class="container split"><div class="split-head">{section_head('MESSAGE', '私たちの仕事は未来を再生すること。')}</div>
 <div class="reveal message"><p>再生医療の現場で、医療の未来を共に築きませんか？<br>私たちは、幹細胞療法や免疫細胞療法による再生医療のほか、幹細胞培養上清療法などを提供しています。</p>
 <p>未来の医療である「再生医療」の現場に、あなたのスキルと情熱を活かしませんか？<br>私たちは患者様の生活を再生し、希望を届けるために共に働ける仲間を探しています。</p>

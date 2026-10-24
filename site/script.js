@@ -536,7 +536,7 @@
   var subStart = 0;
   if (subHeroImg && innerWidth <= 820) { var mp = parseFloat((subHeroImg.style.getPropertyValue('--mpos') || '').split(' ')[0]);
     if (mp >= 0) { var sf = Math.max(0, Math.min(1, (mp / 100 - 0.04) / 0.92)); subStart = Math.acos(1 - 2 * sf) / (2 * Math.PI) * 260; } }
-  if (subHeroImg) glide(subHeroImg, subHeroImg.closest('.hero-bg'), { offset: subStart, period: function () { return innerWidth <= 820 ? 260 : 55; }, zoom: function () { return parseFloat(getComputedStyle(d.documentElement).getPropertyValue(innerWidth <= 820 ? '--subhero-zoom-sp' : '--subhero-zoom')) || 1.1; }, fy: function () { return focusY(subHeroImg); }, swell: 10, swells: 3 });
+  if (subHeroImg) glide(subHeroImg, subHeroImg.closest('.hero-bg'), { offset: subStart, period: function () { return innerWidth <= 820 ? 260 : 55; }, zoom: function () { var own = parseFloat(getComputedStyle(subHeroImg).getPropertyValue('--zoom')); return own || parseFloat(getComputedStyle(d.documentElement).getPropertyValue(innerWidth <= 820 ? '--subhero-zoom-sp' : '--subhero-zoom')) || 1.1; }, fy: function () { return focusY(subHeroImg); }, swell: 10, swells: 3 });
 
   // Light dust: many tiny white particles drift slowly and twinkle across the whole hero picture (a different role from the hexagon cells)
   var dBg = d.querySelector('.hero .hero-bg, .page-hero .hero-bg');
