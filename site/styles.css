@@ -468,7 +468,7 @@ p, dd { font-size: 1rem; line-height: 1.95; }
 .lm-legend dt { font-family: var(--serif); font-size: 1.15rem; color: var(--teal-deep); letter-spacing: .06em; }
 .lm-legend dd { margin: 0; color: var(--ink-soft); font-size: .96rem; line-height: 1.8; }
 .info-wrap img { object-position: 62% 50%; }
-@media (max-width: 820px) { .logo-meaning { grid-template-columns: 1fr; } .logo-meaning .lm-body { order: -1; } .lm-mark { max-width: 360px; } }
+@media (max-width: 820px) { .logo-meaning { grid-template-columns: 1fr; } .logo-meaning .lm-body { display: contents; } .logo-meaning .lm-body > .section-head { order: -2; margin-bottom: 0; } .lm-mark { order: -1; max-width: 360px; } }
 @media (max-width: 640px) { .lm-legend div { grid-template-columns: 1fr; gap: 2px; } }
 .info-wrap { align-items: stretch; }
 .info-wrap img { aspect-ratio: auto; height: 100%; min-height: 360px; object-position: 50% 45%; }
