@@ -419,7 +419,7 @@
     };
     var yaw = 0.087 * 6.2831853, vel = 0, dirty = true, W = 0, H = 0, tanH = 1, asp = 1, hz = 0;
     var phone = function () { return innerWidth <= 820; };
-    if (phone()) yaw = 0.168 * 6.2831853;   // phone picture: begin on picture 1's big dome
+    if (phone()) yaw = 0.15 * 6.2831853;   // phone picture: begin on picture 1's big dome
     var layout = function () {
       var fw = frame.clientWidth, fh = frame.clientHeight; if (!fw || !fh) return;
       var ph = phone() ? Math.min(fh, Math.round(fw * 1.2)) : fh, dpr = Math.min(devicePixelRatio || 1, phone() ? 1.5 : 2);
