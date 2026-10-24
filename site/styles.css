@@ -837,7 +837,7 @@ main > .hero[style*="hidden"] .hero-intro { visibility: hidden !important; displ
 
 /* phone TOP hero: the wide picture sits in the lower half; the sky colour of its top edge fills the space above for the copy */
 @media (max-width: 820px) {
-  .hero .hero-bg { background: linear-gradient(#2fd5e6, #37dae9); }
+  .hero .hero-bg { background: linear-gradient(#62dfe9, #78e6ee); }
   .hero .hero-bg .glide-track img { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 32%); mask-image: linear-gradient(to bottom, transparent 0, #000 32%); }
 }
 
@@ -887,3 +887,7 @@ main > .hero.dragging { cursor: grabbing; user-select: none; -webkit-user-select
 /* article: a proper card with breathing room */
 .article { padding: clamp(24px, 4.5vw, 52px); border-radius: var(--radius); box-shadow: 0 14px 40px rgba(60,110,150,.12); }
 .article-img, .article-fig { margin-bottom: 32px; }
+
+/* TOP hero as a wide-angle canvas (WebGL); on phones it sits in the lower part and fades into the sky colour above it */
+.hero .hero-bg canvas.hero-gl { position: absolute; left: 0; width: 100%; display: block; }
+@media (max-width: 820px) { .hero .hero-bg canvas.hero-gl { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 22%); mask-image: linear-gradient(to bottom, transparent 0, #000 22%); } }

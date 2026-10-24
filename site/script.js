@@ -389,8 +389,88 @@
     if (img.parentNode && img.parentNode.tagName === 'PICTURE') img.addEventListener('load', build);
   };
   var focusY = function (img) { var m = (img.getAttribute('style') || '').match(/object-position:\s*[^;]*?\s(\d+(?:\.\d+)?)%/); return m ? parseFloat(m[1]) / 100 : 0.5; };
+
+  // TOP hero as a wide-angle view: the seamless panorama is wrapped round a cylinder and looked at from the middle (WebGL), so the sides curve away a little.
+  // It turns on its own, can be dragged, and falls back to the flat sliding picture if WebGL is not available.
+  var glHero = function (img, frame) {
+    if (reduce || !frame) return false;
+    var cv = d.createElement('canvas'); cv.className = 'glide-track hero-gl'; cv.setAttribute('aria-hidden', 'true');
+    var gl = null; try { gl = cv.getContext('webgl', { alpha: false, antialias: false }); } catch (e) { gl = null; }
+    if (!gl) return false;
+    var mkShader = function (t, src) { var o = gl.createShader(t); gl.shaderSource(o, src); gl.compileShader(o); return gl.getShaderParameter(o, gl.COMPILE_STATUS) ? o : null; };
+    var vsO = mkShader(gl.VERTEX_SHADER, 'attribute vec2 p;varying vec2 q;void main(){q=p;gl_Position=vec4(p,0.,1.);}');
+    var fsO = mkShader(gl.FRAGMENT_SHADER, 'precision highp float;varying vec2 q;uniform sampler2D t;uniform float yaw,tanH,asp,hz,panAsp;uniform vec3 sky;' +
+      'void main(){float tx=q.x*tanH;float ty=q.y*tanH/asp;float th=atan(tx);float h=ty/sqrt(1.+tx*tx);' +
+      'float u=fract((yaw+th)/6.2831853);float v=0.5+(h+hz)/(6.2831853/panAsp);' +
+      'vec3 c=texture2D(t,vec2(u,clamp(v,0.,1.))).rgb;c=mix(c,sky,smoothstep(0.93,1.06,v));gl_FragColor=vec4(c,1.);}');
+    if (!vsO || !fsO) return false;
+    var pr = gl.createProgram(); gl.attachShader(pr, vsO); gl.attachShader(pr, fsO); gl.linkProgram(pr); if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return false; gl.useProgram(pr);
+    var bf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, bf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    var lc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(lc); gl.vertexAttribPointer(lc, 2, gl.FLOAT, false, 0, 0);
+    var U = function (n) { return gl.getUniformLocation(pr, n); };
+    var tex = gl.createTexture(), ready = false, panAsp = 6;
+    var upload = function () {
+      if (!img.complete || !img.naturalWidth) return;
+      gl.bindTexture(gl.TEXTURE_2D, tex); gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      panAsp = img.naturalWidth / img.naturalHeight; ready = true; dirty = true;
+    };
+    var yaw = 0.47 * 6.2831853, vel = 0, dirty = true, W = 0, H = 0, tanH = 1, asp = 1, hz = 0;
+    var phone = function () { return innerWidth <= 820; };
+    var layout = function () {
+      var fw = frame.clientWidth, fh = frame.clientHeight; if (!fw || !fh) return;
+      var ph = phone() ? Math.min(fh, Math.round(fw * 1.05)) : fh, dpr = Math.min(devicePixelRatio || 1, phone() ? 1.5 : 2);
+      cv.style.height = ph + 'px'; cv.style.top = phone() ? 'auto' : '0'; cv.style.bottom = phone() ? '0' : 'auto';
+      W = Math.round(fw * dpr); H = Math.round(ph * dpr); cv.width = W; cv.height = H;
+      asp = fw / ph; tanH = Math.tan((phone() ? 54 : 100) * Math.PI / 360);
+      var cylH = 6.2831853 / panAsp, halfV = tanH / asp; hz = Math.max(halfV - cylH * 0.5, -0.04);   // a view taller than the picture sits the picture's bottom edge on the canvas bottom; otherwise it is centred
+      dirty = true; if (typeof draw === 'function') { draw(); dirty = false; }   // resizing clears a canvas: paint again at once, not a frame later
+    };
+    var draw = function () {
+      if (!ready || !W) return; gl.viewport(0, 0, W, H);
+      gl.uniform1f(U('yaw'), yaw); gl.uniform1f(U('tanH'), tanH); gl.uniform1f(U('asp'), asp); gl.uniform1f(U('hz'), hz); gl.uniform1f(U('panAsp'), panAsp); gl.uniform3f(U('sky'), 0.47, 0.9, 0.93);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    };
+    frame.insertBefore(cv, frame.firstChild);
+    var pic = img.closest('picture'); if (pic) pic.style.display = 'none'; else img.style.display = 'none';
+    img.addEventListener('load', function () { upload(); layout(); }); upload(); layout();
+    if ('ResizeObserver' in window) new ResizeObserver(layout).observe(frame); addEventListener('resize', layout);
+    var hero = frame.closest('.hero'), onScreen = true, dragging = false, st = null, lastX = 0, lastT = 0, last = 0;
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { onScreen = es[0].isIntersecting; }).observe(frame);
+    var autoSpeed = function () { return 6.2831853 / (phone() ? 190 : 150); };   // radians per second: one full turn takes 2.5-3 minutes
+    var tick = function (now) {
+      var dt = last ? Math.min((now - last) / 1000, 0.1) : 0.016; last = now;
+      if (onScreen && !d.hidden) {
+        if (!dragging) { yaw += vel; vel *= Math.pow(0.94, dt / 0.0167); if (Math.abs(vel) < 0.00005) vel = 0; yaw += autoSpeed() * dt; dirty = true; }
+        if (dirty) { draw(); dirty = false; }
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    // drag to look around (momentum afterwards, then it turns on its own again)
+    var perPx = function () { return 2 * tanH / (frame.clientWidth || 1); };   // radians per pixel at the middle of the view
+    hero.addEventListener('pointerdown', function (e) {
+      if (hero.classList.contains('intro-on') || e.target.closest('a, button')) return; if (e.pointerType === 'mouse' && e.button !== 0) return;
+      st = { x: e.clientX, y: e.clientY, yaw: yaw, id: e.pointerId }; dragging = false; vel = 0; lastX = e.clientX; lastT = performance.now();
+    });
+    hero.addEventListener('pointermove', function (e) {
+      if (!st) return; var dx = e.clientX - st.x, dy = e.clientY - st.y;
+      if (!dragging) {
+        if (Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy) * 1.2) { dragging = true; hero.classList.add('dragging'); try { hero.setPointerCapture(st.id); } catch (er) {} var hn = hero.querySelector('.drag-hint'); if (hn) hn.classList.remove('on'); }
+        else if (Math.abs(dy) > 10) { st = null; return; }
+      }
+      if (!dragging) return;
+      var now = performance.now(), dtm = Math.max(1, now - lastT); vel = 0.8 * vel + 0.2 * (-(e.clientX - lastX) * perPx() / dtm * 16.7); lastX = e.clientX; lastT = now;
+      yaw = st.yaw - dx * perPx(); dirty = true;
+    });
+    var rel = function () { if (!st) return; st = null; dragging = false; hero.classList.remove('dragging'); };
+    hero.addEventListener('pointerup', rel); hero.addEventListener('pointercancel', rel);
+    return true;
+  };
   var heroImg = d.querySelector('.hero .hero-bg img'), subHeroImg = d.querySelector('.page-hero .hero-bg img');
-  if (heroImg) glide(heroImg, heroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 120 : 90; }, zoom: function () { return innerWidth <= 820 ? 0.62 : 1; }, startFrac: function () { return innerWidth <= 820 ? 0.34 : 0; }, speed: function () { return innerWidth <= 820 ? 14 : 18; }, loop: true, fy: function () { return innerWidth <= 820 ? 1 : 0.8; }, swell: 8, swells: 3 });   // PC: a 2.4:1 picture in a 2.3:1 frame has no spare width, so it is enlarged a little to leave room to glide
+  if (heroImg && !glHero(heroImg, heroImg.closest('.hero-bg'))) glide(heroImg, heroImg.closest('.hero-bg'), { period: function () { return innerWidth <= 820 ? 120 : 90; }, zoom: function () { return innerWidth <= 820 ? 0.62 : 1; }, startFrac: function () { return innerWidth <= 820 ? 0.34 : 0; }, speed: function () { return innerWidth <= 820 ? 14 : 18; }, loop: true, fy: function () { return innerWidth <= 820 ? 1 : 0.8; }, swell: 8, swells: 3 });   // PC: a 2.4:1 picture in a 2.3:1 frame has no spare width, so it is enlarged a little to leave room to glide
   // Drag to look around: grab the TOP hero's panorama and move it by hand; it keeps a little momentum and then drifts on by itself again
   (function () {
     var hero = d.querySelector('main > .hero'), bg = hero && hero.querySelector('.hero-bg');
