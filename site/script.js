@@ -426,8 +426,8 @@
       cv.style.height = ph + 'px'; cv.style.top = phone() ? 'auto' : '0'; cv.style.bottom = phone() ? '0' : 'auto';
       W = Math.round(fw * dpr); H = Math.round(ph * dpr); cv.width = W; cv.height = H;
       asp = fw / ph; var cylH = 6.2831853 / panAsp;
-      tanH = phone() ? 0.5 * (0.8 - 0.03) * cylH * asp : Math.tan(92 * Math.PI / 360);   // phone: always show the picture from 3% to 80% of its height (sea to the top of the domes), whatever the screen shape
-      var halfV = tanH / asp; hz = halfV > cylH * 0.5 ? halfV - cylH * 0.5 : phone() ? (0.03 - 0.5) * cylH + halfV : 0;   // phones look down at the islands (they sit low in the picture)   // a view taller than the picture sits the picture's bottom edge on the canvas bottom; otherwise the picture's top is kept in view (the domes are never cut)
+      tanH = phone() ? 0.5 * (0.76 - 0.1) * cylH * asp : Math.tan(92 * Math.PI / 360);   // phone: always show the picture from 10% to 76% of its height (sea to the top of the domes), whatever the screen shape
+      var halfV = tanH / asp; hz = halfV > cylH * 0.5 ? halfV - cylH * 0.5 : phone() ? (0.1 - 0.5) * cylH + halfV : 0;   // phones look down at the islands (they sit low in the picture)   // a view taller than the picture sits the picture's bottom edge on the canvas bottom; otherwise the picture's top is kept in view (the domes are never cut)
       dirty = true; if (typeof draw === 'function') { draw(); dirty = false; }   // resizing clears a canvas: paint again at once, not a frame later
     };
     var draw = function () {
