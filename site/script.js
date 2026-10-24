@@ -301,7 +301,7 @@
       } else { cv.style.top = ''; cv.style.height = ''; cv.style.bottom = ''; }
       cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       var count = Math.round(Math.min(30, Math.max(8, W * H / 24000)));
-      if (innerWidth <= 820 && hero.classList.contains('hero')) count = Math.round(count * 0.6);   // phones: fewer, fainter cells over the picture
+      if (hero.classList.contains('hero')) count = Math.round(count * (innerWidth <= 820 ? 0.45 : 0.65));   // TOP hero: fewer cells (phones fewer still)   // phones: fewer, fainter cells over the picture
       cells = [];
       for (var i = 0; i < count; i++) { var c = {}; spawnCell(c, true); cells.push(c); }
     };
@@ -321,7 +321,7 @@
         if (c.age > c.life) { spawnCell(c, false); c.age = -Math.random() * 0.6; return; }
         c.y += c.vy * c.z * 60 * dt; c.rot += c.vr * 60 * dt;
         var u = c.age / c.life, s = Math.sin(Math.PI * u), env = Math.max(0, Math.min(1, s * s * (3 - 2 * Math.min(1, s * 1.6))));
-        ctx.lineWidth = light ? 1.5 + c.z * 1.1 : 0.8 + c.z * 0.7;   // TOP hero: fine outlines that sit with the drawn picture
+        ctx.lineWidth = light ? 1.5 + c.z * 1.1 : 0.55 + c.z * 0.45;   // TOP hero: fine outlines that sit with the drawn picture
         ctx.strokeStyle = 'rgba(' + ink + ',' + (light ? Math.min(1, c.a + 0.35) : c.a) * env * (innerWidth <= 820 && hero.classList.contains('hero') ? 0.4 : 0.6) + ')';
         ctx.fillStyle = light ? 'rgba(255,255,255,' + (0.4 * env) + ')' : 'rgba(' + ink + ',' + (c.a * 0.16) * env + ')';
         if (light) { ctx.shadowBlur = 0; }
