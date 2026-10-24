@@ -894,3 +894,7 @@ main > .hero.dragging { cursor: grabbing; user-select: none; -webkit-user-select
 
 /* PC: the TOP hero fills the screen under the header (no strip of the next section showing below it) */
 @media (min-width: 821px) { main > .hero { aspect-ratio: auto; min-height: clamp(520px, calc(100svh - var(--header-h)), 1100px); } }
+
+/* TOP hero: a lighter overall haze (glow layer and fog patches fainter) */
+@keyframes heroGlow { from { opacity: .22; transform: translateY(0); } to { opacity: .5; transform: translateY(-6px); } }
+.hero .hero-bg::before { animation-name: heroGlow; }

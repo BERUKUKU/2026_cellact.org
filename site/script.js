@@ -596,7 +596,7 @@
       f.style.setProperty('--fw', w.toFixed(1) + '%'); f.style.setProperty('--fh', h.toFixed(1) + '%');
       f.style.left = (cx - w / 2).toFixed(1) + '%'; f.style.top = (cy - h / 2).toFixed(1) + '%';
       f.style.setProperty('--dx', ((Math.random() < 0.5 ? -1 : 1) * (6 + Math.random() * 14)).toFixed(1) + '%');
-      f.style.setProperty('--o', (phoneFog ? 0.26 + Math.random() * 0.14 : 0.5 + Math.random() * 0.22).toFixed(2));   // phone: fewer, fainter patches so the picture stays clear
+      f.style.setProperty('--o', (phoneFog ? 0.2 + Math.random() * 0.1 : 0.24 + Math.random() * 0.14).toFixed(2));   // phone: fewer, fainter patches so the picture stays clear
     };
     for (var fi = 0; fi < fogCount; fi++) {
       var fg = d.createElement('i'); fg.className = 'fog-patch'; fg.setAttribute('aria-hidden', 'true');
