@@ -589,11 +589,11 @@
   }
 
   // Drifting fog over the TOP hero and the sub-page heroes: soft tinted patches that appear at random places, drift, thin out and come back elsewhere
-  Array.prototype.forEach.call(d.querySelectorAll('.hero .hero-bg, .page-hero .hero-bg'), function (fogBg) {
+  Array.prototype.forEach.call(d.querySelectorAll('.hero .hero-bg, .page-hero .hero-bg, .service-card .thumb, .sd-media'), function (fogBg) {
   if (fogBg && !reduce) {
-    var subFog = !!fogBg.closest('.page-hero');
+    var subFog = !!fogBg.closest('.page-hero'), cardFog = fogBg.classList.contains('thumb') || fogBg.classList.contains('sd-media');
     var FOG_TINTS = [['248,244,255', '200,184,246'], ['255,246,236', '255,196,170'], ['238,255,250', '150,232,212'], ['244,250,255', '150,205,255'], ['255,242,250', '240,176,220']];   // soft centre to a clearly tinted rim: lavender / peach / mint / sky / pink
-    var phoneFog = innerWidth <= 820, fogCount = subFog ? (phoneFog ? 2 : 4) : phoneFog ? 3 : 7, fogPlace = function (f, slot) {
+    var phoneFog = innerWidth <= 820, fogCount = cardFog ? 2 : subFog ? (phoneFog ? 2 : 4) : phoneFog ? 3 : 7, fogPlace = function (f, slot) {
       var w = 44 + Math.random() * 40, h = 24 + Math.random() * 26;                       // % of the frame
       var cx = slot == null ? Math.random() * 100 : (slot + Math.random()) / fogCount * 100;   // initial patches are spread evenly across the width, later ones land anywhere
       var cy = 12 + Math.random() * 76;
@@ -601,7 +601,7 @@
       f.style.setProperty('--fw', w.toFixed(1) + '%'); f.style.setProperty('--fh', h.toFixed(1) + '%');
       f.style.left = (cx - w / 2).toFixed(1) + '%'; f.style.top = (cy - h / 2).toFixed(1) + '%';
       f.style.setProperty('--dx', ((Math.random() < 0.5 ? -1 : 1) * (6 + Math.random() * 14)).toFixed(1) + '%');
-      f.style.setProperty('--o', (phoneFog ? 0.2 + Math.random() * 0.1 : 0.24 + Math.random() * 0.14).toFixed(2));   // phone: fewer, fainter patches so the picture stays clear
+      f.style.setProperty('--o', (cardFog ? 0.2 + Math.random() * 0.12 : phoneFog ? 0.2 + Math.random() * 0.1 : 0.24 + Math.random() * 0.14).toFixed(2));   // phone: fewer, fainter patches so the picture stays clear
     };
     for (var fi = 0; fi < fogCount; fi++) {
       var fg = d.createElement('i'); fg.className = 'fog-patch'; fg.setAttribute('aria-hidden', 'true');
@@ -733,7 +733,7 @@
       W = thumb.clientWidth; H = thumb.clientHeight;
       cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       hexes = [];
-      var big = thumb.classList.contains('sd-media'); var total = big ? 20 : 9;
+      var big = thumb.classList.contains('sd-media'); var total = big ? 13 : 6;
       for (var i = 0; i < total; i++) { var h = {}; spawn(h, true); hexes.push(h); }
     };
     var last = 0;
@@ -752,7 +752,7 @@
         h.y += h.vy * h.z * 60 * dt; h.rot += h.vr * 60 * dt;
         var u = h.age / h.life;
         var env = Math.sin(Math.PI * u); env = env * env * (3 - 2 * Math.min(1, env * 1.6));   // soft in, soft out
-        ctx.lineWidth = 1.2 + h.z * 0.9;
+        ctx.lineWidth = 0.45 + h.z * 0.35;   // same fine outlines as the TOP hero
         ctx.strokeStyle = 'rgba(15,107,134,.5)';
         softHex(ctx, h.x + tx * h.z * 18 + Math.sin(h.age * 0.8 + h.ph) * h.sa, h.y + ty * h.z * 18, h.r * (1 + 0.05 * Math.sin(h.age * 1.2 + h.ph)), h.rot + Math.sin(h.age * 0.55 + h.ph * 1.7) * 0.3);
         // fade out near the bottom-left corner so the card number stays readable
