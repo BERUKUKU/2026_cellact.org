@@ -417,7 +417,7 @@
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
       panAsp = img.naturalWidth / img.naturalHeight; ready = true; dirty = true;
     };
-    var yaw = 0.185 * 6.2831853, vel = 0, dirty = true, W = 0, H = 0, tanH = 1, asp = 1, hz = 0;
+    var yaw = 0.087 * 6.2831853, vel = 0, dirty = true, W = 0, H = 0, tanH = 1, asp = 1, hz = 0;
     var phone = function () { return innerWidth <= 820; };
     var layout = function () {
       var fw = frame.clientWidth, fh = frame.clientHeight; if (!fw || !fh) return;
