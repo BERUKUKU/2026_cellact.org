@@ -301,7 +301,7 @@
       } else { cv.style.top = ''; cv.style.height = ''; cv.style.bottom = ''; }
       cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       var count = Math.round(Math.min(30, Math.max(8, W * H / 24000)));
-      if (hero.classList.contains('hero')) count = Math.round(count * (innerWidth <= 820 ? 0.45 : 0.65));   // TOP hero: fewer cells (phones fewer still)   // phones: fewer, fainter cells over the picture
+      count = Math.round(count * (innerWidth <= 820 ? 0.45 : 0.65));   // fewer cells (phones fewer still), TOP and sub-page heroes alike   // phones: fewer, fainter cells over the picture
       cells = [];
       for (var i = 0; i < count; i++) { var c = {}; spawnCell(c, true); cells.push(c); }
     };
@@ -321,7 +321,7 @@
         if (c.age > c.life) { spawnCell(c, false); c.age = -Math.random() * 0.6; return; }
         c.y += c.vy * c.z * 60 * dt; c.rot += c.vr * 60 * dt;
         var u = c.age / c.life, s = Math.sin(Math.PI * u), env = Math.max(0, Math.min(1, s * s * (3 - 2 * Math.min(1, s * 1.6))));
-        ctx.lineWidth = light ? 1.5 + c.z * 1.1 : 0.4 + c.z * 0.3;   // TOP hero: fine outlines that sit with the drawn picture
+        ctx.lineWidth = 0.45 + c.z * 0.35;   // fine outlines that sit with the drawn picture (TOP and sub-page heroes alike)
         ctx.strokeStyle = 'rgba(' + ink + ',' + (light ? Math.min(1, c.a + 0.35) : c.a) * env * (innerWidth <= 820 && hero.classList.contains('hero') ? 0.4 : 0.6) + ')';
         ctx.fillStyle = light ? 'rgba(255,255,255,' + (0.4 * env) + ')' : 'rgba(' + ink + ',' + (c.a * 0.16) * env + ')';
         if (light) { ctx.shadowBlur = 0; }
@@ -588,11 +588,12 @@
     addEventListener('scroll', hideTick, { passive: true }); addEventListener('resize', hideTick); hideTick();
   }
 
-  // Drifting fog over the whole TOP hero: soft white patches that appear at random places, drift, thin out and come back elsewhere
-  var fogBg = d.querySelector('.hero .hero-bg');
+  // Drifting fog over the TOP hero and the sub-page heroes: soft tinted patches that appear at random places, drift, thin out and come back elsewhere
+  Array.prototype.forEach.call(d.querySelectorAll('.hero .hero-bg, .page-hero .hero-bg'), function (fogBg) {
   if (fogBg && !reduce) {
+    var subFog = !!fogBg.closest('.page-hero');
     var FOG_TINTS = [['248,244,255', '200,184,246'], ['255,246,236', '255,196,170'], ['238,255,250', '150,232,212'], ['244,250,255', '150,205,255'], ['255,242,250', '240,176,220']];   // soft centre to a clearly tinted rim: lavender / peach / mint / sky / pink
-    var phoneFog = innerWidth <= 820, fogCount = phoneFog ? 3 : 7, fogPlace = function (f, slot) {
+    var phoneFog = innerWidth <= 820, fogCount = subFog ? (phoneFog ? 2 : 4) : phoneFog ? 3 : 7, fogPlace = function (f, slot) {
       var w = 44 + Math.random() * 40, h = 24 + Math.random() * 26;                       // % of the frame
       var cx = slot == null ? Math.random() * 100 : (slot + Math.random()) / fogCount * 100;   // initial patches are spread evenly across the width, later ones land anywhere
       var cy = 12 + Math.random() * 76;
@@ -609,6 +610,7 @@
       fogBg.appendChild(fg);
     }
   }
+  });
 
   // Hero -> content: the hero recedes (slides up a little, dims) while the next section slides over it like a curtain
   var curHero = d.querySelector('main > .hero');

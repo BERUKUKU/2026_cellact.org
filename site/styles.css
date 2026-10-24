@@ -910,3 +910,8 @@ main > .hero.dragging { cursor: grabbing; user-select: none; -webkit-user-select
 
 /* phone TOP copy sits about a third of the way down the screen, lightly over the clouds / top of the world */
 @media (max-width: 820px) { .hero .hero-inner { padding-block: 84px 0; } }
+
+/* sub-page heroes: the same light haze as the TOP (glow layer ~half, white mist veil fainter) */
+.page-hero .hero-bg::before { animation-name: heroGlow; }
+.page-hero .hero-bg::after { opacity: .22; }
+@media (max-width: 820px) { .page-hero .hero-bg::after { opacity: .3; } }
