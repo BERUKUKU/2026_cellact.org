@@ -67,7 +67,7 @@
     var bgPic = heroEl.querySelector('.hero-bg img'), spAct = heroEl.querySelector('.hero-actions-sp');
     var bgTarget = function () { var t = heroEl.querySelector('.glide-track'); if (t && bgPic) { bgPic.style.filter = ''; bgPic.style.opacity = ''; bgPic.style.transform = ''; } return t || bgPic; };   // intro blur/fade goes on the whole strip once it exists
     var setAux = function (v) { if (hint) hint.style.opacity = v; if (spAct) spAct.style.opacity = v; };
-    if (!reduce && !seen && scrollY < heroEl.offsetHeight) {
+    if (!reduce && !seen && !window.heroIntroExpired && scrollY < heroEl.offsetHeight) {
       var iSvg = introEl.querySelector('svg'), iTravel = 66, iClose = 2.85;
       var T_BREAK = 3.9, T_FOCUS = 5.4, T_END = 6.0;                    // seconds: hexagon starts to break / picture sharp + logo gone / copy fully in
       var BLUR0 = 16;                                                   // px of blur on the picture at the start
@@ -166,6 +166,10 @@
       heroEl.addEventListener('click', skip); addEventListener('keydown', skip, { once: true });
     } else if (layer) { layer.style.display = 'none'; }
   }
+
+  // Reveal only after the initial intro styles are applied, including on a cold load.
+  clearTimeout(window.heroIntroFallback);
+  d.documentElement.classList.remove('hero-intro-pending');
 
   // Logo capsule animation (company page): the shell closes from above and below, then the wordmark fades in
   var capEl = d.querySelector('[data-capsule]');

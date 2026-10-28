@@ -533,7 +533,7 @@ p, dd { font-size: 1rem; line-height: 1.95; }
 .hero-intro { position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 1s ease; }
 .js .hero.intro-on .hero-intro { opacity: 1; visibility: visible; pointer-events: auto; }
 .hero-intro .hi-veil { position: absolute; inset: 0; background: radial-gradient(ellipse 38% 62% at 50% 46%, rgba(247,255,251,.9), rgba(247,255,251,.45) 62%, rgba(247,255,251,0) 100%); }
-.hero-intro .hi-logo { position: relative; width: min(300px, 46vw); }
+.hero-intro .hi-logo { position: relative; width: min(219px, 33.5vw); }
 .hero-intro .capsule-svg { width: 100%; height: auto; display: block; }
 .hi-skip { position: absolute; right: 20px; bottom: 18px; border: 1px solid rgba(10,74,99,.35); background: rgba(255,255,255,.7); color: var(--teal-deep); font: inherit; font-size: .75rem; letter-spacing: .08em; padding: 6px 14px; border-radius: 99px; cursor: pointer; pointer-events: auto; }
 .hi-skip:hover { background: #fff; }
@@ -582,7 +582,7 @@ p, dd { font-size: 1rem; line-height: 1.95; }
   .hero .hero-eyebrow { font-size: .72rem; letter-spacing: .22em; margin-bottom: 12px; }
   .hero h1 { font-size: 7.2vw; margin-bottom: 12px; }
   .hero .hero-sub { font-size: .8rem; letter-spacing: .05em; white-space: normal; margin-bottom: 0; }
-  .hero-intro .hi-logo { width: min(240px, 52vw); margin-top: -4vw; }
+  .hero-intro .hi-logo { width: min(194px, 42.12vw); margin-top: -4vw; }
   .hero .hero-fx { z-index: 1; -webkit-mask-image: none; mask-image: none; }
   .hero .scroll-hint { display: block; right: auto; left: 50%; top: calc(var(--hb) - 86px); bottom: auto; transform: translateX(-50%); z-index: 3; color: #0a4a63; opacity: 1; text-shadow: 0 0 8px rgba(255,255,255,.9); }
   .hero .scroll-hint::after { background: #0a4a63; height: 40px; box-shadow: 0 0 6px rgba(255,255,255,.8); }
